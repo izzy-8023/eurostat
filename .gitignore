@@ -22,7 +22,7 @@ env/
 *.log
 
 # 忽略大型数据集文件
-
+*.json
 
 # 忽略配置文件
 config.json

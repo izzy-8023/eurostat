@@ -1,0 +1,44 @@
+# Dockerfile.airflow
+
+# Start with the official Apache Airflow image version specified in your docker-compose-airflow.yaml
+# Make sure this matches the AIRFLOW_IMAGE_NAME or the default (e.g., apache/airflow:3.0.1)
+FROM apache/airflow:3.0.1-python3.10
+
+# Set the USER to root temporarily to install system dependencies
+USER root
+
+# Install system dependencies that your scripts might need
+# - curl (if SourceData.py uses it)
+# - libpq-dev (for psycopg2, if your scripts connect to PostgreSQL directly)
+# The base Airflow image might already have some of these.
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    libpq-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Switch back to the airflow user
+USER airflow
+
+# Copy your project's requirements file
+# Ensure this requirements.txt contains all dependencies for SourceData.py, jsonParser.py, load_to_postgres.py
+COPY requirements.txt /requirements.txt
+
+# Install Python dependencies
+# Use --user if you encounter permission issues, though PIP_USER might be set in base image
+RUN pip install --no-cache-dir -r /requirements.txt
+
+# Copy your Python scripts into a directory within the Airflow image.
+# We'll put them in /opt/airflow/scripts for organization.
+# Make sure your scripts (SourceData.py, jsonParser.py, load_to_postgres.py)
+# are in a local 'scripts' directory in your project root.
+COPY ./scripts/ /opt/airflow/scripts/
+
+# If you have other Python modules or files at the root that your scripts import, copy them too.
+# For example, if SourceData.py or jsonParser.py were in the root and are imported by DAGs or other scripts:
+# COPY SourceData.py /opt/airflow/app/SourceData.py
+# COPY jsonParser.py /opt/airflow/app/jsonParser.py
+# And then you might need to add /opt/airflow/app to PYTHONPATH if they are not in 'scripts'
+# ENV PYTHONPATH="${PYTHONPATH}:/opt/airflow/app"
+
+# Your DAGs will be mounted via volumes by docker-compose-airflow.yaml,
+# so no need to COPY dags/ here.

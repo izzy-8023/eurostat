@@ -1,0 +1,68 @@
+services:
+  app:
+    build: .  # Tells Docker Compose to build the image from the Dockerfile in the current directory
+    image: eurostat-processor # Optional: name the image built by compose
+    container_name: eurostat_app
+    depends_on:
+      - db          # Ensures 'db' service starts before 'app'
+    environment:
+      # Pass database connection details to your Python app
+      # Your Python scripts will need to read these environment variables
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=eurostat_data
+      - POSTGRES_USER=eurostat_user
+      - POSTGRES_PASSWORD=mysecretpassword
+    volumes:
+      # Mount local directories for data persistence and script output
+      - ./Data_Directory:/app/Data_Directory
+      - ./Output_Parquet_Directory:/app/Output_Parquet_Directory
+      - ./Output_Directory:/app/Output_Directory
+      # Optional: Mount current directory for live code changes during development
+      # - .:/app # Be careful with this in 'production' builds from compose
+    command: ["tail", "-f", "/dev/null"]
+    networks:
+      - eurostat_shared_network
+
+  db:
+    image: postgres:13-alpine  # Use an official PostgreSQL image (choose a version)
+    container_name: eurostat_postgres_db
+    environment:
+      # These are for PostgreSQL itself to initialize the database
+      - POSTGRES_DB=eurostat_data
+      - POSTGRES_USER=eurostat_user
+      - POSTGRES_PASSWORD=mysecretpassword
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persist PostgreSQL data
+    ports:
+      - "5433:5432" # Map host port 5433 to container port 5432 (to avoid conflict if you have local PG)
+    networks:
+      - eurostat_shared_network
+
+  pgadmin: # New service for pgAdmin
+    image: dpage/pgadmin4:latest # Use the official pgAdmin4 image
+    container_name: eurostat_pgadmin
+    environment:
+      # Set an email and password for the pgAdmin login
+      - PGADMIN_DEFAULT_EMAIL=wangziwei1998@gmail.com
+      - PGADMIN_DEFAULT_PASSWORD=eurostat
+      # For pgAdmin to pre-configure servers, you can use PGADMIN_SETUP_SERVERS,
+      # or you can configure them manually via the web UI once pgAdmin is running.
+      # PGADMIN_CONFIG_SERVER_MODE: 'False' # Set to True to disable server mode if needed
+    ports:
+      - "5050:80" # Map host port 5050 to pgAdmin's default container port 80
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin # Persist pgAdmin's own settings, server configs, etc.
+    depends_on:
+      - db # Optional, but good practice so pgAdmin starts after the DB
+    # restart: unless-stopped # Optional: restart policy
+    networks:
+      - eurostat_shared_network
+
+volumes:
+  postgres_data: # Defines a named volume for persistent DB data
+  pgadmin_data: # Define a named volume for pgAdmin data
+
+networks:
+  eurostat_shared_network:
+    external: true 
