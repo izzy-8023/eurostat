@@ -1,0 +1,491 @@
+ID,Label,CreatedDate,UpdateDataDate,UpdateStructureDate
+HLTH_EHIS_FV3E,"Daily consumption of fruit and vegetables by sex, age and educational attainment level",2016-09-01T16:03:23+0200,2022-04-04T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV3I,"Daily consumption of fruit and vegetables by sex, age and income quintile",2016-11-28T16:15:13+0100,2022-04-04T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV3M,"Daily consumption of fruit and vegetables by sex, age and body mass index",2021-11-11T12:28:10+0100,2021-11-11T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV3U,"Daily consumption of fruit and vegetables by sex, age and degree of urbanisation",2017-03-02T11:29:24+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV5E,"Frequency of drinking pure fruit or vegetable juice by sex, age and educational attainment level",2022-06-28T16:19:15+0200,2022-06-28T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV7E,"Frequency of drinking sugar-sweetened soft drinks by sex, age and educational attainment level",2021-07-21T09:36:43+0200,2022-04-04T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV7I,"Frequency of drinking sugar-sweetened soft drinks by sex, age and income quintile",2021-11-11T12:28:11+0100,2021-11-11T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV7M,"Frequency of drinking sugar-sweetened soft drinks by sex, age and body mass index",2021-08-16T15:50:04+0200,2021-10-29T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_HA1D,"Difficulties in household activities by sex, age and level of disability (activity limitation)",2019-03-13T15:34:16+0100,2022-11-16T23:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_HA1E,"Difficulties in household activities by sex, age and educational attainment level",2016-11-28T16:14:43+0100,2021-12-17T23:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_HA1HCS,"Difficulties in household activities by sex, age and use of home care services",2021-11-18T11:17:57+0100,2021-12-17T23:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_HA1I,"Difficulties in household activities by sex, age and income quintile",2021-11-18T11:18:05+0100,2021-12-17T23:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_HA1U,"Difficulties in household activities by sex, age and degree of urbanisation",2017-03-02T11:29:31+0100,2022-07-20T11:00:00+0200,2024-01-04T23:00:00+0100
+HLTH_EHIS_HAHLPD,"Need for help with household activities by sex, age and level of activity limitation",2019-04-15T16:05:00+0200,2022-07-20T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_HAHLPE,"Need for help with household activities by sex, age and educational attainment level",2019-04-15T16:04:58+0200,2022-05-13T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_HAHLPU,"Need for help with household activities by sex, age and degree of urbanisation",2019-04-15T16:04:56+0200,2022-07-20T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_HC1,"Self-reported vaccination against influenza by sex, age and educational attainment level (%)",2010-12-09T11:30:38+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_HC10,"Self-reported use of non-prescribed medicines by sex, age and educational attainment level",2014-03-27T14:10:25+0100,2014-03-26T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_HC2,Self-reported breast examination by X-ray by educational attainment level among women aged 50-69 (%),2010-12-09T11:30:41+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_HC3,Self-reported cervical smear test by educational attainment level among women aged 20-69 (%),2010-12-09T11:30:44+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_HC4,"Self-reported colorectal cancer screening test by sex, age and educational attainment level among people aged 50-74 (%)",2010-12-09T11:30:47+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_HC5,"Self-reported consultation of a medical professional by sex, age and educational attainment level (%)",2010-12-09T11:30:49+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_HC6,"Self-reported consultation of a psychologist or physiotherapist by sex, age and educational attainment level (%)",2013-11-14T16:14:50+0100,2014-03-20T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_HC7,"Self-reported use of prescribed medicines for specific diseases by sex, age and educational attainment level",2010-12-09T11:30:54+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_HC8,"Self-reported hospital in-patient and day-patient admissions by sex, age and educational attainment level (%)",2013-11-14T15:58:42+0100,2014-03-20T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_HC9,"Self-reported use of prescribed medicines by sex, age and educational attainment level",2014-03-27T14:10:23+0100,2014-03-26T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_HO1E,"Self-reported hospital in-patient and day-patient admissions by sex, age and educational attainment level",2017-07-03T16:29:59+0200,2022-05-13T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_HO1U,"Self-reported hospital in-patient and day-patient admissions by sex, age and degree of urbanisation",2017-07-03T16:29:56+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_IC1E,"Persons providing informal care or assistance at least once a week by sex, age and educational attainment level",2017-07-03T16:15:58+0200,2022-09-09T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_IC1U,"Persons providing informal care or assistance at least once a week by sex, age and degree of urbanisation",2017-07-03T16:15:57+0200,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_MD1B,"Self-reported use of prescribed medicines by sex, age and country of birth",2019-03-13T16:19:18+0100,2022-11-11T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_MD1C,"Self-reported use of prescribed medicines by sex, age and country of citizenship",2019-03-13T16:19:20+0100,2022-11-11T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_MD1E,"Self-reported use of prescribed medicines by sex, age and educational attainment level",2016-11-28T16:07:48+0100,2022-03-22T11:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_MD1U,"Self-reported use of prescribed medicines by sex, age and degree of urbanisation",2017-03-02T11:29:20+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_MD2B,"Self-reported use of non-prescribed medicines by sex, age and country of birth",2019-03-13T16:19:21+0100,2022-11-11T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_MD2C,"Self-reported use of non-prescribed medicines by sex, age and country of citizenship",2019-03-13T16:19:19+0100,2022-11-11T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_MD2E,"Self-reported use of non-prescribed medicines by sex, age and educational attainment level",2017-01-19T16:29:49+0100,2022-03-22T11:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_MD2U,"Self-reported use of non-prescribed medicines by sex, age and degree of urbanisation",2017-03-02T11:29:07+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_MH1B,"Current depressive symptoms by sex, age and country of birth",2019-03-13T15:27:41+0100,2023-06-16T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_MH1C,"Current depressive symptoms by sex, age and country of citizenship",2019-03-13T15:27:34+0100,2023-06-16T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_MH1D,"Current depressive symptoms by level of disability (activity limitation), sex and age",2023-10-03T12:11:50+0200,2023-10-24T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_MH1E,"Current depressive symptoms by sex, age and educational attainment level",2016-11-11T08:49:53+0100,2023-06-16T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_MH1I,"Current depressive symptoms by sex, age and income quintile",2016-11-28T16:07:52+0100,2023-06-16T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_MH1U,"Current depressive symptoms by sex, age and degree of urbanisation",2017-03-02T11:29:36+0100,2023-06-16T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_MH2B,"Severity of current depressive symptoms by sex, age and country of birth",2019-03-13T15:27:39+0100,2022-11-14T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_MH2C,"Severity of current depressive symptoms by sex, age and country of citizenhip",2019-03-13T15:27:35+0100,2022-11-14T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_MH2D,"Severity of current depressive symptoms by level of disability (activity limitation), sex and age",2023-10-03T12:12:29+0200,2023-10-24T23:00:00+0200,2025-04-22T23:00:00+0200
+HLTH_EHIS_MH2E,"Severity of current depressive symptoms by sex, age and educational attainment level",2017-05-03T11:33:36+0200,2021-11-17T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_MH2I,"Severity of current depressive symptoms by sex, age and income quintile",2017-05-03T11:33:30+0200,2021-11-17T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_MH2U,"Severity of current depressive symptoms by sex, age and degree of urbanisation",2017-05-03T11:33:33+0200,2022-07-11T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA1E,"Self-reported vaccination against influenza by sex, age and educational attainment level",2017-01-19T16:29:18+0100,2022-06-29T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA1I,"Self-reported vaccination against influenza by sex, age and income quintile",2022-01-06T13:52:09+0100,2022-06-29T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA1U,"Self-reported vaccination against influenza by sex, age and degree of urbanisation",2017-03-02T11:29:15+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA2E,"Self-reported screening of cardiovascular diseases and diabetes risks by sex, age and educational attainment level",2017-01-19T16:29:21+0100,2022-02-24T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA2I,"Self-reported screening of cardiovascular diseases and diabetes risks by sex, age and income quintile",2021-11-18T11:18:02+0100,2022-02-24T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA2U,"Self-reported screening of cardiovascular diseases and diabetes risks by sex, age and degree of urbanisation",2017-03-02T11:29:40+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA5E,"Self-reported last colorectal cancer screening test by sex, age and educational attainment level",2016-11-28T16:08:36+0100,2021-10-29T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA5I,"Self-reported last colorectal cancer screening test by sex, age and income quintile",2021-07-21T09:36:25+0200,2021-10-29T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA5U,"Self-reported last colorectal cancer screening test by sex, age and degree of urbanisation",2017-03-02T11:29:26+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA6E,"Self-reported last colonoscopy by sex, age and educational attainment level",2019-03-13T16:09:49+0100,2021-12-17T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA6I,"Self-reported last colonoscopy by sex, age and income quintile",2021-11-11T12:27:50+0100,2021-12-17T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA6U,"Self-reported last colonoscopy by sex, age and degree of urbanisation",2019-03-13T16:09:47+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA7E,Self-reported last breast examination by X-ray among women by age and educational attainment level,2016-11-28T16:08:27+0100,2022-02-24T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA7I,Self-reported last breast examination by X-ray among women by age and income quintile,2021-07-21T09:36:22+0200,2022-02-24T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA7U,Self-reported last breast examination by X-ray among women by age and degree of urbanisation,2017-03-02T11:29:12+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA8E,Self-reported last cervical smear test among women by age and educational attainment level,2016-11-28T16:08:31+0100,2022-02-24T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA8I,Self-reported last cervical smear test among women by age and income quintile,2021-07-29T12:05:35+0200,2022-02-24T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PA8U,Self-reported last cervical smear test among women by age and degree of urbanisation,2017-03-02T11:29:11+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PC1D,"Difficulties in personal care activities by sex, age and level of disability (activity limitation)",2019-03-13T15:34:25+0100,2022-11-17T11:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_PC1E,"Difficulties in personal care activities by sex, age and educational attainment level",2016-11-28T16:11:00+0100,2022-08-04T23:00:00+0200,2024-01-04T23:00:00+0100
+HLTH_EHIS_PC1HCS,"Difficulties in personal care activities by sex, age and use of home care services",2021-11-18T11:18:00+0100,2022-08-04T23:00:00+0200,2024-01-04T23:00:00+0100
+HLTH_EHIS_PC1I,"Difficulties in personal care activities by sex, age and income quintile",2022-01-06T13:53:06+0100,2022-08-04T23:00:00+0200,2024-01-04T23:00:00+0100
+HLTH_EHIS_PC1U,"Difficulties in personal care activities by sex, age and degree of urbanisation",2017-03-02T11:29:22+0100,2022-08-04T23:00:00+0200,2024-01-04T23:00:00+0100
+HLTH_EHIS_PCHLPD,"Need for help with personal care activities by sex, age and level of activity limitation",2019-04-15T16:04:06+0200,2022-11-16T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PCHLPE,"Need for help with personal care activities by sex, age and educational attainment level",2019-04-15T16:04:02+0200,2022-03-22T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PCHLPU,"Need for help with personal care activities by sex, age and degree of urbanisation",2019-04-15T16:04:08+0200,2022-07-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE1E,"Effort involved in performing work-related physical activity by sex, age and educational attainment level",2016-11-28T16:12:15+0100,2022-11-25T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE1I,"Effort involved in performing work-related physical activity by sex, age and income quintile",2016-11-28T16:11:06+0100,2022-11-28T11:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE1U,"Effort involved in performing work-related physical activity by sex, age and degree of urbanisation",2017-03-02T11:29:34+0100,2022-11-28T11:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE2E,"Time spent on health-enhancing (non-work-related) aerobic physical activity by sex, age and educational attainment level",2016-11-11T08:50:13+0100,2022-06-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE2I,"Time spent on health-enhancing (non-work-related) aerobic physical activity by sex, age and income quintile",2016-11-28T16:11:03+0100,2022-06-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE2M,"Time spent on health-enhancing non-work-related aerobic physical activity by sex, age and body mass index",2022-01-06T13:52:39+0100,2022-06-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE2U,"Time spent on health-enhancing (non-work-related) aerobic physical activity by sex, age and degree of urbanisation",2017-03-02T11:29:37+0100,2023-08-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE3E,"Performing (non-work-related) physical activities by sex, age and educational attainment level",2017-07-03T16:28:10+0200,2022-06-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE3I,"Performing (non-work-related) physical activities by sex, age and income quintile",2017-07-03T16:28:05+0200,2022-06-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE3U,"Performing (non-work-related) physical activities by sex, age and degree of urbanisation",2017-07-03T16:28:01+0200,2022-10-28T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE6E,"Walking and cycling at least 30 minutes per day by sex, age and educational attainment level",2022-06-28T16:18:44+0200,2022-06-28T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE9B,"Performing health-enhancing physical activity by sex, age and country of birth",2019-03-13T15:50:01+0100,2023-08-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE9C,"Performing health-enhancing physical activity by sex, age and country of citizenship",2019-03-13T15:49:59+0100,2023-08-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE9D,"Performing health-enhancing physical activity by level of disability (activity limitation), sex and age",2019-03-13T15:49:58+0100,2023-08-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE9E,"Performing health-enhancing physical activity by sex, age and educational attainment level",2017-11-14T17:03:39+0100,2023-08-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE9I,"Performing health-enhancing physical activity by sex, age and income quintile",2017-11-14T17:03:37+0100,2023-08-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PE9U,"Performing health-enhancing physical activity by sex, age and degree of urbanisation",2017-11-14T17:03:27+0100,2023-08-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PL1D,"Functional limitations by sex, age and level of disability (activity limitation)",2019-03-13T15:34:20+0100,2022-11-17T11:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_PL1E,"Functional limitations by sex, age and educational attainment level",2017-07-03T16:15:34+0200,2022-11-16T23:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_PL1U,"Functional limitations by sex, age and degree of urbanisation",2017-07-03T16:15:38+0200,2022-11-16T23:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_PN1B,"Severity of bodily pain by sex, age and country of birth",2019-03-13T15:27:32+0100,2022-11-14T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PN1C,"Severity of bodily pain by sex, age and country of citizenship",2019-03-13T15:27:28+0100,2022-11-14T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_PN1D,"Severity of bodily pain by level of disability (activity limitation), sex and age",2019-03-13T15:27:37+0100,2022-07-11T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_PN1E,"Severity of bodily pain by sex, age and educational attainment level",2016-11-28T16:10:57+0100,2022-03-22T11:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK1B,"Smoking of tobacco products by sex, age and country of birth",2019-03-13T15:53:53+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK1C,"Smoking of tobacco products by sex, age and country of citizenship",2019-03-13T15:53:55+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK1E,"Smoking of tobacco products by sex, age and educational attainment level",2016-09-01T16:03:30+0200,2022-04-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK1I,"Smoking of tobacco products by sex, age and income quintile",2016-11-28T16:15:50+0100,2022-04-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK1U,"Smoking of tobacco products by sex, age and degree of urbanisation",2017-03-02T11:29:38+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK2E,"Former daily tobacco smokers by sex, age and educational attainment level",2022-03-23T15:18:18+0100,2022-04-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK2I,"Former daily tobacco smokers by sex, age and income quintile",2022-03-23T15:18:22+0100,2022-04-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK3E,"Daily smokers of cigarettes by sex, age and educational attainment level",2016-11-28T16:15:53+0100,2022-04-04T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK3I,"Daily smokers of cigarettes by sex, age and income quintile",2016-10-10T15:11:20+0200,2022-04-04T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK3U,"Daily smokers of cigarettes by sex, age and degree of urbanisation",2017-03-02T11:29:21+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK4E,"Daily exposure to tobacco smoke indoors by sex, age and educational attainment level",2016-11-28T16:24:02+0100,2022-06-28T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK4U,"Daily exposure to tobacco smoke indoors by sex, age and degree of urbanisation",2017-03-02T11:29:33+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK5E,"Duration of daily tobacco smoking by sex, age and educational attainment level",2022-03-23T15:18:10+0100,2022-04-04T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SK6E,"Use of electronic cigarettes or similar electronic devices by sex, age and educational attainment level",2022-03-23T15:18:27+0100,2022-04-04T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SS1B,"Overall perceived social support by sex, age and country of birth",2019-03-13T15:57:15+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_SS1C,"Overall perceived social support by sex, age and country of citizenship",2019-03-13T15:57:16+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_SS1D,"Overall perceived social support by level of disability (activity limitation), sex and age",2019-03-13T15:57:13+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_SS1E,"Overall perceived social support by sex, age and educational attainment level",2017-11-14T17:03:36+0100,2022-03-22T11:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_SS1U,"Overall perceived social support by sex, age and degree of urbanisation",2017-11-14T17:03:46+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_ST1,"People reporting a chronic disease, by disease, sex, age and educational attainment level (%)",2010-12-09T11:30:57+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_ST10,"Limitations in personal care activities by sex, age and educational attainment level (%)",2013-11-14T15:52:26+0100,2014-03-20T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_ST11,"Limitations in household activities by sex, age and educational attainment level (%)",2013-11-14T15:52:27+0100,2014-03-20T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_ST2,"People reporting having had an accident by sex, age and educational attainment level (%)",2010-12-09T11:30:59+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_ST3,"People reporting having had an accident, which resulted in injury for which medical treatment was sought by sex, age and educational attainment level (%)",2010-12-09T11:31:02+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_ST4,"People declaring physical pain or physical discomfort by sex, age and educational attainment level (%)",2010-12-09T11:31:05+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_ST7,"Psychological distress by sex, age and educational attainment level (average score)",2012-07-25T15:44:20+0200,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_ST8,"Psychological well-being (energy and vitality index) by sex, age and educational attainment level (average score)",2012-07-25T15:44:27+0200,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_ST9,"Physical and sensory functional limitations by sex, age and educational attainment level (%)",2013-11-14T15:52:28+0100,2014-03-20T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_TAD,"Difficulties in personal care activities or household activities by sex, age and level of disability (activity limitation)",2019-06-20T16:43:00+0200,2022-09-19T23:00:00+0200,2024-01-04T23:00:00+0100
+HLTH_EHIS_TADLE,"Severe difficulties in personal care activities or household activities by sex, age and type of activity where the severe difficulty is encountered",2020-11-26T15:48:09+0100,2022-05-13T23:00:00+0200,2024-01-04T23:00:00+0100
+HLTH_EHIS_TADLH,"Need for help with personal care or household activities by level of difficulty experienced in those activities, sex and age",2020-11-26T15:48:24+0100,2022-09-19T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_TADLHI,"Need for help with personal care or household activities by level of difficulty experienced in those activities, age and income quintile",2020-11-26T15:48:29+0100,2021-07-26T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_TADLHU,"Need for help with personal care or household activities by level of difficulty experienced in those activities, age and degree of urbanisation",2022-06-28T16:17:53+0200,2022-09-19T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_TADLI,"Severe difficulties in personal care activities or household activities by age, income quintile and type of activity where the severe difficulty is encountered",2020-11-26T15:48:20+0100,2022-05-13T23:00:00+0200,2024-01-04T23:00:00+0100
+HLTH_EHIS_TAE,"Difficulties in personal care activities or household activities by sex, age and educational attainment level",2019-06-20T16:42:57+0200,2021-11-16T23:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_TAHCS,"Difficulties in personal care activities or household activities by sex, age and use of home care services",2021-11-18T11:17:59+0100,2021-11-18T23:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_TAI,"Difficulties in personal care activities or household activities by sex, age and income quintile",2021-11-18T11:17:59+0100,2021-11-18T23:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_TAU,"Difficulties in personal care activities or household activities by sex, age and degree of urbanisation",2019-06-20T16:42:59+0200,2022-09-19T23:00:00+0200,2024-01-04T23:00:00+0100
+HLTH_EHIS_UN1D,"Self-reported unmet needs for health care by specific reasons, level of disability (activity limitation), sex and age",2019-03-13T16:12:29+0100,2022-11-25T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_UN1E,"Self-reported unmet needs for health care by sex, age, specific reasons and educational attainment level",2017-11-14T17:03:29+0100,2021-11-16T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_UN1I,"Self-reported unmet needs for health care by sex, age, specific reasons and income quintile",2021-11-18T11:18:07+0100,2021-11-18T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_UN1U,"Self-reported unmet needs for health care by sex, age, specific reasons and degree of urbanisation",2017-11-14T17:03:43+0100,2022-11-25T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_UN2D,"Self-reported unmet needs for specific health care-related services due to financial reasons by level of disability (activity limitation), sex and age",2019-03-13T16:12:27+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_UN2E,"Self-reported unmet needs for specific health care-related services due to financial reasons by sex, age and educational attainment level",2017-11-14T17:03:35+0100,2022-02-24T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_UN2I,"Self-reported unmet needs for specific health care-related services due to financial reasons by sex, age and income quintile",2022-03-23T15:16:35+0100,2022-03-23T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_UN2U,"Self-reported unmet needs for specific health care-related services due to financial reasons by sex, age and degree of urbanisation",2017-11-14T17:03:32+0100,2022-10-28T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_VIE,"Correction of vision problems by sex, age and educational attainment level",2019-03-13T15:34:18+0100,2022-11-16T23:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_EHIS_VIU,"Correction of vision problems by sex, age and degree of urbanisation",2019-03-13T15:34:23+0100,2022-11-16T23:00:00+0100,2024-01-04T23:00:00+0100
+HLTH_HC_DENT,Consultation of a dentist per inhabitant,2014-03-05T17:23:43+0100,2024-07-11T11:00:00+0200,2024-07-11T11:00:00+0200
+HLTH_HC_PHYS,Consultation of a medical doctor (in private practice or as outpatient) per inhabitant - historical data (1960-2013),2014-03-05T17:23:43+0100,2022-07-12T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_HC_PHYS2,Consultation of a medical doctor per inhabitant,2023-06-14T18:09:53+0200,2024-12-11T23:00:00+0100,2024-07-11T11:00:00+0200
+HLTH_HLYE,Healthy life years by sex (from 2004 onwards),2020-02-20T18:14:00+0100,2024-06-11T23:00:00+0200,2024-06-11T23:00:00+0200
+HLTH_HLYE_H,Healthy life years (1995 - 2003),2012-03-13T15:53:24+0100,2011-10-05T23:00:00+0200,2023-12-21T23:00:00+0100
+HLTH_PS_IMMU,Vaccination against influenza of population aged 65 and over,2014-03-05T17:23:57+0100,2024-12-11T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_PS_PREV,Preventive cancer screenings - programme data,2023-02-09T14:07:04+0100,2024-12-11T23:00:00+0100,2023-07-12T11:00:00+0200
+HLTH_PS_SCRE,Breast cancer and cervical cancer screenings - historical data (2000-2021),2014-03-05T17:23:57+0100,2022-07-12T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_RS_BDLTC,Beds in nursing and other residential long-term care facilities,2023-02-09T14:57:36+0100,2024-12-11T23:00:00+0100,2024-12-11T23:00:00+0100
+HLTH_RS_BDS,Hospital beds by type of care - historical data (1960-2020),2014-03-05T17:07:29+0100,2021-07-02T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_RS_BDS1,Hospital beds by function and type of care,2023-02-09T14:57:35+0100,2024-12-11T23:00:00+0100,2023-07-12T11:00:00+0200
+HLTH_RS_BDS2,Hospital beds by hospital ownership,2014-03-05T17:07:22+0100,2024-12-11T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_RS_BDSNS,Long-term care beds in nursing and residential care facilities by NUTS 2 region - historical data (1980-2021),2014-03-05T17:07:28+0100,2022-07-12T11:00:00+0200,2024-01-10T11:00:00+0100
+HLTH_RS_BDSRG,Hospital beds by NUTS 2 region - historical data (1993-2016),2014-03-05T17:07:26+0100,2022-12-20T11:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_RS_BDSRG2,Available beds in hospitals by NUTS 2 region,2023-06-14T18:07:25+0200,2024-09-03T23:00:00+0200,2024-07-25T23:00:00+0200
+HLTH_RS_EQUIP,Medical technology - historical data (1980-2016),2014-03-05T17:07:23+0100,2022-07-12T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_RS_GRD,Health graduates - historical data (1980-2021),2014-06-06T17:00:17+0200,2022-07-12T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_RS_GRD2,Health graduates,2023-06-14T18:08:46+0200,2024-12-11T23:00:00+0100,2023-07-12T23:00:00+0200
+HLTH_RS_MEDIM,Devices for medical imaging,2023-06-14T18:05:51+0200,2024-09-03T23:00:00+0200,2023-07-12T11:00:00+0200
+HLTH_RS_NURSE,Nurses by age and sex,2024-07-11T08:58:08+0200,2024-09-11T23:00:00+0200,2024-09-11T23:00:00+0200
+HLTH_RS_PHYS,Physicians by sex and age,2014-03-05T17:07:27+0100,2024-12-11T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_RS_PHYSCAT,Physicians by category,2023-06-14T18:05:00+0200,2024-12-11T23:00:00+0100,2023-07-12T11:00:00+0200
+HLTH_RS_PHYSREG,Physicians by NUTS 2 region,2023-02-09T14:57:34+0100,2024-09-11T23:00:00+0200,2024-07-25T23:00:00+0200
+HLTH_RS_PRS1,Health personnel (excluding nursing and caring professionals) - historical data (1980-2021),2015-08-12T14:15:18+0200,2022-07-12T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_RS_PRS2,Health personnel,2023-06-14T18:08:05+0200,2024-12-11T23:00:00+0100,2023-07-12T11:00:00+0200
+HLTH_RS_PRSHP1,Health personnel employed in hospital - historical data (1980-2021),2014-03-05T17:07:25+0100,2022-07-12T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_RS_PRSHP2,Hospital employment,2023-06-14T18:08:20+0200,2024-12-11T23:00:00+0100,2023-07-12T11:00:00+0200
+HLTH_RS_PRSNS,Nursing and caring professionals - historical data (1980-2021),2014-03-05T17:07:21+0100,2022-07-12T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_RS_PRSRG,Health personnel by NUTS 2 region - historical data (1993-2021),2014-03-05T17:07:19+0100,2022-12-20T11:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_RS_SPEC,Physicians by medical speciality - historical data (1985-2016),2014-03-05T17:07:22+0100,2022-07-12T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_RS_TECH,Technical resources in hospital,2014-03-05T17:07:18+0100,2024-07-11T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_RS_WKMG,Health workforce migration - historical data (2000-2021),2016-01-27T15:31:31+0100,2022-07-12T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_RS_WKMG2,Health workforce migration,2023-06-14T18:09:08+0200,2024-12-11T23:00:00+0100,2023-07-12T11:00:00+0200
+HLTH_SHA11_FS,Revenues of health care financing schemes,2020-11-30T16:10:56+0100,2024-10-29T23:00:00+0100,2024-10-29T23:00:00+0100
+HLTH_SHA11_HC,Health care expenditure by function,2015-09-30T15:50:25+0200,2025-03-27T23:00:00+0100,2024-10-29T23:00:00+0100
+HLTH_SHA11_HCHF,Expenditure for selected health care functions by health care financing schemes,2015-09-30T15:50:16+0200,2025-03-27T23:00:00+0100,2024-10-29T23:00:00+0100
+HLTH_SHA11_HCHP,Expenditure for selected health care functions by health care providers,2015-09-30T15:50:09+0200,2025-03-27T23:00:00+0100,2024-10-29T23:00:00+0100
+HLTH_SHA11_HF,Health care expenditure by financing scheme,2015-09-30T15:50:21+0200,2025-03-27T23:00:00+0100,2024-10-29T23:00:00+0100
+HLTH_SHA11_HFFS,Revenues of health care financing schemes by health care financing schemes,2020-11-30T16:10:51+0100,2024-10-29T23:00:00+0100,2024-10-29T23:00:00+0100
+HLTH_SHA11_HP,Health care expenditure by provider,2015-09-30T15:50:19+0200,2025-03-27T23:00:00+0100,2024-10-29T23:00:00+0100
+HLTH_SHA11_HPHF,Expenditure for selected health care providers by health care financing schemes,2015-09-30T15:50:23+0200,2025-03-27T23:00:00+0100,2024-10-29T23:00:00+0100
+HLTH_SILC_01,"Self-perceived health by sex, age and labour status",2009-03-27T17:52:43+0100,2025-04-30T11:00:00+0200,2025-04-14T23:00:00+0200
+HLTH_SILC_02,"Self-perceived health by sex, age and educational attainment level",2009-03-27T17:52:43+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_04,"People having a long-standing illness or health problem, by sex, age and labour status",2009-03-27T17:52:43+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_05,"People having a long-standing illness or health problem, by sex, age and educational attainment level",2009-03-27T17:52:43+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_06,"Self-perceived long-standing limitations in usual activities due to health problem by sex, age and labour status",2009-03-27T17:52:43+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_07,"Level of disability (activity limitation) by sex, age and educational attainment level",2009-03-27T17:52:43+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_08,"Self-reported unmet needs for medical examination by sex, age, main reason declared and income quintile",2009-06-03T22:15:17+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_08B,"Self-reported unmet needs for medical examination due to financial reasons, long waiting list or distance by sex, age and risk of poverty threshold - % of the persons having the same needs",2023-12-11T08:38:19+0100,2025-04-30T11:00:00+0200,2025-04-30T11:00:00+0200
+HLTH_SILC_08B_R,"Self-reported unmet needs for medical examination due to financial reasons, long waiting list or distance by NUTS-2-region - % of the persons having the same needs",2024-07-15T11:27:12+0200,2025-04-30T11:00:00+0200,2025-04-30T11:00:00+0200
+HLTH_SILC_08C,"Persons reporting needs for medical examination or treatment by sex, age and at risk of poverty and social exclusion situation",2025-02-10T15:44:47+0100,2025-04-30T11:00:00+0200,2025-04-30T11:00:00+0200
+HLTH_SILC_08_R,Self-reported unmet needs for medical examination by main reason declared and NUTS 2 region,2019-07-25T14:32:04+0200,2025-04-30T11:00:00+0200,2025-04-23T23:00:00+0200
+HLTH_SILC_09,"Self-reported unmet needs for dental examination by sex, age, main reason declared and income quintile",2009-06-03T22:15:20+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_09B,"Self-reported unmet needs for dental examination due to financial reasons, long waiting list or distance by sex, age and risk of poverty threshold - % of the persons having the same needs",2023-12-11T08:39:09+0100,2025-04-30T11:00:00+0200,2025-04-30T11:00:00+0200
+HLTH_SILC_09C,"Persons reporting needs for dental examination or treatment by sex, age and at risk of poverty and social exclusion situation",2025-02-10T15:45:01+0100,2025-04-30T11:00:00+0200,2025-04-30T11:00:00+0200
+HLTH_SILC_10,"Self-perceived health by sex, age and income quintile",2009-03-27T17:52:43+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_11,"People having a long-standing illness or health problem, by sex, age and income quintile",2009-03-27T17:52:43+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_12,"Level of disability (activity limitation) by sex, age and income quintile",2009-03-27T17:52:43+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_13,"Self-reported unmet needs for medical examination by sex, age, main reason declared and labour status",2012-04-10T15:44:27+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_14,"Self-reported unmet needs for medical examination by sex, age, main reason declared and educational attainment level",2012-04-10T15:44:41+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_15,"Self-reported unmet needs for dental examination by sex, age, main reason declared and labour status",2012-04-10T15:44:51+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_16,"Self-reported unmet needs for dental examination by sex, age, main reason declared and educational attainment level",2012-04-10T15:44:56+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_17,Healthy life expectancy based on self-perceived health,2012-10-17T07:46:31+0200,2024-06-11T23:00:00+0200,2024-06-11T23:00:00+0200
+HLTH_SILC_18,"Self-perceived health by sex, age and degree of urbanisation",2016-03-03T17:29:02+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_19,"People having a long-standing illness or health problem, by sex, age and degree of urbanisation",2016-03-03T17:28:39+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_20,"Level of disability (activity limitation) by sex, age and degree of urbanisation",2016-03-03T17:28:56+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_21,"Self-reported unmet needs for medical examination by sex, age, main reason declared and degree of urbanisation",2016-03-03T17:28:19+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_22,"Self-reported unmet needs for dental examination by sex, age, main reason declared and degree of urbanisation",2016-03-03T17:28:41+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_23,"Self-perceived health by sex, age and groups of country of birth",2018-03-13T17:01:46+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_24,"Self-perceived health by sex, age and groups of country of citizenship",2018-03-13T17:01:57+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_25,"People having a long-standing illness or health problem, by sex, age and groups of country of birth",2018-03-13T17:01:36+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_26,"People having a long-standing illness or health problem, by sex, age and groups of country of citizenship",2018-03-13T17:01:34+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_27,"Level of disability (activity limitation) by sex, age and country of birth",2018-03-13T17:01:38+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_28,"Level of disability (activity limitation) by sex, age and citizenship",2018-03-13T17:02:57+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_29,"Self-reported unmet needs for medical examination by sex, age, main reason declared and groups of country of birth  ",2018-03-13T17:02:42+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_30,"Self-reported unmet needs for medical examination by sex, age, main reason declared and groups of country of citizenship",2018-03-13T17:02:09+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_31,"Self-reported unmet needs for dental examination by sex, age, main reason declared and groups of country of birth",2018-03-13T17:01:17+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_SILC_32,"Self-reported unmet needs for dental examination by sex, age, main reason declared and groups of country of citizenship",2018-03-13T17:02:25+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_CD_ACDR,Causes of death by NUTS 2 region - crude death rate,2013-11-28T09:21:34+0100,2020-04-17T23:00:00+0200,2024-01-10T11:00:00+0100
+HLTH_CD_ACDR2,Causes of death - crude death rate by NUTS 2 region of residence,2014-10-27T14:55:24+0100,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_AINFO,Causes of death - infant mortality by country of occurrence,2014-10-27T14:55:23+0100,2025-05-05T23:00:00+0200,2025-04-24T23:00:00+0200
+HLTH_CD_AINFR,Causes of death - infant mortality by country of residence,2014-10-27T14:55:21+0100,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_ANR,Causes of death - absolute number,2013-11-28T09:25:01+0100,2020-04-17T23:00:00+0200,2023-12-21T23:00:00+0100
+HLTH_CD_APERRO,"Peri-neonatal mortality by age of mother, by residence and occurrence",2014-10-27T14:55:19+0100,2025-05-05T23:00:00+0200,2025-04-24T23:00:00+0200
+HLTH_CD_APERRTO,"Fetal, peri- and neonatal mortality rates by country of occurrence",2014-10-27T14:55:07+0100,2025-05-05T23:00:00+0200,2025-04-24T23:00:00+0200
+HLTH_CD_APR,Treatable and preventable mortality of residents by cause and sex,2020-05-13T11:39:57+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_APYLL,Causes of death - potential years of life lost by residence,2015-08-04T11:13:11+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_ARO,Causes of death - deaths by country of residence and occurrence,2014-10-27T14:55:10+0100,2025-05-05T23:00:00+0200,2025-04-08T23:00:00+0200
+HLTH_CD_ASDR,Causes of death - standardised death rate,2013-11-28T09:19:33+0100,2020-04-17T23:00:00+0200,2023-12-21T23:00:00+0100
+HLTH_CD_ASDR2,Causes of death - standardised death rate by NUTS 2 region of residence,2014-10-27T14:55:20+0100,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_DAR,Deaths of residents related to dementias including Alzheimer,2015-04-16T14:53:00+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_IAP,Health impacts of air pollution,2022-05-12T13:53:21+0200,2025-02-03T23:00:00+0100,2025-01-17T11:00:00+0100
+HLTH_CD_IDO,Deaths related to infectious diseases,2015-04-16T14:52:41+0200,2025-05-05T23:00:00+0200,2025-04-08T23:00:00+0200
+HLTH_CD_INFO,Infant deaths occurring in the country by cause,2015-04-16T14:52:59+0200,2025-03-31T23:00:00+0200,2025-03-21T11:00:00+0100
+HLTH_CD_INFOEU,Infant deaths occurring in the EU by cause and age,2015-04-16T14:52:56+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_MRO,"Causes of death - death by country of residence and occurrence, monthly data",2023-06-13T07:52:23+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_MSDR2,"Causes of death - standardised death rate by country of residence, monthly data",2023-06-13T07:52:35+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_TRO,Deaths related to transport accidents occurring in the country,2015-04-16T14:52:56+0200,2025-05-05T23:00:00+0200,2025-04-08T23:00:00+0200
+HLTH_CD_TROEU,Detailed deaths related to transport accidents occurring in the EU,2015-04-16T14:52:57+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_YCDR2,"Causes of death - crude death rate by NUTS 2 region of residence, 3 year average",2016-05-17T14:05:00+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_YCDRF,"Causes of death by NUTS 2 region - crude death rate, 3 year average - females",2013-11-28T09:20:34+0100,2019-03-19T11:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CD_YCDRM,"Causes of death by NUTS 2 region - crude death rate, 3 year average - males",2013-11-28T09:21:36+0100,2019-03-19T11:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CD_YCDRT,"Causes of death by NUTS 2 region - crude death rate, 3 year average - total",2013-11-28T09:22:38+0100,2019-03-19T11:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CD_YINFO,"Causes of death - infant mortality by NUTS 2 region of occurrence, 3 year average",2016-05-17T13:59:08+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_YINFR,"Causes of death - infant mortality by NUTS 2 region of residence, 3 year average",2016-05-17T13:58:54+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_YNRF,"Causes of death by NUTS 2 region - absolute number, 3 year average - females",2013-11-28T09:25:21+0100,2019-03-19T11:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CD_YNRM,"Causes of death by NUTS 2 region - absolute number, 3 year average - males",2013-11-28T09:19:34+0100,2019-03-19T11:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CD_YNRT,"Causes of death by NUTS 2 region - absolute number, 3 year average - total",2013-11-28T09:23:44+0100,2019-03-19T11:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CD_YPERRO,"Peri-neonatal mortality by age of mother and parity, by NUTS 2 region of residence and occurrence, 3 year average",2016-05-17T14:04:56+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_YPERRTO,"Fetal, peri- and neonatal mortality rates by NUTS 2 region of occurrence, 3 year average",2016-05-17T14:04:54+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_YPYLL,"Causes of death - years and potential years of life lost by NUTS 2 region of residence, 3 year average",2016-05-17T14:04:53+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_YRO,"Causes of death - deaths by NUTS 2 region of residence and occurrence, 3 year average",2016-05-17T13:59:29+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CD_YSDR1,"Causes of death by NUTS 2 region - standardised death rate, 3 year average",2013-11-28T09:24:39+0100,2019-03-19T11:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CD_YSDR2,"Causes of death - standardised death rate by NUTS 2 region of residence, 3 year average",2016-05-17T13:59:23+0200,2025-03-21T11:00:00+0100,2025-03-21T11:00:00+0100
+HLTH_CO_BEDOC,Inpatient curative care bed occupancy rate by type of care,2023-01-25T18:04:32+0100,2024-12-11T23:00:00+0100,2024-07-11T11:00:00+0200
+HLTH_CO_DISCH1,"Hospital discharges by diagnosis, in-patients, total number",2014-03-05T17:15:12+0100,2023-11-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_CO_DISCH1F,"Hospital discharges by diagnosis, NUTS 2 region, in-patients and total number - females",2014-03-05T17:16:20+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCH1M,"Hospital discharges by diagnosis and NUTS 2 region, in-patients, total number - males",2014-03-05T17:13:57+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCH1T,"Hospital discharges by diagnosis and NUTS 2 region, in-patients, total number - total",2014-03-05T17:18:54+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCH2,"Hospital discharges by diagnosis, in-patients, per 100 000 inhabitants",2014-03-05T17:22:45+0100,2023-11-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_CO_DISCH2F,"Hospital discharges by diagnosis and NUTS 2 region, in-patients, per 100 000 inhabitants - females",2014-03-05T17:21:18+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCH2M,"Hospital discharges by diagnosis and NUTS 2 region, in-patients, per 100 000 inhabitants - males",2014-03-05T17:15:41+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCH2T,"Hospital discharges by diagnosis and NUTS 2 region, in-patients, per 100 000 inhabitants - total",2014-03-05T17:14:32+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCH3,"Hospital discharges by diagnosis, day cases, total number",2014-03-05T17:22:32+0100,2023-11-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_CO_DISCH3F,"Hospital discharges by diagnosis and NUTS 2 region, day cases, total number - females",2014-03-05T17:20:43+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCH3M,"Hospital discharges by diagnosis and NUTS 2 region, day cases, total number - males",2014-03-05T17:11:15+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCH3T,"Hospital discharges by diagnosis and NUTS 2 region, day cases, total number - total",2014-03-05T17:20:09+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCH4,"Hospital discharges by diagnosis, day cases, per 100 000 inhabitants",2014-03-05T17:13:03+0100,2023-11-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_CO_DISCH4F,"Hospital discharges by diagnosis and NUTS 2 region, day cases, per 100 000 inhabitants - females",2014-03-05T17:21:56+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCH4M,"Hospital discharges by diagnosis and NUTS 2 region, day cases, per 100 000 inhabitants - males",2014-03-05T17:17:31+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCH4T,"Hospital discharges by diagnosis and NUTS 2 region, day cases, per 100 000 inhabitants - total",2014-03-05T17:13:19+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_DISCHLS,Hospital discharges and length of stay for inpatient and curative care - historical data (until 2021),2014-03-05T17:21:18+0100,2022-07-12T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_CO_DISCHNR,"Non-residents among all hospital discharges, %",2014-03-10T10:39:15+0100,2021-07-02T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_CO_EXAM,"Medical technologies - examinations by medical imaging techniques (CT, MRI and PET)",2014-03-05T17:13:18+0100,2024-09-03T23:00:00+0200,2024-07-11T11:00:00+0200
+HLTH_CO_HOSDAY,Hospital days of in-patients,2014-03-05T17:23:02+0100,2023-11-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_CO_HOSDAYF,Hospital days of in-patients by NUTS 2 region - females,2014-03-05T17:12:22+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_HOSDAYM,Hospital days of in-patients by NUTS 2 region - males,2014-03-05T17:19:31+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_HOSDAYT,Hospital days of in-patients by NUTS 2 region - total,2014-03-05T17:18:06+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_INPAGG,Hospital discharges and length of stay for inpatient curative care,2023-02-09T17:15:46+0100,2024-12-11T23:00:00+0100,2024-07-11T11:00:00+0200
+HLTH_CO_INPST,In-patient average length of stay (days),2014-03-05T17:15:27+0100,2023-11-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_CO_INPSTF,In-patient average length of stay (days) by NUTS 2 region - females,2014-03-05T17:11:48+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_INPSTM,In-patient average length of stay (days) by NUTS 2 region - males,2014-03-05T17:10:39+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_INPSTT,In-patient average length of stay (days) by NUTS 2 region - total,2014-03-05T17:16:56+0100,2023-11-21T23:00:00+0100,2024-01-10T11:00:00+0100
+HLTH_CO_PROC2,Surgical operations and procedures performed in hospitals by ICD-9-CM - historical data (1990-2016),2014-03-05T17:13:18+0100,2022-09-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_CO_PROC3,Surgical procedures,2023-06-14T18:09:28+0200,2024-09-03T23:00:00+0200,2023-07-12T11:00:00+0200
+HLTH_CO_REN,End-stage renal failure (ESRF) patients - historical data (1980-2014),2014-03-05T17:13:03+0100,2015-07-20T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DB_EMACAG,"Prevalence of disability by sex, age and labour status",2009-09-04T11:21:14+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMACSE,"Percentage distribution of labour status by severity of disability, sex and age",2009-09-04T11:21:14+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMASNE,Percentage distribution of assistance needed by not employed disabled people by sex,2009-09-04T11:21:15+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMASNT,Percentage distribution of types of assistance needed by not employed disabled people by sex,2009-09-04T11:21:15+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMASPR,Percentage distribution of assistance provided to employed disabled people by sex,2009-09-04T11:21:15+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMASPT,Percentage distribution of types of assistance provided to employed disabled people by sex,2009-09-04T11:21:15+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMCANA,Percentage distribution of causes of disability by sex and economic activity (NACE Rev. 1),2009-09-04T11:21:15+0200,2009-03-27T11:00:00+0100,2024-10-14T23:00:00+0200
+HLTH_DB_EMDUCA,"Percentage distribution of duration of disability (in years) since onset, by cause of disability and sex",2010-02-09T21:40:30+0100,2010-02-09T11:00:00+0100,2024-10-14T23:00:00+0200
+HLTH_DB_EMEDAG,"Prevalence of disability by sex, age and educational attainment level",2009-09-04T11:21:15+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMMAAG,"Prevalence of disability by sex, age and marital status",2009-09-04T11:21:16+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMNAAG,"Prevalence of disability by sex, age and economic activity (NACE Rev. 1)",2009-09-04T11:21:16+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMOCAG,"Prevalence of disability by sex, age and occupation",2009-09-04T11:21:16+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMRENA,"Prevalence of disability by sex, economic activity (NACE Rev. 1) and NUTS 2 region",2009-09-04T11:21:16+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMSEAG,Percentage distribution of severities of disability by sex and age,2009-09-04T11:21:16+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DB_EMTYAG,Percentage distribution of types of disability by sex and age,2009-09-04T11:21:16+0200,2009-03-27T11:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_DE010,"Early leavers from education and training (age group 18-24) by type of disability, sex and labour status",2014-07-29T17:08:03+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DE020,Tertiary educational attainment (age group 30-34) by type of disability and sex,2014-07-29T17:08:01+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DE030,"Young persons neither in employment nor in education and training by type of disability, sex and age",2014-07-29T17:08:03+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DE040,"Population by type of disability, sex, age and educational attainment level",2014-07-29T17:08:05+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DE050,"Participation in education and training by type of disability, sex and age",2014-07-29T17:08:04+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DE060,"Participation in formal education by type of disability, sex and age",2014-07-29T17:08:00+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DE070,"Participation in non-formal education and training by type of disability, sex and age",2014-07-29T17:08:01+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DH010,"Self-perceived health by level of disability (activity limitation), sex and age",2014-10-20T15:14:03+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DH020,"Persons having a longstanding health problem by level of disability (activity limitation), sex and age",2014-10-20T15:14:02+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DH030,"Self-reported unmet needs for medical examination by level of disability (activity limitation), sex and age",2014-10-20T15:14:04+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DHC010,Tenure status by level of disability (activity limitation) and poverty status,2014-10-20T15:14:54+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DHC020,"Overall satisfaction with the dwelling by level of disability (activity limitation), sex and age",2014-10-20T15:14:59+0200,2014-10-09T23:00:00+0200,2024-10-14T23:00:00+0200
+HLTH_DHC030,"Severe housing deprivation rate by level of disability (activity limitation), sex and age",2014-10-20T15:14:58+0200,2025-04-30T11:00:00+0200,2025-04-30T11:00:00+0200
+HLTH_DHC040,"Overcrowding rate by level of disability (activity limitation), sex and age",2014-10-20T15:14:57+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DHC050,"Share of housing cost in disposable income by level of disability (activity limitation), sex and age",2014-10-20T15:14:55+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DHC060,"Housing cost overburden rate by level of disability (activity limitation), sex and age",2014-10-20T15:15:00+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DHC070,"Persons living in a dwelling with a leaking roof, damp walls, floors or foundation, or rot in window frames or floor by level of disability (activity limitation), sex and age",2014-10-30T17:12:12+0100,2025-04-30T11:00:00+0200,2025-04-30T11:00:00+0200
+HLTH_DHC080,"Persons with no bath or shower in their dwelling by level of disability (activity limitation), sex and age",2014-10-30T17:12:11+0100,2025-03-21T23:00:00+0100,2024-02-02T23:00:00+0100
+HLTH_DHC090,"Persons not having indoor flushing toilet for the sole use of their household by level of disability (activity limitation), sex and age",2014-10-30T17:12:10+0100,2025-03-21T23:00:00+0100,2024-02-02T23:00:00+0100
+HLTH_DHC100,"Persons considering their dwelling as too dark by level of disability (activity limitation), sex and age",2014-10-30T17:12:16+0100,2025-04-30T11:00:00+0200,2025-04-30T11:00:00+0200
+HLTH_DHC110,"Noise from neighbours or from the street by level of disability (activity limitation), sex and age",2014-10-30T17:12:14+0100,2025-04-30T11:00:00+0200,2025-04-30T11:00:00+0200
+HLTH_DHC120,"Pollution, grime or other environmental problems by level of disability (activity limitation), sex and age",2014-10-30T17:12:13+0100,2025-04-30T11:00:00+0200,2025-04-30T11:00:00+0200
+HLTH_DHC130,"Crime, violence or vandalism in the area by level of disability (activity limitation), sex and age",2014-10-30T17:12:08+0100,2025-04-30T11:00:00+0200,2025-04-30T11:00:00+0200
+HLTH_DHC140,"Inability to keep home adequately warm by level of disability (activity limitation), sex and age",2014-10-30T17:12:15+0100,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DLM010,"Employment rate of people by type of disability, sex and age",2014-07-29T17:08:34+0200,2014-07-09T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM020,"Activity rate of people by type of disability, sex and age",2014-07-29T17:08:28+0200,2014-07-09T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM030,"Unemployment rate of people by type of disability, sex and age",2014-07-29T17:08:41+0200,2014-07-09T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM040,"Population by type of disability, sex, age and labour status",2014-07-29T17:08:39+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM050,"Employment by type of disability, sex, age and professional status",2014-07-29T17:08:33+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM060,"Inactive population by type of disability, sex, age and the main reason for not seeking employment",2014-07-29T17:08:34+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM070,"Not employed people but having a previous work experience by type of disability, sex, age and the main reason for leaving the last job or business",2014-07-29T17:08:30+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM080,"Employment by type of disability, sex, age and full-time/part-time employment",2014-07-29T17:08:39+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM090,"Employment by type of disability, sex, age and working at home",2014-07-29T17:08:38+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM100,"Employment by type of disability, sex, age and supervisor responsibility",2014-07-29T17:08:36+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM110,"Employment by type of disability, sex, age and number of usual weekly hours of work in main job",2014-07-29T17:08:37+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM120,"Employment by type of disability, sex, age and economic activity",2014-07-29T17:08:28+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM130,"Employment by type of disability, sex, age and occupation",2014-07-29T17:08:31+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM140,"People reporting a limitation in work by the reason for limitation in work, sex and age",2014-07-29T17:08:41+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM150,"People reporting a limitation in the amount of work caused by longstanding health problems or difficulties in basic activities by cause, sex and age",2014-07-29T17:08:40+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM160,"People reporting a limitation in the type of work caused by longstanding health problems or difficulties in basic activities by cause, sex and age",2014-07-29T17:08:27+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM170,"People reporting a limitation in getting to and from work caused by longstanding health problems or difficulties in basic activities by cause, sex and age",2014-07-29T17:08:32+0200,2014-06-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DLM180,"Employed people having a longstanding health problem or a difficulty in basic activities by the type of special assistance used, sex and age",2014-07-29T17:08:40+0200,2014-07-16T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DLM190,"Not employed people having a longstanding health problem or a difficulty in basic activities by the type of special assistance needed, sex and age",2014-07-29T17:08:35+0200,2014-07-16T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DLM200,Disability employment gap by level of activity limitation and sex (source EU-SILC),2021-07-05T16:47:26+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DM010,"Severe material and social deprivation rate by level of disability (activity limitation), sex and age",2014-10-20T15:14:29+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DM020,"Inability to afford paying for one week annual holiday away from home by level of disability (activity limitation), sex and age",2014-10-20T15:14:28+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DM030,"Inability to afford a meal with meat, chicken, fish (or vegetarian equivalent) every second day by level of disability (activity limitation), sex and age",2014-10-20T15:14:21+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DM040,"Inability to face unexpected financial expenses by level of disability (activity limitation), sex and age",2014-10-20T15:14:24+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DM050,"Arrears (mortgage or rent, utility bills or hire purchase) by level of disability (activity limitation), sex and age",2014-10-20T15:14:26+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DM060,"Ability to make ends meet by level of disability (activity limitation), sex and age",2014-10-20T15:14:33+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DM070,"Share of persons who cannot afford a telephone by level of activity limitation, sex and age",2014-10-20T15:14:25+0200,2025-03-21T23:00:00+0100,2024-01-05T11:00:00+0100
+HLTH_DM080,"Share of persons who cannot afford a colour TV by level of activity limitation, sex and age",2014-10-20T15:14:27+0200,2025-03-21T23:00:00+0100,2024-01-05T11:00:00+0100
+HLTH_DM090,"Share of persons who cannot afford a computer by level of disability (activity limitation), sex and age",2014-10-20T15:14:31+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DM100,"Share of persons who cannot afford a washing machine by level of activity limitation, sex and age",2014-10-20T15:14:22+0200,2025-03-21T23:00:00+0100,2024-01-05T11:00:00+0100
+HLTH_DM110,"Share of persons who cannot afford a personal car by level of disability (activity limitation), sex and age",2014-10-20T15:14:30+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DP010,Persons reporting a longstanding health problem or a basic activity difficulty by sex and age,2014-07-29T17:07:28+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DP020,"Population by type of longstanding health problem, sex and age",2014-07-29T17:07:30+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DP030,Prevalence of the main longstanding health problems by sex and age,2014-07-29T17:07:25+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DP040,"Population by type of basic activity difficulty, sex and age",2014-07-29T17:07:29+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DP050,Prevalence of the main basic activity difficulties by sex and age,2014-07-29T17:07:29+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DP060,"Population by type of disability, sex, age and marital status",2014-07-29T17:07:27+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DP070,"Population by type of disability, sex, age and household composition",2014-07-29T17:07:26+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DP080,"Population by type of disability, sex, age and degree of urbanization",2014-07-29T17:07:21+0200,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_DPE010,"Persons at risk of poverty or social exclusion by level of disability (activity limitation), sex and age",2014-10-20T15:15:25+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DPE020,"Persons at risk of poverty by level of disability (activity limitation), sex and age",2014-10-20T15:15:24+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DPE030,"Persons at risk of poverty before social transfers (pensions included in social transfers) by level of disability (activity limitation), sex and age",2014-10-20T15:15:23+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DPE040,"Persons living in households with very low work intensity by level of disability (activity limitation), sex and age",2014-10-20T15:15:22+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DPE050,"In-work at-risk-of-poverty rate by level of disability (activity limitation), sex and age",2014-10-20T15:15:20+0200,2025-04-30T11:00:00+0200,2025-01-27T23:00:00+0100
+HLTH_DPEH005,"Population by sex, age and disability status",2015-06-11T15:05:22+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DPEH010,"Population by sex, age, disability status and labour status",2015-06-11T15:05:29+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DPEH020,"Population by sex, age, disability status and educational attainment level",2015-06-11T15:05:30+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DPEH030,"Population by sex, age, disability status and income quintile",2015-06-11T15:05:25+0200,2015-05-18T23:00:00+0200,2024-10-14T23:00:00+0200
+HLTH_DPEH040,"Population by sex, age, disability status and household type",2015-06-11T15:05:27+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DPEH050,"Population by sex, age, disability status and having a longstanding health problem",2015-06-11T15:05:19+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DPEH060,"Population by sex, age, disability status and having a longstanding difficulty in basic activities",2015-06-11T15:05:21+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DPEH070,"Population by sex, age, disability status and reporting a longstanding difficulty in activities of personal care",2015-06-11T15:05:18+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DPEH080,"Population by sex, age, disability status and reporting a longstanding difficulty in activities of household care",2015-06-11T15:05:32+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DPEH090,"Persons reporting a longstanding health problem by sex, age and type of longstanding health problem",2015-06-11T15:05:31+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DPEH100,"Persons reporting a longstanding difficulty in basic activities by sex, age and type of basic activity where a longstanding difficulty is encountered",2015-06-11T15:05:06+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DPEH110,"Persons reporting a difficulty in personal care activities by sex, age and need for assistance",2015-06-11T15:05:16+0200,2015-05-18T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DPEH120,"Persons reporting a difficulty in household care activities by sex, age and need for assistance",2015-06-11T15:05:15+0200,2015-05-18T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DPEH130,"Persons with disabilities by sex, age and need for assistance",2015-06-11T15:05:23+0200,2015-05-18T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DPEH135,"Persons with disabilities by sex, need for assistance and labour status",2015-06-11T15:05:23+0200,2015-05-18T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DPEH140,"Persons with disabilities by sex, need for assistance and educational attainment level",2015-06-11T15:05:29+0200,2015-05-18T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DPEH150,"Persons with disabilities by sex, need for assistance and income quintile",2015-06-11T15:05:24+0200,2015-05-18T23:00:00+0200,2024-10-14T23:00:00+0200
+HLTH_DPEH160,"Persons with disabilities by sex, need for assistance and household type",2015-06-11T15:05:34+0200,2015-05-18T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DPEH170,"Persons with disabilities by sex, need for assistance and having a longstanding health problem",2015-06-11T15:05:20+0200,2015-05-18T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DPEH180,"Persons with disabilities by sex, need for assistance and having a longstanding difficulty in basic activities",2015-06-11T15:05:17+0200,2015-05-18T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DPEH190,"Persons with disabilities by sex, need for assistance and having a longstanding difficulty in activities of personal care",2015-06-11T15:05:28+0200,2015-05-18T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DPEH200,"Persons with disabilities by sex, need for assistance and having a longstanding difficulty in activities of household care",2015-06-11T15:05:33+0200,2015-05-18T23:00:00+0200,2024-08-22T11:00:00+0200
+HLTH_DS010,"Frequency of going to cinema, live performances, cultural sites or attending live sport events by level of disability (activity limitation), sex and age",2014-10-30T17:11:46+0100,2014-10-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DS020,"Frequency of getting together with relatives or friends by level of disability (activity limitation), sex and age",2014-10-30T17:11:44+0100,2014-10-20T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DS030,"Frequency of contacts with relatives or friends by level of disability (activity limitation), sex and age",2014-10-30T17:11:36+0100,2014-10-22T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DS040,"Participation in activities of churches or other religious organisations by level of disability (activity limitation), sex and age",2014-10-30T17:11:42+0100,2014-10-22T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DS050,"Participation in informal voluntary activities by level of disability (activity limitation), sex and age",2014-10-30T17:11:45+0100,2014-10-22T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI010,"Persons with disabilities by sex, age and severity of disability",2015-06-11T15:09:35+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI015,"Persons with disabilities by sex, severity of disability and labour status",2015-06-11T15:09:39+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI020,"Persons with disabilities by sex, severity of disability and educational attainment level",2015-06-11T15:09:32+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI030,"Persons with disabilities by sex, severity of disability and income quintile",2015-06-11T15:09:44+0200,2015-05-19T23:00:00+0200,2024-10-14T23:00:00+0200
+HLTH_DSI040,"Persons with disabilities by sex, severity of disability and household type",2015-06-11T15:09:30+0200,2015-05-19T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI050,"Persons with disabilities by sex, severity of disability and having a longstanding health problem",2015-06-11T15:09:42+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI060,"Persons with disabilities by sex, severity of disability and having a longstanding difficulty in basic activities",2015-06-11T15:09:33+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI070,"Persons with disabilities by sex, severity of disability and having a longstanding difficulty in activities of personal care",2015-06-11T15:09:42+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI080,"Persons with disabilities by sex, severity of disability and having a longstanding difficulty in activities of household care",2015-06-11T15:09:38+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI090,"Persons with disabilities by sex, age and life area where a barrier is reported",2015-06-11T15:09:36+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI095,"Persons with disabilities by sex, life area where a barrier is reported and labour status",2015-06-11T15:09:31+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI100,"Persons with disabilities by sex, life area where a barrier is reported and educational attainment level",2015-06-11T15:09:39+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI110,"Persons with disabilities by sex, life area where a barrier is reported and income quintile",2015-06-11T15:09:43+0200,2015-05-18T23:00:00+0200,2024-10-14T23:00:00+0200
+HLTH_DSI120,"Persons with disabilities by sex, life area where a barrier is reported and household type",2015-06-11T15:09:34+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI130,"Persons with disabilities by sex, life area where a barrier is reported and having a longstanding health problem",2015-06-11T15:09:33+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI140,"Persons with disabilities by sex, life area where a barrier is reported and having a longstanding difficulty in basic activities",2015-06-11T15:09:37+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI150,"Persons with disabilities by sex, life area where a barrier is reported and having a longstanding difficulty in activities of personal care",2015-06-11T15:09:41+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_DSI160,"Persons with disabilities by sex, life area where a barrier is reported and having a longstanding difficulty in activities of household care",2015-06-11T15:09:40+0200,2015-05-18T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AC1E,"Persons reporting an accident resulting in injury by sex, age and educational attainment level",2016-11-28T16:13:59+0100,2022-03-22T11:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AC1U,"Persons reporting an accident resulting in injury by sex, age and degree of urbanisation",2017-03-02T11:29:25+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AC2E,"Medical intervention for an accident resulting in injury by sex, age and educational attainment level",2017-11-14T17:03:30+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AL1B,"Frequency of alcohol consumption by sex, age and country of birth",2019-03-13T15:55:55+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AL1C,"Frequency of alcohol consumption by sex, age and country of citizenship",2019-03-13T15:55:57+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AL1E,"Frequency of alcohol consumption by sex, age and educational attainment level",2016-11-28T16:14:05+0100,2022-04-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AL1I,"Frequency of alcohol consumption by sex, age and income quintile",2016-11-28T16:14:01+0100,2022-04-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AL1U,"Frequency of alcohol consumption by sex, age and degree of urbanisation",2017-03-02T11:29:29+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AL2E,"Hazardous alcohol drinkers by sex, age and educational attainment level",2019-03-13T15:55:54+0100,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AL2I,"Hazardous alcohol drinkers by sex, age and income quintile",2019-03-13T15:55:59+0100,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AL2U,"Hazardous alcohol drinkers by sex, age and degree of urbanisation",2019-03-13T15:55:53+0100,2019-03-21T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AL3E,"Frequency of heavy episodic drinking by sex, age and educational attainment level",2016-09-01T16:03:28+0200,2022-04-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AL3I,"Frequency of heavy episodic drinking by sex, age and income quintile",2016-11-28T16:14:03+0100,2022-04-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AL3U,"Frequency of heavy episodic drinking by sex, age and degree of urbanisation",2017-03-02T11:29:16+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM1E,"Self-reported time elapsed since last visit to a medical professional by sex, age and educational attainment level",2017-07-03T16:29:13+0200,2022-10-13T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM1U,"Self-reported time elapsed since last visit to a medical professional by sex, age and degree of urbanisation",2017-07-03T16:29:01+0200,2022-11-30T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM2B,"Self-reported consultations of a medical professional by sex, age and country of birth",2019-03-13T16:07:59+0100,2022-11-11T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM2C,"Self-reported consultations of a medical professional by sex, age and country of citizenship",2019-03-13T16:07:56+0100,2022-11-11T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM2D,"Self-reported consultations of a medical professional by level of disability (activity limitation), sex and age",2019-03-13T16:07:53+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM2E,"Self-reported consultations of a medical professional by sex, age and educational attainment level",2017-07-03T16:29:06+0200,2022-05-13T11:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM2U,"Self-reported consultations of a medical professional by sex, age and degree of urbanisation",2017-07-03T16:29:19+0200,2022-10-17T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM6D,"Self-reported consultation of mental healthcare or rehabilitative care professionals by level of disability (activity limitation), sex and age",2019-03-13T16:08:01+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM6E,"Self-reported consultation of mental healthcare or rehabilitative care professionals by sex, age and educational attainment level",2017-11-14T17:03:49+0100,2022-03-22T11:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM6U,"Self-reported consultation of mental healthcare or rehabilitative care professionals by sex, age and degree of urbanisation",2017-11-14T17:03:44+0100,2022-10-17T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM7D,"Self-reported use of home care services by level of disability (activity limitation), sex and age",2019-03-13T16:10:45+0100,2021-11-16T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM7E,"Self-reported use of home care services by sex, age and educational attainment level",2017-11-14T17:03:25+0100,2021-11-16T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM7I,"Self-reported use of home care services by sex, age and income quintile",2021-11-18T11:17:53+0100,2021-11-18T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM7SA,Self-reported use of home care services by people with severe difficulty in personal care activities by sex and age,2020-11-26T15:49:08+0100,2022-02-24T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM7SH,Self-reported use of home care services by people with severe difficulty in personal care activities by age and household type,2020-11-26T15:49:11+0100,2022-02-24T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM7TA,"Self-reported use of home care services by sex, age and level of difficulty with personal care or household activities",2020-11-26T15:49:15+0100,2021-07-26T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM7TH,"Self-reported use of home care services by age, level of difficulty with personal care or household activities and household type",2020-11-26T15:49:18+0100,2021-07-26T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AM7U,"Self-reported use of home care services by sex, age and degree of urbanisation",2017-11-14T17:03:47+0100,2021-11-16T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AW1D,"Absence from work due to personal health problems by level of disability (activity limitation), sex and age",2019-03-13T15:46:15+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_AW1E,"Absence from work due to personal health problems by sex, age and educational attainment level",2017-11-14T17:03:48+0100,2022-03-22T11:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_AW1U,"Absence from work due to personal health problems by sex, age and degree of urbanisation",2017-11-14T17:03:34+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_BM1B,"Body mass index (BMI) by sex, age and country of birth",2019-03-13T15:48:15+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_BM1C,"Body mass index (BMI) by sex, age and country of citizenship",2019-03-13T15:48:18+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_BM1D,"Body mass index (BMI) by level of disability (activity limitation), sex and age",2019-03-13T15:48:17+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_BM1E,"Body mass index (BMI) by sex, age and educational attainment level",2016-09-01T16:03:32+0200,2022-10-24T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_BM1I,"Body mass index (BMI) by sex, age and income quintile",2016-10-10T15:10:24+0200,2022-10-24T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_BM1U,"Body mass index (BMI) by sex, age and degree of urbanisation",2017-03-02T11:29:28+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_CD1B,"Persons reporting a chronic disease, by disease, sex, age and contry of birth",2019-03-13T15:38:52+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_CD1C,"Persons reporting a chronic disease, by disease, sex, age and broad group of citizenship",2019-03-13T15:38:49+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_CD1D,"Persons reporting a chronic disease by level of disability (activity limitation), sex and age",2017-11-14T17:03:40+0100,2022-07-12T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_CD1E,"Persons reporting a chronic disease, by disease, sex, age and educational attainment level",2016-09-01T16:02:45+0200,2021-12-17T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_CD1I,"Persons reporting a chronic disease, by disease, sex, age and income quintile",2018-04-17T15:32:23+0200,2021-12-17T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_CD1U,"Persons reporting a chronic disease, by disease, sex, age and degree of urbanisation",2017-03-02T11:29:13+0100,2022-07-12T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_DE1,"Body mass index (BMI) by sex, age and educational attainment level (%)",2010-12-09T11:30:12+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_DE10,"Frequency of alcohol consumption by sex, age and educational attainment level (%)",2013-11-14T15:54:08+0100,2014-03-20T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_DE2,"Body mass index (BMI) by sex, age and income quintile (%)",2010-12-09T11:30:15+0100,2012-04-13T23:00:00+0200,2023-12-21T23:00:00+0100
+HLTH_EHIS_DE3,"Daily smokers of cigarettes by sex, age and educational attainment level (%)",2010-12-09T11:30:19+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_DE4,"Daily smokers of cigarettes by sex, age and income quintile (%)",2010-12-09T11:30:22+0100,2012-04-13T23:00:00+0200,2023-12-21T23:00:00+0100
+HLTH_EHIS_DE5,"Daily smokers by number of cigarettes by sex, age and educational attainment level (%)",2010-12-09T11:30:25+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_DE6,"Frequency of binge drinking by sex, age and educational attainment level",2010-12-09T11:30:27+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_DE7,"Consumption of fruits by sex, age and educational attainment level (%)",2010-12-09T11:30:30+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_DE8,"Consumption of vegetables by sex, age and educational attainment level (%)",2010-12-09T11:30:33+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_DE9,"Practice of daily physical activity by sex, age and educational attainment level (%)",2010-12-09T11:30:35+0100,2014-03-20T23:00:00+0100,2023-12-21T23:00:00+0100
+HLTH_EHIS_FV1B,"Frequency of fruit and vegetables consumption by sex, age and country of birth",2019-03-13T15:52:29+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV1C,"Frequency of fruit and vegetables consumption by sex, age and country of citizenship",2019-03-13T15:52:34+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV1D,"Frequency of fruit and vegetables consumption by level of disability (activity limitation), sex and age",2019-03-13T15:52:26+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV1E,"Frequency of fruit and vegetables consumption by sex, age and educational attainment level",2016-09-01T16:03:25+0200,2022-04-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV1I,"Frequency of fruit and vegetables consumption by sex, age and income quintile",2021-11-18T11:18:04+0100,2022-04-01T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV1M,"Frequency of fruit and vegetables consumption by sex, age and body mass index",2021-11-18T11:17:56+0100,2021-11-18T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV1U,"Frequency of fruit and vegetables consumption by sex, age and degree of urbanisation",2017-03-02T11:29:17+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV3B,"Daily consumption of fruit and vegetables by sex, age and country of birth",2019-03-13T15:52:37+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV3C,"Daily consumption of fruit and vegetables by sex, age and country of citizenship",2019-03-13T15:52:31+0100,2022-11-08T23:00:00+0100,2024-01-03T23:00:00+0100
+HLTH_EHIS_FV3D,"Daily consumption of fruit and vegetables by level of disability (activity limitation), sex and age",2019-03-13T15:52:33+0100,2022-10-27T23:00:00+0200,2024-01-03T23:00:00+0100
+ENPE_HLTH_EXP,"Health care expenditure - % of GDP, ENP-East countries",2021-04-08T17:58:41+0200,2025-04-15T23:00:00+0200,2025-04-15T23:00:00+0200
