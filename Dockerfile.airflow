@@ -2,7 +2,7 @@
 
 # Start with the official Apache Airflow image version specified in your docker-compose-airflow.yaml
 # Make sure this matches the AIRFLOW_IMAGE_NAME or the default (e.g., apache/airflow:3.0.1)
-FROM apache/airflow:3.0.1-python3.10
+FROM apache/airflow:3.0.1
 
 # Set the USER to root temporarily to install system dependencies
 USER root
@@ -31,7 +31,7 @@ RUN pip install --no-cache-dir -r /requirements.txt
 # We'll put them in /opt/airflow/scripts for organization.
 # Make sure your scripts (SourceData.py, jsonParser.py, load_to_postgres.py)
 # are in a local 'scripts' directory in your project root.
-COPY ./scripts/ /opt/airflow/scripts/
+# COPY ./scripts/ /opt/airflow/scripts/
 
 # If you have other Python modules or files at the root that your scripts import, copy them too.
 # For example, if SourceData.py or jsonParser.py were in the root and are imported by DAGs or other scripts:

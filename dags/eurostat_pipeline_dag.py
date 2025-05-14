@@ -3,8 +3,8 @@ from __future__ import annotations
 import pendulum
 
 from airflow.models.dag import DAG
-from airflow.operators.bash import BashOperator
-from airflow.operators.python import PythonOperator
+from airflow.providers.standard.operators.bash import BashOperator
+from airflow.providers.standard.operators.python import PythonOperator
 
 # --- Define functions to be called by PythonOperator ---
 # You'll need to make sure your scripts are importable or callable.
@@ -18,7 +18,7 @@ SCRIPTS_PATH = "/opt/airflow/scripts"
 with DAG(
     dag_id="eurostat_data_pipeline",
     schedule=None, # Or a cron schedule e.g., "0 0 * * *"
-    start_date=pendulum.datetime(2023, 10, 26, tz="UTC"),
+    start_date=pendulum.now('UTC'),
     catchup=False,
     tags=["eurostat", "data_pipeline"],
     doc_md="""
@@ -34,7 +34,7 @@ with DAG(
     # This assumes SourceData.py can take an action like 'download-catalog'
     task_download_catalog = BashOperator(
         task_id="download_eurostat_catalog",
-        bash_command=f"python {SCRIPTS_PATH}/SourceData.py --action download-catalog",
+        bash_command=f"python {SCRIPTS_PATH}/SourceData.py --action download-datasets --limit 1",
         doc_md="Downloads the main Eurostat data catalog."
     )
 
@@ -42,7 +42,7 @@ with DAG(
     # This assumes SourceData.py can identify health datasets and export details
     task_identify_health_datasets = BashOperator(
         task_id="identify_health_datasets",
-        bash_command=f"python {SCRIPTS_PATH}/SourceData.py --action export-details --keyword HLTH --output-csv-path /opt/airflow/dags/health_datasets_details.csv",
+        bash_command=f"python {SCRIPTS_PATH}/SourceData.py --action export-details --keyword HLTH --csv-output /opt/airflow/dags/health_datasets_details.csv",
         # Note: writing to /opt/airflow/dags so it's accessible if needed,
         # but ideally intermediate data goes to a more structured location or XComs.
         doc_md="Filters catalog for 'HLTH' datasets and exports their details to a CSV."
@@ -59,9 +59,9 @@ with DAG(
         bash_command=(
             f"mkdir -p {TEMP_DOWNLOAD_DIR_AIRFLOW} && "
             f"python {SCRIPTS_PATH}/SourceData.py "
-            f"--action download "
+            f"--action download-datasets "
             f"--dataset-ids {DATASET_ID_TO_DOWNLOAD} "
-            f"--temp-download-dir {TEMP_DOWNLOAD_DIR_AIRFLOW}"
+            f"--data-dir {TEMP_DOWNLOAD_DIR_AIRFLOW}"
         ),
         doc_md=f"Downloads dataset {DATASET_ID_TO_DOWNLOAD}."
     )
@@ -93,7 +93,8 @@ with DAG(
         task_id=f"load_{DATASET_ID_TO_DOWNLOAD}_to_postgres",
         bash_command=(
             f"python {SCRIPTS_PATH}/load_to_postgres.py "
-            f"--parquet-file {OUTPUT_PARQUET_PATH_AIRFLOW}"
+            f"--parquet-file {OUTPUT_PARQUET_PATH_AIRFLOW} "
+            f"--dataset-id {DATASET_ID_TO_DOWNLOAD}"
         ),
         env={ # Pass DB connection details to this task
             "POSTGRES_HOST": "db", # Service name of your project's PostgreSQL
@@ -107,6 +108,6 @@ with DAG(
 
     # Define task dependencies
     task_download_catalog >> task_identify_health_datasets
-    task_identify_health_datasets >> task_download_specific_dataset # Simplified: normally you'd iterate
+    task_identify_health_datasets >> task_download_specific_dataset 
     task_download_specific_dataset >> task_parse_to_parquet
     task_parse_to_parquet >> task_load_to_postgres
