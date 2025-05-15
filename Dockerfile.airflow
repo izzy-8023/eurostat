@@ -31,7 +31,7 @@ RUN pip install --no-cache-dir -r /requirements.txt
 # We'll put them in /opt/airflow/scripts for organization.
 # Make sure your scripts (SourceData.py, jsonParser.py, load_to_postgres.py)
 # are in a local 'scripts' directory in your project root.
-# COPY ./scripts/ /opt/airflow/scripts/
+COPY ./scripts/ /opt/airflow/scripts/
 
 # If you have other Python modules or files at the root that your scripts import, copy them too.
 # For example, if SourceData.py or jsonParser.py were in the root and are imported by DAGs or other scripts:

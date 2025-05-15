@@ -124,72 +124,10 @@ def export_dataset_details_to_csv(dataset_details, csv_file_name):
 # --- Shared variables and Lock for processing ---
 # These are now managed within calculate_total_size_concurrently's scope if possible,
 # or passed back carefully. Let's return them from the function.
-shared_data_lock = threading.Lock() # The lock is still needed for the worker function
+# shared_data_lock = threading.Lock() # MOVED TO EDA.py
 
 # --- Worker Function (return size/status) ---
-def process_dataset_worker(id_value, index, total_count, api_config, temp_dir):
-    """
-    Downloads, measures size, deletes a single dataset.
-    Returns (file_size, success_flag). file_size is None on failure.
-    """
-    # Unpack API config for clarity
-    host_url = api_config['host']
-    service = api_config['service']
-    version = api_config['version']
-    resp_type = api_config['response_type']
-    format_ = api_config['format']
-    lang = api_config['lang']
-    url = f"{host_url}/{service}/{version}/{resp_type}/{id_value}?format={format_}&lang={lang}"
-    # Use a unique temp filename including thread ID to prevent potential race conditions
-    temp_filename = os.path.join(temp_dir, f"{id_value}_temp_{threading.get_ident()}.json") 
-    
-    # Progress indicator (print less frequently in threads)
-    if (index + 1) % 20 == 0 or (index + 1) == total_count:
-         print(f"\rProcessing ({index+1}/{total_count}): {id_value} ...", end="", flush=True)
-    
-    file_size = None
-    success = False
-    download_ok = False
-    
-    try:
-        # Download (consider adding session object for potential keep-alive)
-        response = requests.get(url, timeout=60) 
-        response.raise_for_status() # Check for HTTP errors (4xx, 5xx)
-
-        # Save content temporarily
-        with open(temp_filename, 'wb') as f:
-             f.write(response.content) 
-
-        download_ok = True # Mark download as successful before sizing/deletion
-
-        # Get size & ensure deletion in finally block
-        try:
-            file_size = os.path.getsize(temp_filename)
-            success = True
-        except OSError as e:
-             # Log error but continue to deletion
-             print(f"\nError getting size for {temp_filename} (ID: {id_value}): {e}") 
-        finally:
-            # Attempt deletion regardless of size success/failure
-            try:
-                os.remove(temp_filename)
-            except OSError as e:
-                 # Log deletion error
-                 print(f"\nError deleting temporary file {temp_filename} (ID: {id_value}): {e}")
-
-    except requests.exceptions.Timeout:
-         print(f"\nRequest timed out for {id_value}")
-    except requests.exceptions.RequestException as e: # Catches connection errors, HTTP errors, etc.
-        print(f"\nDownload error for {id_value}: {e}")
-    except Exception as e: # Catch any other unexpected error during processing
-        print(f"\nUnexpected error processing {id_value}: {e}")
-        # Attempt cleanup if file exists from partial download/write
-        if not download_ok and os.path.exists(temp_filename):
-             try: os.remove(temp_filename)
-             except OSError: pass # Ignore error during cleanup after another error
-
-    # Return size (or None) and overall success (including sizing)
-    return (file_size, success)
+# MOVED TO EDA.py: process_dataset_worker
 
 # --- Worker Function (for SAVING datasets) ---
 def download_dataset_worker(dataset_id, api_config, output_directory):
@@ -286,68 +224,7 @@ def load_and_filter_catalog(catalog_file_path, keyword_filter):
         print(f"Error loading or processing catalog: {e}")
         return None
 
-def calculate_total_size_concurrently(dataset_ids, api_config, temp_dir, max_workers):
-    """Orchestrates concurrent download/sizing and returns aggregate results."""
-    total_datasets = len(dataset_ids)
-    local_total_size_bytes = 0
-    local_datasets_processed_size = 0
-    local_datasets_failed = 0
 
-    print(f"\nCalculating total size using up to {max_workers} threads...")
-
-    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
-        # Prepare arguments for each task
-        indices = range(total_datasets)
-        total_counts = [total_datasets] * total_datasets
-        api_configs = [api_config] * total_datasets
-        temp_dirs = [temp_dir] * total_datasets
-
-        # Submit tasks and get results
-        results_iterator = executor.map(process_dataset_worker, dataset_ids, indices, total_counts, api_configs, temp_dirs)
-
-        # Process results as they complete
-        for file_size, success in results_iterator:
-            if success and file_size is not None:
-                local_total_size_bytes += file_size
-                local_datasets_processed_size += 1
-            else:
-                local_datasets_failed += 1
-
-    print("\n" + "="*30)
-    print("All processing threads completed.")
-    print("="*30)
-
-    return local_datasets_processed_size, local_datasets_failed, local_total_size_bytes
-
-
-def cleanup_temp_directory(temp_dir_path):
-    """Attempts to remove the temporary directory if it's empty."""
-    try:
-        if not os.listdir(temp_dir_path):
-            os.rmdir(temp_dir_path)
-            print(f"Removed empty temporary directory: {temp_dir_path}")
-        else:
-             print(f"Warning: Temporary directory {temp_dir_path} not empty, skipping removal.")
-             print("(This might happen if file deletion failed for some downloads)")
-    except FileNotFoundError:
-         print(f"Temporary directory {temp_dir_path} not found for cleanup (already removed or never created).")
-    except OSError as e:
-        print(f"Warning: Could not check or remove temporary directory {temp_dir_path}: {e}")
-
-
-def print_summary(total_targeted, processed_count, failed_count, total_bytes):
-    """Prints the final size calculation summary."""
-    print("\n--- Total Size Calculation Summary ---")
-    print(f"Datasets targeted:                 {total_targeted}")
-    print(f"Successfully processed and sized:  {processed_count}")
-    print(f"Failed or size unavailable:        {failed_count}")
-
-    total_size_mb = total_bytes / (1024 * 1024)
-    total_size_gb = total_bytes / (1024 * 1024 * 1024)
-
-    print(f"\nTotal calculated size from successful downloads: {total_size_mb:.2f} MB ({total_size_gb:.2f} GB)")
-    if failed_count > 0:
-         print("Note: Total size might be incomplete due to download/size errors for failed datasets.")
 
 
 # --- REFINED FUNCTION for RSS Feed Processing ---
@@ -431,9 +308,9 @@ if __name__ == "__main__":
     
     parser.add_argument(
         "--action",
-        choices=['export-details', 'calculate-size', 'download-datasets', 'check-updates', 'all'],
+        choices=['export-details', 'calculate-size', 'download-datasets', 'check-updates', 'all', 'download-main-catalog'],
         default='all',
-        help="Action(s) to perform. 'check-updates' looks for health datasets in RSS. 'all' performs export, download, size calc, AND check-updates."
+        help="Action(s) to perform. 'check-updates' looks for health datasets in RSS. 'all' performs export, download, size calc, AND check-updates. 'download-main-catalog' downloads the full Eurostat catalog."
     )
     parser.add_argument(
         "--data-dir", default="Data_Directory", help="Directory to save downloaded dataset JSON files."
@@ -462,8 +339,11 @@ if __name__ == "__main__":
     parser.add_argument(
         "--rss-url", default="https://ec.europa.eu/eurostat/api/dissemination/catalogue/rss/en/statistics-update.rss", help="URL of the Eurostat RSS feed."
     )
+    parser.add_argument(
+        "--main-catalog-output-path", default="eurostat_main_catalog.json", help="Output path for the downloaded main Eurostat catalog (used with --action download-main-catalog)."
+    )
 
-    TEMP_DOWNLOAD_DIR = "temp_eurostat_downloads"
+    # TEMP_DOWNLOAD_DIR = "temp_eurostat_downloads" # MOVED TO EDA.py (or similar for its main block)
     MAX_WORKERS = 10
     API_CONFIG = {
         "host": "https://ec.europa.eu/eurostat/api/dissemination",
@@ -478,30 +358,30 @@ if __name__ == "__main__":
     # --- Stage 0: Download Catalog ---
     # This logic needs to run if the catalog is required by ANY selected action
     # and not skipped.
-    catalog_needed = args.action in ['export-details', 'calculate-size', 'download-datasets', 'all'] or \
+    catalog_needed_for_other_actions = args.action in ['export-details', 'calculate-size', 'download-datasets', 'all'] or \
                      (args.action == 'check-updates' and not args.dataset_ids) # If check-updates and no specific IDs, need catalog
 
-    if catalog_needed:
+    if catalog_needed_for_other_actions:
         if not args.skip_download or not os.path.exists(args.catalog_file):
-            print("--- Stage 0: Download Catalog ---")
-            if not download_eurostat_catalog(args.catalog_file):
-                print(f"Failed to download catalog. Exiting.")
-                exit()
+            print("--- Stage 0: Initial Catalog Download (for filtering/listing actions) ---")
+            if not download_eurostat_catalog(args.catalog_file): # This uses the --catalog-file for general purpose
+                print(f"Failed to download initial catalog to {args.catalog_file}. Some actions might fail.")
+                # Decide if exit is needed here or let actions fail individually
             else:
-                print(f"Catalog ready at {args.catalog_file}")
+                print(f"Initial catalog ready at {args.catalog_file}")
         else:
-            print(f"--- Stage 0: Skipping catalog download (using existing {args.catalog_file}) ---")
+            print(f"--- Stage 0: Skipping initial catalog download (using existing {args.catalog_file}) ---")
 
     # --- Stage 1: Load and Filter (if catalog was needed and exists) ---
     all_dataset_details = []
-    if catalog_needed and os.path.exists(args.catalog_file):
-        print("\n--- Stage 1: Load and Filter ---")
+    if catalog_needed_for_other_actions and os.path.exists(args.catalog_file):
+        print("\n--- Stage 1: Load and Filter (for filtering/listing actions) ---")
         all_dataset_details = load_and_filter_catalog(args.catalog_file, args.keyword)
         if not all_dataset_details:
             print(f"Warning: No datasets found matching keyword '{args.keyword}'. Some actions might not proceed.")
         else:
             print(f"Initially found {len(all_dataset_details)} datasets matching keyword '{args.keyword}'.")
-    elif catalog_needed and not os.path.exists(args.catalog_file):
+    elif catalog_needed_for_other_actions and not os.path.exists(args.catalog_file):
         print(f"Error: Catalog file {args.catalog_file} not found and was required. Exiting.")
         exit()
 
@@ -536,8 +416,21 @@ if __name__ == "__main__":
 
     # --- Stage 2: Perform Actions Based on Argument ---
 
+    # Action: Download Main Catalog (New Action)
+    if args.action == 'download-main-catalog':
+        print("\n--- Action: Download Main Eurostat Catalog ---")
+        if not args.main_catalog_output_path:
+            print("Error: --main-catalog-output-path must be specified for action 'download-main-catalog'.")
+            exit(1)
+        print(f"Attempting to download main catalog to: {args.main_catalog_output_path}")
+        if download_eurostat_catalog(args.main_catalog_output_path):
+            print(f"Main Eurostat catalog successfully downloaded to {args.main_catalog_output_path}")
+        else:
+            print(f"Failed to download main Eurostat catalog to {args.main_catalog_output_path}")
+            exit(1) # Exit if this specific action fails
+
     # Action: Check Updates (checks for health datasets in RSS)
-    if args.action in ['check-updates', 'all']:
+    elif args.action in ['check-updates', 'all']:
         print("\n--- Action: Check Updates ---")
         if not health_ids_to_check_rss: # Use the set prepared above
             print("No local dataset IDs to check against the RSS feed. Provide --dataset-ids or ensure catalog filtering works.")
@@ -555,7 +448,7 @@ if __name__ == "__main__":
                 print("Could not retrieve or parse update information from RSS feed.")
 
     # Action: Export Details to CSV
-    if args.action in ['export-details', 'all']:
+    elif args.action in ['export-details', 'all']:
         if not targeted_dataset_details_for_actions:
             print("\nNo targeted datasets to export details for (check --keyword, --dataset-ids, or --limit).")
         else:
@@ -567,7 +460,7 @@ if __name__ == "__main__":
             export_dataset_details_to_csv(targeted_dataset_details_for_actions, csv_export_filename)
 
     # Action: Download Datasets
-    if args.action in ['download-datasets', 'all']:
+    elif args.action in ['download-datasets', 'all']:
         if not targeted_ids_for_actions:
             print("\nNo targeted datasets to download (check --keyword, --dataset-ids, or --limit).")
         else:
@@ -578,16 +471,18 @@ if __name__ == "__main__":
             print(f"Finished downloads. Success: {len(downloaded_file_paths)}, Failed: {failed_count}")
 
     # Action: Calculate Size
-    if args.action in ['calculate-size', 'all']:
+    elif args.action in ['calculate-size', 'all']:
         if not targeted_ids_for_actions:
             print("\nNo targeted datasets to calculate size for (check --keyword, --dataset-ids, or --limit).")
         else:
             print("\n--- Action: Calculating Size for Targeted Datasets ---")
-            os.makedirs(TEMP_DOWNLOAD_DIR, exist_ok=True) # Ensure temp dir for this action
-            processed, failed, total_bytes = calculate_total_size_concurrently(
-                targeted_ids_for_actions, API_CONFIG, TEMP_DOWNLOAD_DIR, MAX_WORKERS
-            )
-            cleanup_temp_directory(TEMP_DOWNLOAD_DIR)
-            print_summary(len(targeted_ids_for_actions), processed, failed, total_bytes)
+            print("This functionality has been moved to scripts/EDA.py")
+            print("Example usage: python scripts/EDA.py --action calculate-size --dataset-ids \"ID1,ID2,ID3\"")
+            # os.makedirs(TEMP_DOWNLOAD_DIR, exist_ok=True) # MOVED
+            # processed, failed, total_bytes = calculate_total_size_concurrently(
+            #     targeted_ids_for_actions, API_CONFIG, TEMP_DOWNLOAD_DIR, MAX_WORKERS
+            # ) # MOVED
+            # cleanup_temp_directory(TEMP_DOWNLOAD_DIR) # MOVED
+            # print_summary(len(targeted_ids_for_actions), processed, failed, total_bytes) # MOVED
 
     print("\nScript finished.")               
