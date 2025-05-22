@@ -1,0 +1,8 @@
+# requirements-airflow.txt
+dbt-core==1.9.1
+dbt-postgres==1.9.0
+psycopg2-binary~=2.9.0
+# Add any other packages specifically needed by Airflow PythonOperators that run your scripts
+# For example, if your scripts copied into /opt/airflow/scripts/ directly use pandas or ijson:
+# pandas~=2.2.0
+# ijson~=3.3.0 

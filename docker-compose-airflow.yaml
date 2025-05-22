@@ -150,6 +150,10 @@ services:
 
   airflow-scheduler:
     <<: *airflow-common
+    deploy:
+      resources:
+        limits:
+          memory: 4G
     command: scheduler
     healthcheck:
       test: ["CMD", "curl", "--fail", "http://localhost:8974/health"]
@@ -165,6 +169,10 @@ services:
 
   airflow-dag-processor:
     <<: *airflow-common
+    deploy:
+      resources:
+        limits:
+          memory: 4G
     command: dag-processor
     healthcheck:
       test: ["CMD-SHELL", 'airflow jobs check --job-type DagProcessorJob --hostname "$${HOSTNAME}"']
@@ -180,6 +188,10 @@ services:
 
   airflow-worker:
     <<: *airflow-common
+    deploy:
+      resources:
+        limits:
+          memory: 4G
     command: celery worker
     healthcheck:
       # yamllint disable rule:line-length

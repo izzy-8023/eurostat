@@ -1,0 +1,17 @@
+    # profiles.yml located in /Users/izzy/Desktop/eurostat/dbt_project/profiles.yml
+
+    eurostat_dbt_profile: # This is the profile name referenced in dbt_project.yml
+      target: dev
+      outputs:
+        dev:
+          type: postgres
+          host: "{{ env_var('POSTGRES_HOST') }}"         # Will use 'db' from docker-compose
+          user: "{{ env_var('POSTGRES_USER') }}"         # Will use 'eurostat_user'
+          password: "{{ env_var('POSTGRES_PASSWORD') }}" # Will use 'mysecretpassword'
+          port: "{{ env_var('POSTGRES_PORT', '5432') | int }}" # Will use 5432
+          dbname: "{{ env_var('POSTGRES_DB') }}"         # Will use 'eurostat_data'
+          schema: dbt_prod                             # Schema where dbt will build models
+          threads: 4                                   # Number of concurrent threads
+          # Optional settings:
+          # keepalives_idle: 0 # Disables TCP keepalives
+          # connect_timeout: 10

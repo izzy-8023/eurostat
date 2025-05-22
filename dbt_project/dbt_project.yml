@@ -1,0 +1,33 @@
+name: 'eurostat_dbt_project' # Choose a name for your dbt project
+version: '1.0.0'
+config-version: 2
+
+# This setting configures which "profile" dbt uses for this project.
+profile: 'eurostat_dbt_profile' # This should match the profile name in profiles.yml
+
+# Global flags
+flags:
+  send_anonymous_usage_stats: False
+
+# These configurations specify where dbt should look for different types of files.
+# Relative to the dbt_project directory.
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:         # directories to be removed by `dbt clean`
+  - "target"
+  - "dbt_packages"
+
+# Configure models under the 'models/' directory
+models:
+  eurostat_dbt_project: # This should match the 'name' of your project
+    # Applies to all models in your project
+    +materialized: view # Default to view, can be overridden
+    dimensions: # For models in models/dimensions/
+      +materialized: view
+    facts:   # For models in models/facts/
+      +materialized: table

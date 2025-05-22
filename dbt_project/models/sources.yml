@@ -1,0 +1,21 @@
+    # dbt_project/models/staging/sources.yml
+    version: 2
+
+    sources:
+      - name: eurostat_raw # A name for this group of sources
+        description: "Raw Eurostat data loaded from JSON files into PostgreSQL"
+        database: "{{ env_var('POSTGRES_DB') }}" 
+        schema: public # The schema where your raw tables exist
+        tables:
+          - name: hlth_cd_ainfo
+            description: "Causes of death - absolute number, NUTS 2 regions"
+            # You can add column descriptions here if desired
+            # columns:
+            #   - name: linear_index
+            #     description: "Primary key of the source table"
+          - name: hlth_cd_ainfr
+            description: "Causes of death - crude death rate, NUTS 2 regions"
+          - name: hlth_cd_yinfo
+            description: "Causes of death - absolute number, by broad groups of diseases and sex"
+          - name: hlth_cd_yinfr
+            description: "Causes of death - crude death rate, by broad groups of diseases and sex"

@@ -24,9 +24,9 @@ def inspect_json_structure(file_path, max_events=50):
     except Exception as e:
         print(f"Error during inspection: {e}")
 
-inspect_json_structure("eurostat_catalog.json")
+# inspect_json_structure("eurostat_catalog.json")
 
-
+# recursive function to explore the json file
 def explore_json(d, indent=0, max_depth=3):
     if indent >= max_depth:
         print('  ' * indent + '... (max depth reached)')
@@ -41,15 +41,15 @@ def explore_json(d, indent=0, max_depth=3):
         if d:
             explore_json(d[0], indent + 1, max_depth)
 
-# usage
+
 
 
 with open("eurostat_catalog.json", "r") as f:
     data = json.load(f)
 
-explore_json(data, max_depth=8)  # limit the max depth
+# explore_json(data, max_depth=8)  # limit the max depth
 
-# --- Functions moved from SourceData.py for EDA purposes ---
+
 
 # Shared lock for process_dataset_worker, if needed globally here
 shared_data_lock = threading.Lock()
@@ -199,7 +199,7 @@ if __name__ == "__main__":
         
         dataset_ids_list = [ds_id.strip() for ds_id in args.dataset_ids.split(',')]
         
-        # Configuration for size calculation (can be adjusted or made configurable)
+        # Configuration for size calculation
         EDA_TEMP_DOWNLOAD_DIR = "temp_eurostat_downloads_eda"
         EDA_MAX_WORKERS = 5 # Adjust as needed for EDA, maybe less than pipeline
         EDA_API_CONFIG = {

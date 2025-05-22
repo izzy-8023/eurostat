@@ -1,0 +1,190 @@
+group_name,dataset_count,dataset_ids
+Ability to make ends meet,1,HLTH_DM060
+Absence from work due to personal health problems,3,"HLTH_EHIS_AW1D,HLTH_EHIS_AW1E,HLTH_EHIS_AW1U"
+Activity rate of people,1,HLTH_DLM020
+"Arrears (mortgage or rent, utility bills or hire purchase)",1,HLTH_DM050
+Available beds in hospitals,1,HLTH_RS_BDSRG2
+Body mass index (BMI),8,"HLTH_EHIS_BM1B,HLTH_EHIS_BM1C,HLTH_EHIS_BM1D,HLTH_EHIS_BM1E,HLTH_EHIS_BM1I,HLTH_EHIS_BM1U,HLTH_EHIS_DE1,HLTH_EHIS_DE2"
+Causes of death,8,"HLTH_CD_ACDR,HLTH_CD_YCDRF,HLTH_CD_YCDRM,HLTH_CD_YCDRT,HLTH_CD_YNRF,HLTH_CD_YNRM,HLTH_CD_YNRT,HLTH_CD_YSDR1"
+Causes of death - crude death rate,2,"HLTH_CD_ACDR2,HLTH_CD_YCDR2"
+Causes of death - death,1,HLTH_CD_MRO
+Causes of death - deaths,2,"HLTH_CD_ARO,HLTH_CD_YRO"
+Causes of death - infant mortality,4,"HLTH_CD_AINFO,HLTH_CD_AINFR,HLTH_CD_YINFO,HLTH_CD_YINFR"
+Causes of death - potential years of life lost,1,HLTH_CD_APYLL
+Causes of death - standardised death rate,3,"HLTH_CD_ASDR2,HLTH_CD_MSDR2,HLTH_CD_YSDR2"
+Causes of death - years and potential years of life lost,1,HLTH_CD_YPYLL
+Consumption of fruits,1,HLTH_EHIS_DE7
+Consumption of vegetables,1,HLTH_EHIS_DE8
+Correction of vision problems,2,"HLTH_EHIS_VIE,HLTH_EHIS_VIU"
+"Crime, violence or vandalism in the area",1,HLTH_DHC130
+Current depressive symptoms,6,"HLTH_EHIS_MH1B,HLTH_EHIS_MH1C,HLTH_EHIS_MH1D,HLTH_EHIS_MH1E,HLTH_EHIS_MH1I,HLTH_EHIS_MH1U"
+Daily consumption of fruit and vegetables,7,"HLTH_EHIS_FV3E,HLTH_EHIS_FV3I,HLTH_EHIS_FV3M,HLTH_EHIS_FV3U,HLTH_EHIS_FV3B,HLTH_EHIS_FV3C,HLTH_EHIS_FV3D"
+Daily exposure to tobacco smoke indoors,2,"HLTH_EHIS_SK4E,HLTH_EHIS_SK4U"
+Daily smokers,1,HLTH_EHIS_DE5
+Daily smokers of cigarettes,5,"HLTH_EHIS_SK3E,HLTH_EHIS_SK3I,HLTH_EHIS_SK3U,HLTH_EHIS_DE3,HLTH_EHIS_DE4"
+Difficulties in household activities,5,"HLTH_EHIS_HA1D,HLTH_EHIS_HA1E,HLTH_EHIS_HA1HCS,HLTH_EHIS_HA1I,HLTH_EHIS_HA1U"
+Difficulties in personal care activities,5,"HLTH_EHIS_PC1D,HLTH_EHIS_PC1E,HLTH_EHIS_PC1HCS,HLTH_EHIS_PC1I,HLTH_EHIS_PC1U"
+Difficulties in personal care activities or household activities,5,"HLTH_EHIS_TAD,HLTH_EHIS_TAE,HLTH_EHIS_TAHCS,HLTH_EHIS_TAI,HLTH_EHIS_TAU"
+Disability employment gap,1,HLTH_DLM200
+Duration of daily tobacco smoking,1,HLTH_EHIS_SK5E
+Early leavers from education and training (age group 18-24),1,HLTH_DE010
+Effort involved in performing work-related physical activity,3,"HLTH_EHIS_PE1E,HLTH_EHIS_PE1I,HLTH_EHIS_PE1U"
+Employed people having a longstanding health problem or a difficulty in basic activities,1,HLTH_DLM180
+Employment,7,"HLTH_DLM050,HLTH_DLM080,HLTH_DLM090,HLTH_DLM100,HLTH_DLM110,HLTH_DLM120,HLTH_DLM130"
+Employment rate of people,1,HLTH_DLM010
+Expenditure for selected health care functions,2,"HLTH_SHA11_HCHF,HLTH_SHA11_HCHP"
+Expenditure for selected health care providers,1,HLTH_SHA11_HPHF
+"Fetal, peri- and neonatal mortality rates",2,"HLTH_CD_APERRTO,HLTH_CD_YPERRTO"
+Former daily tobacco smokers,2,"HLTH_EHIS_SK2E,HLTH_EHIS_SK2I"
+Frequency of alcohol consumption,6,"HLTH_EHIS_AL1B,HLTH_EHIS_AL1C,HLTH_EHIS_AL1E,HLTH_EHIS_AL1I,HLTH_EHIS_AL1U,HLTH_EHIS_DE10"
+Frequency of binge drinking,1,HLTH_EHIS_DE6
+Frequency of contacts with relatives or friends,1,HLTH_DS030
+Frequency of drinking pure fruit or vegetable juice,1,HLTH_EHIS_FV5E
+Frequency of drinking sugar-sweetened soft drinks,3,"HLTH_EHIS_FV7E,HLTH_EHIS_FV7I,HLTH_EHIS_FV7M"
+Frequency of fruit and vegetables consumption,7,"HLTH_EHIS_FV1B,HLTH_EHIS_FV1C,HLTH_EHIS_FV1D,HLTH_EHIS_FV1E,HLTH_EHIS_FV1I,HLTH_EHIS_FV1M,HLTH_EHIS_FV1U"
+Frequency of getting together with relatives or friends,1,HLTH_DS020
+"Frequency of going to cinema, live performances, cultural sites or attending live sport events",1,HLTH_DS010
+Frequency of heavy episodic drinking,3,"HLTH_EHIS_AL3E,HLTH_EHIS_AL3I,HLTH_EHIS_AL3U"
+Functional limitations,3,"HLTH_EHIS_PL1D,HLTH_EHIS_PL1E,HLTH_EHIS_PL1U"
+Hazardous alcohol drinkers,3,"HLTH_EHIS_AL2E,HLTH_EHIS_AL2I,HLTH_EHIS_AL2U"
+Health care expenditure,3,"HLTH_SHA11_HC,HLTH_SHA11_HF,HLTH_SHA11_HP"
+Health personnel,1,HLTH_RS_PRSRG
+Healthy life years,1,HLTH_HLYE
+Hospital beds,4,"HLTH_RS_BDS,HLTH_RS_BDS1,HLTH_RS_BDS2,HLTH_RS_BDSRG"
+Hospital days of in-patients,3,"HLTH_CO_HOSDAYF,HLTH_CO_HOSDAYM,HLTH_CO_HOSDAYT"
+Hospital discharges,16,"HLTH_CO_DISCH1,HLTH_CO_DISCH1F,HLTH_CO_DISCH1M,HLTH_CO_DISCH1T,HLTH_CO_DISCH2,HLTH_CO_DISCH2F,HLTH_CO_DISCH2M,HLTH_CO_DISCH2T,HLTH_CO_DISCH3,HLTH_CO_DISCH3F,HLTH_CO_DISCH3M,HLTH_CO_DISCH3T,HLTH_CO_DISCH4,HLTH_CO_DISCH4F,HLTH_CO_DISCH4M,HLTH_CO_DISCH4T"
+Housing cost overburden rate,1,HLTH_DHC060
+In-patient average length of stay (days),3,"HLTH_CO_INPSTF,HLTH_CO_INPSTM,HLTH_CO_INPSTT"
+In-work at-risk-of-poverty rate,1,HLTH_DPE050
+"Inability to afford a meal with meat, chicken, fish (or vegetarian equivalent) every second day",1,HLTH_DM030
+Inability to afford paying for one week annual holiday away from home,1,HLTH_DM020
+Inability to face unexpected financial expenses,1,HLTH_DM040
+Inability to keep home adequately warm,1,HLTH_DHC140
+Inactive population,1,HLTH_DLM060
+Infant deaths occurring in the EU,1,HLTH_CD_INFOEU
+Infant deaths occurring in the country,1,HLTH_CD_INFO
+Inpatient curative care bed occupancy rate,1,HLTH_CO_BEDOC
+Level of disability (activity limitation),5,"HLTH_SILC_07,HLTH_SILC_12,HLTH_SILC_20,HLTH_SILC_27,HLTH_SILC_28"
+Limitations in household activities,1,HLTH_EHIS_ST11
+Limitations in personal care activities,1,HLTH_EHIS_ST10
+Long-term care beds in nursing and residential care facilities,1,HLTH_RS_BDSNS
+Medical intervention for an accident resulting in injury,1,HLTH_EHIS_AC2E
+Medical technologies - examinations,1,HLTH_CO_EXAM
+Need for help with household activities,3,"HLTH_EHIS_HAHLPD,HLTH_EHIS_HAHLPE,HLTH_EHIS_HAHLPU"
+Need for help with personal care activities,3,"HLTH_EHIS_PCHLPD,HLTH_EHIS_PCHLPE,HLTH_EHIS_PCHLPU"
+Need for help with personal care or household activities,3,"HLTH_EHIS_TADLH,HLTH_EHIS_TADLHI,HLTH_EHIS_TADLHU"
+Noise from neighbours or from the street,1,HLTH_DHC110
+Not employed people but having a previous work experience,1,HLTH_DLM070
+Not employed people having a longstanding health problem or a difficulty in basic activities,1,HLTH_DLM190
+Nurses,1,HLTH_RS_NURSE
+Overall perceived social support,5,"HLTH_EHIS_SS1B,HLTH_EHIS_SS1C,HLTH_EHIS_SS1D,HLTH_EHIS_SS1E,HLTH_EHIS_SS1U"
+Overall satisfaction with the dwelling,1,HLTH_DHC020
+Overcrowding rate,1,HLTH_DHC040
+Participation in activities of churches or other religious organisations,1,HLTH_DS040
+Participation in education and training,1,HLTH_DE050
+Participation in formal education,1,HLTH_DE060
+Participation in informal voluntary activities,1,HLTH_DS050
+Participation in non-formal education and training,1,HLTH_DE070
+People declaring physical pain or physical discomfort,1,HLTH_EHIS_ST4
+"People having a long-standing illness or health problem,",6,"HLTH_SILC_04,HLTH_SILC_05,HLTH_SILC_11,HLTH_SILC_19,HLTH_SILC_25,HLTH_SILC_26"
+"People reporting a chronic disease,",1,HLTH_EHIS_ST1
+People reporting a limitation in getting to and from work caused,1,HLTH_DLM170
+People reporting a limitation in the amount of work caused,1,HLTH_DLM150
+People reporting a limitation in the type of work caused,1,HLTH_DLM160
+People reporting a limitation in work,1,HLTH_DLM140
+People reporting having had an accident,1,HLTH_EHIS_ST2
+"People reporting having had an accident, which resulted in injury for which medical treatment was sought",1,HLTH_EHIS_ST3
+Percentage distribution of assistance needed,1,HLTH_DB_EMASNE
+Percentage distribution of assistance provided to employed disabled people,1,HLTH_DB_EMASPR
+Percentage distribution of causes of disability,1,HLTH_DB_EMCANA
+"Percentage distribution of duration of disability (in years) since onset,",1,HLTH_DB_EMDUCA
+Percentage distribution of labour status,1,HLTH_DB_EMACSE
+Percentage distribution of severities of disability,1,HLTH_DB_EMSEAG
+Percentage distribution of types of assistance needed,1,HLTH_DB_EMASNT
+Percentage distribution of types of assistance provided to employed disabled people,1,HLTH_DB_EMASPT
+Percentage distribution of types of disability,1,HLTH_DB_EMTYAG
+Performing (non-work-related) physical activities,3,"HLTH_EHIS_PE3E,HLTH_EHIS_PE3I,HLTH_EHIS_PE3U"
+Performing health-enhancing physical activity,6,"HLTH_EHIS_PE9B,HLTH_EHIS_PE9C,HLTH_EHIS_PE9D,HLTH_EHIS_PE9E,HLTH_EHIS_PE9I,HLTH_EHIS_PE9U"
+Peri-neonatal mortality,2,"HLTH_CD_APERRO,HLTH_CD_YPERRO"
+Persons at risk of poverty,1,HLTH_DPE020
+Persons at risk of poverty before social transfers (pensions included in social transfers),1,HLTH_DPE030
+Persons at risk of poverty or social exclusion,1,HLTH_DPE010
+Persons considering their dwelling as too dark,1,HLTH_DHC100
+Persons having a longstanding health problem,1,HLTH_DH020
+"Persons living in a dwelling with a leaking roof, damp walls, floors or foundation, or rot in window frames or floor",1,HLTH_DHC070
+Persons living in households with very low work intensity,1,HLTH_DPE040
+Persons not having indoor flushing toilet for the sole use of their household,1,HLTH_DHC090
+Persons providing informal care or assistance at least once a week,2,"HLTH_EHIS_IC1E,HLTH_EHIS_IC1U"
+Persons reporting a chronic disease,1,HLTH_EHIS_CD1D
+"Persons reporting a chronic disease,",5,"HLTH_EHIS_CD1B,HLTH_EHIS_CD1C,HLTH_EHIS_CD1E,HLTH_EHIS_CD1I,HLTH_EHIS_CD1U"
+Persons reporting a difficulty in household care activities,1,HLTH_DPEH120
+Persons reporting a difficulty in personal care activities,1,HLTH_DPEH110
+Persons reporting a longstanding difficulty in basic activities,1,HLTH_DPEH100
+Persons reporting a longstanding health problem,1,HLTH_DPEH090
+Persons reporting a longstanding health problem or a basic activity difficulty,1,HLTH_DP010
+Persons reporting an accident resulting in injury,2,"HLTH_EHIS_AC1E,HLTH_EHIS_AC1U"
+Persons reporting needs for dental examination or treatment,1,HLTH_SILC_09C
+Persons reporting needs for medical examination or treatment,1,HLTH_SILC_08C
+Persons with disabilities,27,"HLTH_DPEH130,HLTH_DPEH135,HLTH_DPEH140,HLTH_DPEH150,HLTH_DPEH160,HLTH_DPEH170,HLTH_DPEH180,HLTH_DPEH190,HLTH_DPEH200,HLTH_DSI010,HLTH_DSI015,HLTH_DSI020,HLTH_DSI030,HLTH_DSI040,HLTH_DSI050,HLTH_DSI060,HLTH_DSI070,HLTH_DSI080,HLTH_DSI090,HLTH_DSI095,HLTH_DSI100,HLTH_DSI110,HLTH_DSI120,HLTH_DSI130,HLTH_DSI140,HLTH_DSI150,HLTH_DSI160"
+Persons with no bath or shower in their dwelling,1,HLTH_DHC080
+Physical and sensory functional limitations,1,HLTH_EHIS_ST9
+Physicians,4,"HLTH_RS_PHYS,HLTH_RS_PHYSCAT,HLTH_RS_PHYSREG,HLTH_RS_SPEC"
+"Pollution, grime or other environmental problems",1,HLTH_DHC120
+Population,16,"HLTH_DE040,HLTH_DLM040,HLTH_DP020,HLTH_DP040,HLTH_DP060,HLTH_DP070,HLTH_DP080,HLTH_DPEH005,HLTH_DPEH010,HLTH_DPEH020,HLTH_DPEH030,HLTH_DPEH040,HLTH_DPEH050,HLTH_DPEH060,HLTH_DPEH070,HLTH_DPEH080"
+Practice of daily physical activity,1,HLTH_EHIS_DE9
+Prevalence of disability,6,"HLTH_DB_EMACAG,HLTH_DB_EMEDAG,HLTH_DB_EMMAAG,HLTH_DB_EMNAAG,HLTH_DB_EMOCAG,HLTH_DB_EMRENA"
+Prevalence of the main basic activity difficulties,1,HLTH_DP050
+Prevalence of the main longstanding health problems,1,HLTH_DP030
+Psychological distress,1,HLTH_EHIS_ST7
+Psychological well-being (energy and vitality index),1,HLTH_EHIS_ST8
+Revenues of health care financing schemes,1,HLTH_SHA11_HFFS
+Self-perceived health,7,"HLTH_SILC_01,HLTH_SILC_02,HLTH_SILC_10,HLTH_SILC_18,HLTH_SILC_23,HLTH_SILC_24,HLTH_DH010"
+Self-perceived long-standing limitations in usual activities due to health problem,1,HLTH_SILC_06
+Self-reported breast examination,1,HLTH_EHIS_HC2
+Self-reported cervical smear test,1,HLTH_EHIS_HC3
+Self-reported colorectal cancer screening test,1,HLTH_EHIS_HC4
+Self-reported consultation of a medical professional,1,HLTH_EHIS_HC5
+Self-reported consultation of a psychologist or physiotherapist,1,HLTH_EHIS_HC6
+Self-reported consultation of mental healthcare or rehabilitative care professionals,3,"HLTH_EHIS_AM6D,HLTH_EHIS_AM6E,HLTH_EHIS_AM6U"
+Self-reported consultations of a medical professional,5,"HLTH_EHIS_AM2B,HLTH_EHIS_AM2C,HLTH_EHIS_AM2D,HLTH_EHIS_AM2E,HLTH_EHIS_AM2U"
+Self-reported hospital in-patient and day-patient admissions,3,"HLTH_EHIS_HC8,HLTH_EHIS_HO1E,HLTH_EHIS_HO1U"
+Self-reported last breast examination,3,"HLTH_EHIS_PA7E,HLTH_EHIS_PA7I,HLTH_EHIS_PA7U"
+Self-reported last cervical smear test among women,3,"HLTH_EHIS_PA8E,HLTH_EHIS_PA8I,HLTH_EHIS_PA8U"
+Self-reported last colonoscopy,3,"HLTH_EHIS_PA6E,HLTH_EHIS_PA6I,HLTH_EHIS_PA6U"
+Self-reported last colorectal cancer screening test,3,"HLTH_EHIS_PA5E,HLTH_EHIS_PA5I,HLTH_EHIS_PA5U"
+Self-reported screening of cardiovascular diseases and diabetes risks,3,"HLTH_EHIS_PA2E,HLTH_EHIS_PA2I,HLTH_EHIS_PA2U"
+Self-reported time elapsed since last visit to a medical professional,2,"HLTH_EHIS_AM1E,HLTH_EHIS_AM1U"
+Self-reported unmet needs for dental examination,6,"HLTH_SILC_09,HLTH_SILC_15,HLTH_SILC_16,HLTH_SILC_22,HLTH_SILC_31,HLTH_SILC_32"
+"Self-reported unmet needs for dental examination due to financial reasons, long waiting list or distance",1,HLTH_SILC_09B
+Self-reported unmet needs for health care,4,"HLTH_EHIS_UN1D,HLTH_EHIS_UN1E,HLTH_EHIS_UN1I,HLTH_EHIS_UN1U"
+Self-reported unmet needs for medical examination,8,"HLTH_SILC_08,HLTH_SILC_08_R,HLTH_SILC_13,HLTH_SILC_14,HLTH_SILC_21,HLTH_SILC_29,HLTH_SILC_30,HLTH_DH030"
+"Self-reported unmet needs for medical examination due to financial reasons, long waiting list or distance",2,"HLTH_SILC_08B,HLTH_SILC_08B_R"
+Self-reported unmet needs for specific health care-related services due to financial reasons,4,"HLTH_EHIS_UN2D,HLTH_EHIS_UN2E,HLTH_EHIS_UN2I,HLTH_EHIS_UN2U"
+Self-reported use of home care services,8,"HLTH_EHIS_AM7D,HLTH_EHIS_AM7E,HLTH_EHIS_AM7I,HLTH_EHIS_AM7SA,HLTH_EHIS_AM7SH,HLTH_EHIS_AM7TA,HLTH_EHIS_AM7TH,HLTH_EHIS_AM7U"
+Self-reported use of non-prescribed medicines,5,"HLTH_EHIS_HC10,HLTH_EHIS_MD2B,HLTH_EHIS_MD2C,HLTH_EHIS_MD2E,HLTH_EHIS_MD2U"
+Self-reported use of prescribed medicines,5,"HLTH_EHIS_HC9,HLTH_EHIS_MD1B,HLTH_EHIS_MD1C,HLTH_EHIS_MD1E,HLTH_EHIS_MD1U"
+Self-reported use of prescribed medicines for specific diseases,1,HLTH_EHIS_HC7
+Self-reported vaccination against influenza,4,"HLTH_EHIS_HC1,HLTH_EHIS_PA1E,HLTH_EHIS_PA1I,HLTH_EHIS_PA1U"
+Severe difficulties in personal care activities or household activities,2,"HLTH_EHIS_TADLE,HLTH_EHIS_TADLI"
+Severe housing deprivation rate,1,HLTH_DHC030
+Severe material and social deprivation rate,1,HLTH_DM010
+Severity of bodily pain,4,"HLTH_EHIS_PN1B,HLTH_EHIS_PN1C,HLTH_EHIS_PN1D,HLTH_EHIS_PN1E"
+Severity of current depressive symptoms,6,"HLTH_EHIS_MH2B,HLTH_EHIS_MH2C,HLTH_EHIS_MH2D,HLTH_EHIS_MH2E,HLTH_EHIS_MH2I,HLTH_EHIS_MH2U"
+Share of housing cost in disposable income,1,HLTH_DHC050
+Share of persons who cannot afford a colour TV,1,HLTH_DM080
+Share of persons who cannot afford a computer,1,HLTH_DM090
+Share of persons who cannot afford a personal car,1,HLTH_DM110
+Share of persons who cannot afford a telephone,1,HLTH_DM070
+Share of persons who cannot afford a washing machine,1,HLTH_DM100
+Smoking of tobacco products,5,"HLTH_EHIS_SK1B,HLTH_EHIS_SK1C,HLTH_EHIS_SK1E,HLTH_EHIS_SK1I,HLTH_EHIS_SK1U"
+Surgical operations and procedures performed in hospitals,1,HLTH_CO_PROC2
+Tenure status,1,HLTH_DHC010
+Tertiary educational attainment (age group 30-34),1,HLTH_DE020
+Time spent on health-enhancing (non-work-related) aerobic physical activity,3,"HLTH_EHIS_PE2E,HLTH_EHIS_PE2I,HLTH_EHIS_PE2U"
+Time spent on health-enhancing non-work-related aerobic physical activity,1,HLTH_EHIS_PE2M
+Treatable and preventable mortality of residents,1,HLTH_CD_APR
+Unemployment rate of people,1,HLTH_DLM030
+Use of electronic cigarettes or similar electronic devices,1,HLTH_EHIS_SK6E
+Walking and cycling at least 30 minutes per day,1,HLTH_EHIS_PE6E
+Young persons neither in employment nor in education and training,1,HLTH_DE030
+datasets_with_label_missing_primary_by_separator,37,"HLTH_HC_DENT,HLTH_HC_PHYS,HLTH_HC_PHYS2,HLTH_HLYE_H,HLTH_PS_IMMU,HLTH_PS_PREV,HLTH_PS_SCRE,HLTH_RS_BDLTC,HLTH_RS_EQUIP,HLTH_RS_GRD,HLTH_RS_GRD2,HLTH_RS_MEDIM,HLTH_RS_PRS1,HLTH_RS_PRS2,HLTH_RS_PRSHP1,HLTH_RS_PRSHP2,HLTH_RS_PRSNS,HLTH_RS_TECH,HLTH_RS_WKMG,HLTH_RS_WKMG2,HLTH_SHA11_FS,HLTH_SILC_17,HLTH_CD_ANR,HLTH_CD_ASDR,HLTH_CD_DAR,HLTH_CD_IAP,HLTH_CD_IDO,HLTH_CD_TRO,HLTH_CD_TROEU,HLTH_CO_DISCHLS,HLTH_CO_DISCHNR,HLTH_CO_HOSDAY,HLTH_CO_INPAGG,HLTH_CO_INPST,HLTH_CO_PROC3,HLTH_CO_REN,ENPE_HLTH_EXP"

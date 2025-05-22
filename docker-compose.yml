@@ -13,13 +13,17 @@ services:
       - POSTGRES_DB=eurostat_data
       - POSTGRES_USER=eurostat_user
       - POSTGRES_PASSWORD=mysecretpassword
+      - DBT_PROFILES_DIR=/app/dbt_project # Tells dbt where to find profiles.yml
     volumes:
       # Mount local directories for data persistence and script output
       - ./Data_Directory:/app/Data_Directory
       - ./Output_Parquet_Directory:/app/Output_Parquet_Directory
       - ./Output_Directory:/app/Output_Directory
-      # Optional: Mount current directory for live code changes during development
-      # - .:/app # Be careful with this in 'production' builds from compose
+      - ./dbt_project:/app/dbt_project   # Mount your dbt project
+      - ./scripts:/app/scripts # Mount your scripts directory
+    # Optional: Mount current directory for live code changes during development
+    # - .:/app # Be careful with this in 'production' builds from compose
+    working_dir: /app         # Set a general working directory
     command: ["tail", "-f", "/dev/null"]
     networks:
       - eurostat_shared_network

@@ -17,17 +17,6 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 # --- Core Logic from jsonParser.py (get_category_info_from_linear_index_core_logic) ---
-# This function remains largely the same as it's about interpreting the JSON structure.
-def pre_calculate_reverse_indices(dimension_details_meta):
-    """Pre-calculates _reverse_index for all categories to avoid modifying during streaming."""
-    if dimension_details_meta:
-        for dim_id, dim_content in dimension_details_meta.items():
-            category_section = dim_content.get('category', {})
-            if isinstance(category_section, dict):
-                index_map = category_section.get('index', {})
-                if isinstance(index_map, dict):
-                    category_section['_reverse_index'] = {v: k for k, v in index_map.items()}
-
 def get_category_info_from_linear_index_core_logic(
         dimension_ids_meta, dimension_sizes_meta, dimension_details_meta,
         linear_index_str, value_content,
@@ -64,11 +53,22 @@ def get_category_info_from_linear_index_core_logic(
         category_numeric_index = temp_index % dim_size
         temp_index = math.floor(temp_index / dim_size)
 
-        category_section = dimension_details_meta.get(dim_id, {}).get('category', {})
+        dim_data = dimension_details_meta.get(dim_id, {})
+        category_section = dim_data.get('category', {})
         label_map = category_section.get('label', {})
         category_key = "Unknown Key"
+
+        # _reverse_index is now expected to be pre-calculated in dimension_details_meta
+        # No on-demand creation here.
         if isinstance(category_section, dict) and '_reverse_index' in category_section:
              category_key = category_section['_reverse_index'].get(category_numeric_index, "Unknown Key")
+        else:
+            # This case should be less common if metadata parsing is robust and all dimensions have categories.
+            # It could happen if a dimension has no 'index' in its category, so '_reverse_index' wasn't created.
+            logger.debug(f"Dimension {dim_id} category either not a dict or no '_reverse_index'. Using numeric index: {category_numeric_index}")
+            # Fallback or decide how to handle - for now, this will lead to "Unknown Key" if not in label_map directly by numeric index
+            # which is unlikely for JSON-stat. The original on-demand logic also had this path implicitly.
+
         category_label = label_map.get(category_key, f"Unknown Label (Index: {category_numeric_index})")
 
         row_dict[f"{dim_id}_key"] = category_key
@@ -119,35 +119,128 @@ def parse_json_and_load_to_db(input_json_path, table_name, source_dataset_id, db
     cur = None
 
     dimension_ids = None
-    dimension_details = None
-    statuses_map = {}
-    status_labels = {}
+    dimension_sizes = None # Added for consistency, was missing from previous declaration block
+    dimension_details_meta = {} # Initialize as empty dict
+    statuses_map = {} # Default to empty dict
+    status_labels = {} # Default to empty dict
 
     try:
-        logger.info("Phase 1: Loading metadata from JSON...")
-        with open(input_json_path, 'rb') as f:
-            full_data_except_value = {
-                k: v for k, v in ijson.kvitems(f, '') if k != 'value'
-            }
+        # Phase 1: Loading metadata from JSON (with streaming for 'dimension' object)
+        logger.info("Phase 1: Loading metadata from JSON (streaming 'dimension' object)...")
+
+        # Load 'id' (dimension_ids)
+        try:
+            with open(input_json_path, 'rb') as f_id:
+                # Assuming 'id' is a top-level array of strings
+                dimension_ids = list(ijson.items(f_id, 'id.item'))
+            if not dimension_ids:
+                logger.warning(f"Parsed 'id' (dimension_ids) is empty or None from {input_json_path}")
+        except Exception as e:
+            logger.error(f"Error loading 'id' (dimension_ids) metadata: {e}", exc_info=True)
+            dimension_ids = None # Ensure it's None on error
+
+        # Load 'size' (dimension_sizes)
+        try:
+            with open(input_json_path, 'rb') as f_size:
+                # Assuming 'size' is a top-level array of numbers
+                dimension_sizes = list(ijson.items(f_size, 'size.item'))
+            if not dimension_sizes:
+                 logger.warning(f"Parsed 'size' (dimension_sizes) is empty or None from {input_json_path}")
+        except Exception as e:
+            logger.error(f"Error loading 'size' (dimension_sizes) metadata: {e}", exc_info=True)
+            dimension_sizes = None # Ensure it's None on error
+
+        # Stream-load 'dimension' object and build dimension_details_meta
+        try:
+            all_dimension_data = None
+            with open(input_json_path, 'rb') as f_dim_obj: # f_dim_obj is the main file stream
+                # Parse the entire "dimension": {...} object into a Python dictionary
+                all_dimension_data = next(ijson.items(f_dim_obj, 'dimension'), None)
+
+            if not all_dimension_data:
+                logger.warning(f"Parsed 'dimension' object is empty or None from {input_json_path}. No dimension details will be processed.")
+                dimension_details_meta = {} # Ensure it's empty
+            else:
+                for dim_id, current_dim_details_built in all_dimension_data.items():
+                    # current_dim_details_built is now a Python dict for the dimension's content
+                    # No further ijson parsing or ObjectBuilder needed here for this part.
+                    
+                    category_data = current_dim_details_built.get('category', {})
+                    index_map = {}
+                    label_map = {}
+
+                    if isinstance(category_data, dict):
+                        index_map = category_data.get('index', {})
+                        label_map = category_data.get('label', {})
+                    
+                    # Ensure index_map and label_map are dicts
+                    index_map = index_map if isinstance(index_map, dict) else {}
+                    label_map = label_map if isinstance(label_map, dict) else {}
+                        
+                    reverse_index = {}
+                    if index_map: # Only if 'index' map exists and is not empty
+                        try:
+                            reverse_index = {v: k for k, v in index_map.items()}
+                        except TypeError as te: # Handle non-integer values in index_map if they occur
+                            logger.warning(f"TypeError creating reverse_index for dim '{dim_id}'. Index map values might not be hashable: {index_map}. Error: {te}")
+                            # reverse_index remains empty
+                        except Exception as e_rev:
+                            logger.warning(f"Generic error creating reverse_index for dim '{dim_id}'. Error: {e_rev}")
+                            # reverse_index remains empty
+
+                    dimension_details_meta[dim_id] = {
+                        'category': {
+                            'index': index_map,
+                            'label': label_map,
+                            '_reverse_index': reverse_index
+                        }
+                    }
+            if not dimension_details_meta: # Check if, after processing, it's still empty
+                logger.warning(f"After processing, 'dimension' (dimension_details_meta) is effectively empty from {input_json_path}")
+
+        except Exception as e: # Catch errors from opening file or parsing the 'dimension' object
+            logger.error(f"Error loading the entire 'dimension' metadata object: {e}", exc_info=True)
+            dimension_details_meta = {} # Ensure it's empty on error
         
-        dimension_ids = full_data_except_value.get('id')
-        dimension_sizes = full_data_except_value.get('size')
-        dimension_details = full_data_except_value.get('dimension')
-        statuses_map = full_data_except_value.get('status', {})
-        ext_data = full_data_except_value.get('extension', {})
-        if isinstance(ext_data, dict):
-            status_ext = ext_data.get('status', {})
-            if isinstance(status_ext, dict):
-                status_labels = status_ext.get('label', {})
+        # Load 'status' (statuses_map)
+        try:
+            with open(input_json_path, 'rb') as f_stat:
+                # Assuming 'status' is a top-level object (map from linear index to status code)
+                statuses_map = dict(ijson.kvitems(f_stat, 'status'))
+        except Exception as e:
+            logger.error(f"Error loading 'status' (statuses_map) metadata: {e}. Defaulting to empty status map.", exc_info=True)
+            statuses_map = {} # Default to empty
+
+        # Load 'extension.status.label' (status_labels)
+        try:
+            with open(input_json_path, 'rb') as f_ext:
+                # Navigate to extension -> status -> label
+                # This is a bit more complex with ijson.items or kvitems for deep paths.
+                # A simpler way is to load 'extension' then navigate, if 'extension' isn't huge.
+                ext_data = dict(ijson.kvitems(f_ext, 'extension')) # Load 'extension' object
+                status_ext_data = ext_data.get('status', {})
+                status_labels = status_ext_data.get('label', {})
+        except Exception as e:
+            logger.error(f"Error loading 'extension' or 'status_labels' metadata: {e}. Defaulting to empty status labels.", exc_info=True)
+            status_labels = {} # Default to empty
 
         if not (dimension_ids and isinstance(dimension_ids, list) and
-                dimension_sizes and isinstance(dimension_sizes, list) and
-                dimension_details and isinstance(dimension_details, dict)):
-            logger.error(f"Essential dimension info missing in {input_json_path}.")
+                dimension_sizes and isinstance(dimension_sizes, list) and len(dimension_ids) == len(dimension_sizes) and
+                dimension_details_meta and isinstance(dimension_details_meta, dict)):
+            logger.error(f"Essential dimension info (id, size, dimension details) missing, mismatched, or not parsed correctly in {input_json_path}. " +
+                         f"IDs loaded: {dimension_ids is not None and isinstance(dimension_ids, list)}, " +
+                         f"Sizes loaded: {dimension_sizes is not None and isinstance(dimension_sizes, list)}, " +
+                         f"Details loaded: {dimension_details_meta is not None and isinstance(dimension_details_meta, dict)}. " +
+                         f"ID count: {len(dimension_ids or [])}, Size count: {len(dimension_sizes or [])}.")
+            if cur: cur.close()
+            if conn: conn.close()
             return False
         
-        pre_calculate_reverse_indices(dimension_details)
-        logger.info("Metadata loaded and reverse indices pre-calculated.")
+        statuses_map = statuses_map if isinstance(statuses_map, dict) else {}
+        status_labels = status_labels if isinstance(status_labels, dict) else {}
+
+        # pre_calculate_reverse_indices(dimension_details_meta) # This function is removed.
+        logger.info("Metadata loaded (dimension details streamed) and reverse indices pre-calculated.")
 
         header_columns = ['linear_index']
         pg_column_sql_parts = [sql.SQL("linear_index INTEGER")]
@@ -211,7 +304,7 @@ def parse_json_and_load_to_db(input_json_path, table_name, source_dataset_id, db
             for linear_index_str, value_content in ijson.kvitems(f_values, 'value'):
                 current_status_code = statuses_map.get(linear_index_str)
                 interpreted_row_dict = get_category_info_from_linear_index_core_logic(
-                    dimension_ids, dimension_sizes, dimension_details,
+                    dimension_ids, dimension_sizes, dimension_details_meta,
                     linear_index_str, value_content,
                     current_status_code, status_labels
                 )

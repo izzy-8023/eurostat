@@ -1,0 +1,58 @@
+# models/dimensions/dimensions.yml
+version: 2
+
+models:
+  - name: dim_time
+    description: "Time dimension with years"
+    columns:
+      - name: time_id
+        description: "Surrogate key for time dimension"
+        tests:
+          - unique
+          - not_null
+      - name: time_key
+        description: "Original time key from source"
+        tests:
+          - unique
+          - not_null
+      - name: time_label
+        description: "Human-readable time label"
+        tests:
+          - not_null
+
+  - name: dim_geography
+    description: "Geography dimension with NUTS regions"
+    columns:
+      - name: geo_id
+        description: "Surrogate key for geography dimension"
+        tests:
+          - unique
+          - not_null
+      - name: geo_key
+        description: "Original geography key from source"
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_disease
+    description: "Disease dimension with ICD-10 categories"
+    columns:
+      - name: disease_id
+        description: "Surrogate key for disease dimension"
+        tests:
+          - unique
+          - not_null
+      - name: icd10_key
+        description: "Original ICD-10 key from source"
+        tests:
+          - unique
+          - not_null
+
+  - name: dim_demographics
+    description: "Demographics dimension with sex and age"
+    columns:
+      - name: demographic_id
+        description: "Surrogate key for demographics dimension"
+        tests:
+          - unique
+          - not_null

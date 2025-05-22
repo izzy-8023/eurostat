@@ -26,11 +26,8 @@ def download_eurostat_catalog(output_file_path):
 
     print(f"Attempting to download Eurostat catalog to {output_file_path}...")
     try:
-        # Execute the command
         process = subprocess.run(curl_command, check=True, capture_output=True, text=True)
         print(f"Successfully downloaded catalog: {output_file_path}")
-        # You could check process.stdout or process.stderr if curl writes anything on success,
-        # but -o handles output directly to file. check=True handles errors.
         return True
     except subprocess.CalledProcessError as e:
         print(f"Error during curl command execution for catalog download:")
@@ -45,11 +42,11 @@ def download_eurostat_catalog(output_file_path):
         print(f"An unexpected error occurred during catalog download: {e}")
         return False
 
-# Get ID values containing HLTH
+# Get ID values containing HLTH in catalog.json file.
 def health_dataset_list(obj, keyword="HLTH"):
     """Recursively searches a nested object for 'id' keys whose string value contains the keyword."""
     matches = []
-    seen = set()  # Used for deduplication, prevents duplicates
+    seen = set()  # prevents duplicates
 
     def recurse(o, parent_label=None):
         if isinstance(o, dict):
@@ -121,13 +118,6 @@ def export_dataset_details_to_csv(dataset_details, csv_file_name):
     except Exception as e:
         print(f"An unexpected error occurred during CSV export: {e}")
 
-# --- Shared variables and Lock for processing ---
-# These are now managed within calculate_total_size_concurrently's scope if possible,
-# or passed back carefully. Let's return them from the function.
-# shared_data_lock = threading.Lock() # MOVED TO EDA.py
-
-# --- Worker Function (return size/status) ---
-# MOVED TO EDA.py: process_dataset_worker
 
 # --- Worker Function (for SAVING datasets) ---
 def download_dataset_worker(dataset_id, api_config, output_directory):
@@ -210,8 +200,6 @@ def load_and_filter_catalog(catalog_file_path, keyword_filter):
              return None # Indicate no datasets found
 
         print(f"Found {len(dataset_details_list)} matching datasets.")
-        # --- SRP Change: Removed internal call to export_dataset_details_to_csv ---
-        # --- SRP Change: Return the full details list ---
         return dataset_details_list
 
     except FileNotFoundError:
@@ -227,7 +215,7 @@ def load_and_filter_catalog(catalog_file_path, keyword_filter):
 
 
 
-# --- REFINED FUNCTION for RSS Feed Processing ---
+# --- RSS Feed Processing ---
 def fetch_and_parse_rss_feed(rss_url):
     """
     Fetches the Eurostat RSS update feed and extracts updated dataset identifiers

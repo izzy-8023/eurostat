@@ -44,16 +44,28 @@ def get_dataset_ids_to_process(params: dict, dag_run: DagRun | None = None) -> l
                     print(f"Warning: dataset_ids was a string but not a JSON list: {dataset_ids}. Using as single item list if non-empty.")
                     dataset_ids = [dataset_ids] if dataset_ids else []
             except json.JSONDecodeError:
-                print(f"Warning: dataset_ids string '{dataset_ids}' is not a valid JSON list. Treating as single item or empty.")
-                dataset_ids = [dataset_ids] if dataset_ids else []
+                print(f"Warning: dataset_ids string '{dataset_ids}' is not a valid JSON list. Attempting to split by comma.")
+                # Split by comma and strip whitespace from each potential ID
+                potential_ids = [item.strip() for item in dataset_ids.split(',')]
+                # Filter out any empty strings that might result from multiple commas or trailing commas
+                dataset_ids = [pid for pid in potential_ids if pid]
+                if not dataset_ids:
+                    print("After splitting by comma, no valid dataset IDs were found.")
         else:
-            print(f"Warning: dataset_ids is not a list: {type(dataset_ids)}. Attempting to clear.")
+            print(f"Warning: dataset_ids is not a list or string: {type(dataset_ids)}. Attempting to clear.")
             dataset_ids = []
     
-    dataset_ids = [str(item) for item in dataset_ids if item]
+    # Ensure all items in the list are strings and filter out empty ones
+    if isinstance(dataset_ids, list):
+        dataset_ids = [str(item).strip() for item in dataset_ids if str(item).strip()]
+    else: # If somehow it's still not a list, make it an empty one to prevent downstream errors
+        print(f"Critical: After processing, dataset_ids is still not a list ({type(dataset_ids)}). Defaulting to empty list.")
+        dataset_ids = []
     
     if not dataset_ids:
-        print("No dataset IDs found to process.")
+        print("No dataset IDs found to process after all parsing attempts.")
+    else:
+        print(f"Final dataset_ids to process: {dataset_ids}")
     
     return dataset_ids
 

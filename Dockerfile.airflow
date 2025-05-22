@@ -21,7 +21,7 @@ USER airflow
 
 # Copy your project's requirements file
 # Ensure this requirements.txt contains all dependencies for SourceData.py, jsonParser.py, load_to_postgres.py
-COPY requirements.txt /requirements.txt
+COPY requirements-airflow.txt /requirements.txt
 
 # Install Python dependencies
 # Use --user if you encounter permission issues, though PIP_USER might be set in base image
