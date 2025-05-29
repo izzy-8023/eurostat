@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Eurostat Data Pipeline{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="fas fa-tachometer-alt me-2"></i>
+        Dashboard
+    </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <div class="btn-group me-2">
+            <a href="{{ url_for('process_datasets') }}" class="btn btn-primary">
+                <i class="fas fa-play me-1"></i>
+                Start Processing
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card card-stats shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Health Datasets
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ stats.total_datasets }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-heart fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card card-stats shadow h-100 py-2" style="border-left-color: #28a745;">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Processed Datasets
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ stats.processed_datasets }}
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-check-circle fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-4 col-md-6 mb-4">
+        <div class="card card-stats shadow h-100 py-2" style="border-left-color: #17a2b8;">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Processing Rate
+                        </div>
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-auto">
+                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">
+                                    {% if stats.total_datasets > 0 %}
+                                        {{ "%.1f"|format((stats.processed_datasets / stats.total_datasets) * 100) }}%
+                                    {% else %}
+                                        0%
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="progress progress-sm mr-2">
+                                    <div class="progress-bar bg-info" role="progressbar" 
+                                         style="width: {% if stats.total_datasets > 0 %}{{ (stats.processed_datasets / stats.total_datasets) * 100 }}{% else %}0{% endif %}%" 
+                                         aria-valuenow="{{ stats.processed_datasets }}" 
+                                         aria-valuemin="0" 
+                                         aria-valuemax="{{ stats.total_datasets }}">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-chart-pie fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-rocket me-2"></i>
+                    Quick Actions
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-primary">
+                            <div class="card-body text-center">
+                                <i class="fas fa-heart fa-3x text-primary mb-3"></i>
+                                <h5>Browse Health Datasets</h5>
+                                <p class="text-muted">Explore available health datasets</p>
+                                <a href="{{ url_for('datasets') }}" class="btn btn-primary">
+                                    Browse Now
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-success">
+                            <div class="card-body text-center">
+                                <i class="fas fa-play fa-3x text-success mb-3"></i>
+                                <h5>Process Health Data</h5>
+                                <p class="text-muted">Start processing health datasets</p>
+                                <a href="{{ url_for('process_datasets') }}" class="btn btn-success">
+                                    Start Processing
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-info">
+                            <div class="card-body text-center">
+                                <i class="fas fa-cubes fa-3x text-info mb-3"></i>
+                                <h5>Topic Marts</h5>
+                                <p class="text-muted">View combined topic datasets</p>
+                                <a href="{{ url_for('topic_marts') }}" class="btn btn-info">
+                                    View Marts
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-warning">
+                            <div class="card-body text-center">
+                                <i class="fas fa-external-link-alt fa-3x text-warning mb-3"></i>
+                                <h5>Airflow UI</h5>
+                                <p class="text-muted">Monitor pipeline execution</p>
+                                <a href="http://localhost:8080" target="_blank" class="btn btn-warning">
+                                    Open Airflow
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-info-circle me-2"></i>
+                    System Status
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Database</span>
+                        <span class="badge bg-success">Connected</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>Airflow</span>
+                        <span class="badge bg-success">Running</span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between">
+                        <span>dbt Models</span>
+                        <span class="badge bg-info">{{ stats.processed_datasets }} Available</span>
+                    </div>
+                </div>
+                <hr>
+                <small class="text-muted">
+                    <i class="fas fa-clock me-1"></i>
+                    Auto-refreshes every 30 seconds
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

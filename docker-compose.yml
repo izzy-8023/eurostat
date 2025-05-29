@@ -1,72 +1,150 @@
+version: '3.8'
+
 services:
   app:
-    build: .  # Tells Docker Compose to build the image from the Dockerfile in the current directory
-    image: eurostat-processor # Optional: name the image built by compose
-    container_name: eurostat_app
+    build: .  # Uses the enhanced Dockerfile
+    image: eurostat-enhanced-processor # Updated image name
+    container_name: eurostat_app_processor
     depends_on:
-      - db          # Ensures 'db' service starts before 'app'
+      db:
+        condition: service_healthy
     environment:
-      # Pass database connection details to your Python app
-      # Your Python scripts will need to read these environment variables
+      # Enhanced pipeline database connection details
       - POSTGRES_HOST=db
       - POSTGRES_PORT=5432
       - POSTGRES_DB=eurostat_data
       - POSTGRES_USER=eurostat_user
       - POSTGRES_PASSWORD=mysecretpassword
-      - DBT_PROFILES_DIR=/app/dbt_project # Tells dbt where to find profiles.yml
+      - DBT_PROFILES_DIR=/app/dbt_project # For dbt integration
+      # Enhanced pipeline configuration
+      - USE_SHARED_MODULES=true
+      - ENHANCED_PIPELINE_MODE=true
+      - PYTHONUNBUFFERED=1 # For immediate log output
     volumes:
-      # Mount local directories for data persistence and script output
+      # Mount directories for data persistence and enhanced pipeline output
       - ./Data_Directory:/app/Data_Directory
       - ./Output_Parquet_Directory:/app/Output_Parquet_Directory
       - ./Output_Directory:/app/Output_Directory
-      - ./dbt_project:/app/dbt_project   # Mount your dbt project
-      - ./scripts:/app/scripts # Mount your scripts directory
-    # Optional: Mount current directory for live code changes during development
-    # - .:/app # Be careful with this in 'production' builds from compose
-    working_dir: /app         # Set a general working directory
-    command: ["tail", "-f", "/dev/null"]
+      - ./dbt_project:/app/dbt_project   # Mount dbt project for enhanced pipeline
+      - ./scripts:/app/scripts # Mount enhanced scripts with shared modules
+      # Enhanced pipeline specific directories
+      - ./logs:/app/logs # Enhanced logging
+      - ./backups:/app/backups # Cleaned up backups
+      - ./health_datasets.csv:/app/health_datasets.csv:ro
+      - ./eurostat_full_catalog.json:/app/eurostat_full_catalog.json:ro
+    working_dir: /app
+    command: ["tail", "-f", "/dev/null"]  # Keep container running for development
     networks:
       - eurostat_shared_network
 
   db:
-    image: postgres:13-alpine  # Use an official PostgreSQL image (choose a version)
-    container_name: eurostat_postgres_db
+    image: postgres:13-alpine  # Stable PostgreSQL version
+    container_name: eurostat_db
     environment:
-      # These are for PostgreSQL itself to initialize the database
+      # PostgreSQL configuration for enhanced pipeline
       - POSTGRES_DB=eurostat_data
       - POSTGRES_USER=eurostat_user
       - POSTGRES_PASSWORD=mysecretpassword
+      # Performance optimizations for enhanced pipeline
+      - POSTGRES_SHARED_PRELOAD_LIBRARIES=pg_stat_statements
+      - POSTGRES_MAX_CONNECTIONS=200
     volumes:
       - postgres_data:/var/lib/postgresql/data  # Persist PostgreSQL data
+      - ./sql_init:/docker-entrypoint-initdb.d # Initialization scripts
     ports:
-      - "5433:5432" # Map host port 5433 to container port 5432 (to avoid conflict if you have local PG)
+      - "5432:5432" # Map to 5433 to avoid conflicts with local PostgreSQL
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eurostat_user -d eurostat_data"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - eurostat_shared_network
 
-  pgadmin: # New service for pgAdmin
-    image: dpage/pgadmin4:latest # Use the official pgAdmin4 image
+  web:
+    build: .  # Uses the enhanced Dockerfile
+    image: eurostat-web-interface # Same image as app
+    container_name: eurostat_web_interface
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      # Database connection details (same as app)
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_DB=eurostat_data
+      - POSTGRES_USER=eurostat_user
+      - POSTGRES_PASSWORD=mysecretpassword
+      # Web interface specific environment
+      - FLASK_APP=web_interface/app.py
+      - FLASK_ENV=development
+      - FLASK_DEBUG=1
+      # Enhanced pipeline configuration
+      - USE_SHARED_MODULES=true
+      - ENHANCED_PIPELINE_MODE=true
+      - PYTHONPATH=/app/scripts:/app/scripts/shared:/app/web_interface # Ensure web_interface is in PYTHONPATH if needed
+      - PYTHONUNBUFFERED=1 # For immediate log output
+    volumes:
+      # Mount directories (same as app)
+      - ./Data_Directory:/app/Data_Directory
+      - ./Output_Parquet_Directory:/app/Output_Parquet_Directory
+      - ./Output_Directory:/app/Output_Directory
+      - ./dbt_project:/app/dbt_project
+      # - ./scripts:/app/scripts # Temporarily commented out for the web service to reduce reloads
+      - ./web_interface:/app/web_interface # Mount web interface
+      - ./logs:/app/logs
+      - ./health_datasets.csv:/app/health_datasets.csv:ro
+      - ./eurostat_full_catalog.json:/app/eurostat_full_catalog.json:ro
+      - ./grouped_datasets_summary.csv:/app/grouped_datasets_summary.csv:ro # Added for web interface access
+      # Mount Docker socket to allow docker commands
+      - /var/run/docker.sock:/var/run/docker.sock
+    working_dir: /app
+    # Run as root to access Docker socket, then switch to app user
+    user: "0:0"
+    command: ["sh", "-c", "python -m flask run --host=0.0.0.0 --port=5001"]
+    ports:
+      - "5001:5001" # Web interface port
+    networks:
+      - eurostat_shared_network
+      - airflow
+    # Health check for web interface
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://localhost:5001/health"] # Updated to /health endpoint
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  pgadmin:
+    image: dpage/pgadmin4:latest # Database administration interface
     container_name: eurostat_pgadmin
     environment:
-      # Set an email and password for the pgAdmin login
+      # pgAdmin configuration for enhanced pipeline monitoring
       - PGADMIN_DEFAULT_EMAIL=wangziwei1998@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=eurostat
-      # For pgAdmin to pre-configure servers, you can use PGADMIN_SETUP_SERVERS,
-      # or you can configure them manually via the web UI once pgAdmin is running.
-      # PGADMIN_CONFIG_SERVER_MODE: 'False' # Set to True to disable server mode if needed
+      - PGADMIN_CONFIG_SERVER_MODE=False # Simplified for development
     ports:
-      - "5050:80" # Map host port 5050 to pgAdmin's default container port 80
+      - "5050:80" # pgAdmin web interface
     volumes:
-      - pgadmin_data:/var/lib/pgadmin # Persist pgAdmin's own settings, server configs, etc.
+      - pgadmin_data:/var/lib/pgadmin # Persist pgAdmin settings
     depends_on:
-      - db # Optional, but good practice so pgAdmin starts after the DB
-    # restart: unless-stopped # Optional: restart policy
+      - db
     networks:
       - eurostat_shared_network
+    # Health check for pgAdmin
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/misc/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
 volumes:
-  postgres_data: # Defines a named volume for persistent DB data
-  pgadmin_data: # Define a named volume for pgAdmin data
+  postgres_data: # Persistent database storage
+  pgadmin_data: # Persistent pgAdmin configuration
 
 networks:
   eurostat_shared_network:
-    external: true 
+    name: eurostat_shared_network
+    driver: bridge # This will create the network if it doesn't exist
+  airflow:             # Add this
+    name: airflow      # Use the same name as in docker-compose-airflow.yaml
+    external: true     # Mark as external, assuming it's created by docker-compose-airflow.yaml 

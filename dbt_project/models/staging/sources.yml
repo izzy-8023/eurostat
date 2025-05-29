@@ -1,0 +1,657 @@
+version: 2
+sources:
+- name: eurostat_raw
+  description: Raw Eurostat data tables loaded by enhanced pipeline
+  schema: public
+  tables:
+  - name: hlth_cd_ainfo
+    description: Eurostat dataset HLTH_CD_AINFO
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: icd10_key
+      description: Code for icd10 dimension
+    - name: icd10_label
+      description: Label for icd10 dimension
+    - name: resid_key
+      description: Code for resid dimension
+    - name: resid_label
+      description: Label for resid dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_hahlpd
+    description: Eurostat dataset HLTH_EHIS_HAHLPD
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: assist_key
+      description: Code for assist dimension
+    - name: assist_label
+      description: Label for assist dimension
+    - name: lev_limit_key
+      description: Code for lev_limit dimension
+    - name: lev_limit_label
+      description: Label for lev_limit dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_hahlpe
+    description: Eurostat dataset HLTH_EHIS_HAHLPE
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: assist_key
+      description: Code for assist dimension
+    - name: assist_label
+      description: Label for assist dimension
+    - name: isced11_key
+      description: Code for isced11 dimension
+    - name: isced11_label
+      description: Label for isced11 dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_hahlpu
+    description: Eurostat dataset HLTH_EHIS_HAHLPU
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: assist_key
+      description: Code for assist dimension
+    - name: assist_label
+      description: Label for assist dimension
+    - name: deg_urb_key
+      description: Code for deg_urb dimension
+    - name: deg_urb_label
+      description: Label for deg_urb dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_fv3e
+    description: Eurostat dataset HLTH_EHIS_FV3E
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: n_portion_key
+      description: Code for n_portion dimension
+    - name: n_portion_label
+      description: Label for n_portion dimension
+    - name: isced11_key
+      description: Code for isced11 dimension
+    - name: isced11_label
+      description: Label for isced11 dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_fv3i
+    description: Eurostat dataset HLTH_EHIS_FV3I
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: n_portion_key
+      description: Code for n_portion dimension
+    - name: n_portion_label
+      description: Label for n_portion dimension
+    - name: quant_inc_key
+      description: Code for quant_inc dimension
+    - name: quant_inc_label
+      description: Label for quant_inc dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_fv3m
+    description: Eurostat dataset HLTH_EHIS_FV3M
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: n_portion_key
+      description: Code for n_portion dimension
+    - name: n_portion_label
+      description: Label for n_portion dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: bmi_key
+      description: Code for bmi dimension
+    - name: bmi_label
+      description: Label for bmi dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_fv3u
+    description: Eurostat dataset HLTH_EHIS_FV3U
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: n_portion_key
+      description: Code for n_portion dimension
+    - name: n_portion_label
+      description: Label for n_portion dimension
+    - name: deg_urb_key
+      description: Code for deg_urb dimension
+    - name: deg_urb_label
+      description: Label for deg_urb dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_sk3e
+    description: Eurostat dataset HLTH_EHIS_SK3E
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: smoking_key
+      description: Code for smoking dimension
+    - name: smoking_label
+      description: Label for smoking dimension
+    - name: isced11_key
+      description: Code for isced11 dimension
+    - name: isced11_label
+      description: Label for isced11 dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_sk3i
+    description: Eurostat dataset HLTH_EHIS_SK3I
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: smoking_key
+      description: Code for smoking dimension
+    - name: smoking_label
+      description: Label for smoking dimension
+    - name: quant_inc_key
+      description: Code for quant_inc dimension
+    - name: quant_inc_label
+      description: Label for quant_inc dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_sk3u
+    description: Eurostat dataset HLTH_EHIS_SK3U
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: smoking_key
+      description: Code for smoking dimension
+    - name: smoking_label
+      description: Label for smoking dimension
+    - name: deg_urb_key
+      description: Code for deg_urb dimension
+    - name: deg_urb_label
+      description: Label for deg_urb dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_sk2e
+    description: Eurostat dataset HLTH_EHIS_SK2E
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: isced11_key
+      description: Code for isced11 dimension
+    - name: isced11_label
+      description: Label for isced11 dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_sk2i
+    description: Eurostat dataset HLTH_EHIS_SK2I
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: unit_key
+      description: Code for unit dimension
+    - name: unit_label
+      description: Label for unit dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: quant_inc_key
+      description: Code for quant_inc dimension
+    - name: quant_inc_label
+      description: Label for quant_inc dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_de3
+    description: Eurostat dataset HLTH_EHIS_DE3
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: isced97_key
+      description: Code for isced97 dimension
+    - name: isced97_label
+      description: Label for isced97 dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier
+  - name: hlth_ehis_de4
+    description: Eurostat dataset HLTH_EHIS_DE4
+    columns:
+    - name: freq_key
+      description: Code for freq dimension
+    - name: freq_label
+      description: Label for freq dimension
+    - name: sex_key
+      description: Code for sex dimension
+    - name: sex_label
+      description: Label for sex dimension
+    - name: age_key
+      description: Code for age dimension
+    - name: age_label
+      description: Label for age dimension
+    - name: quantile_key
+      description: Code for quantile dimension
+    - name: quantile_label
+      description: Label for quantile dimension
+    - name: geo_key
+      description: Code for geo dimension
+    - name: geo_label
+      description: Label for geo dimension
+    - name: time_key
+      description: Code for time dimension
+    - name: time_label
+      description: Label for time dimension
+    - name: linear_index
+      description: Sequential index for the record
+    - name: value
+      description: Numeric value for the indicator
+    - name: status_code
+      description: Status code for the value
+    - name: status_label
+      description: Label for status dimension
+    - name: source_dataset_id
+      description: Source dataset identifier

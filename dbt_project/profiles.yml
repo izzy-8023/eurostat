@@ -5,11 +5,11 @@
       outputs:
         dev:
           type: postgres
-          host: "{{ env_var('POSTGRES_HOST') }}"         # Will use 'db' from docker-compose
-          user: "{{ env_var('POSTGRES_USER') }}"         # Will use 'eurostat_user'
-          password: "{{ env_var('POSTGRES_PASSWORD') }}" # Will use 'mysecretpassword'
-          port: "{{ env_var('POSTGRES_PORT', '5432') | int }}" # Will use 5432
-          dbname: "{{ env_var('POSTGRES_DB') }}"         # Will use 'eurostat_data'
+          host: "{{ env_var('EUROSTAT_POSTGRES_HOST') }}"         # Will use 'eurostat_postgres_db' from docker-compose
+          user: "{{ env_var('EUROSTAT_POSTGRES_USER') }}"         # Will use 'eurostat_user'
+          password: "{{ env_var('EUROSTAT_POSTGRES_PASSWORD') }}" # Will use 'mysecretpassword'
+          port: "{{ env_var('EUROSTAT_POSTGRES_PORT', '5432') | int }}" # Will use 5432
+          dbname: "{{ env_var('EUROSTAT_POSTGRES_DB') }}"         # Will use 'eurostat_data'
           schema: dbt_prod                             # Schema where dbt will build models
           threads: 4                                   # Number of concurrent threads
           # Optional settings:

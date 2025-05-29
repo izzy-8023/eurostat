@@ -74,16 +74,40 @@ x-airflow-common:
     _PIP_ADDITIONAL_REQUIREMENTS: ${_PIP_ADDITIONAL_REQUIREMENTS:-}
     # The following line can be used to set a custom config file, stored in the local config folder
     AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
+    # Eurostat database connection (separate from Airflow's own database)
+    EUROSTAT_POSTGRES_HOST: eurostat_postgres_db
+    EUROSTAT_POSTGRES_PORT: 5432
+    EUROSTAT_POSTGRES_DB: eurostat_data
+    EUROSTAT_POSTGRES_USER: eurostat_user
+    EUROSTAT_POSTGRES_PASSWORD: mysecretpassword
+    # Enhanced pipeline configuration
+    USE_SHARED_MODULES: 'true'
+    ENHANCED_PIPELINE_MODE: 'true'
+    PYTHONPATH: '/opt/airflow/scripts:/opt/airflow/scripts/shared'
+    # Enhanced DAG default variables (can be overridden in Airflow UI)
+    AIRFLOW_VAR_USE_SHARED_HEALTH_DATASETS: 'true'
+    AIRFLOW_VAR_ENHANCED_BATCH_SIZE: '2000'
+    AIRFLOW_VAR_ENABLE_STREAMING_LOAD: 'true'
+    AIRFLOW_VAR_AUTO_GENERATE_MARTS: 'true'
+    AIRFLOW_VAR_MAX_PARALLEL_DOWNLOADS: '5'
+    AIRFLOW_VAR_MAX_PARALLEL_LOADS: '3'
+    AIRFLOW_VAR_ENHANCED_DEBUG_MODE: 'false'
     # For local development only, be careful with secrets management for production
     # AWS_ACCESS_KEY_ID: ...
     # AWS_SECRET_ACCESS_KEY: ...
   volumes:
+    # Enhanced DAG and cleaned-up project structure
     - ./dags:/opt/airflow/dags:rw
-    - ./scripts:/opt/airflow/scripts:rw
+    - ./scripts:/opt/airflow/scripts:rw  # Enhanced scripts with shared modules
     - ./logs:/opt/airflow/logs:rw
     - ./config:/opt/airflow/config:rw
-    # You can add other volumes here if needed, for example, for plugins:
-    # - ./plugins:/opt/airflow/plugins:rw
+    - ./dbt_project:/opt/airflow/dbt_project:rw
+    - ./backups:/opt/airflow/backups:ro  # Cleaned-up backups (read-only)
+    # Enhanced pipeline specific volumes
+    - ./Data_Directory:/opt/airflow/Data_Directory:rw
+    - ./Output_Directory:/opt/airflow/Output_Directory:rw
+    - ./grouped_datasets_summary.csv:/opt/airflow/grouped_datasets_summary.csv:ro
+    - ./health_datasets.csv:/opt/airflow/health_datasets.csv:ro
   user: "${AIRFLOW_UID:-50000}:0"
   depends_on:
     &airflow-common-depends-on
@@ -365,5 +389,7 @@ volumes:
 networks:
   airflow:
     name: airflow
+    driver: bridge
   eurostat_shared_network:
-    external: true
+    name: eurostat_shared_network
+    external: true # Assumes this network is created by the main docker-compose.yml

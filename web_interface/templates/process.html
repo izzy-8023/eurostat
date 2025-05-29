@@ -1,0 +1,363 @@
+{% extends "base.html" %}
+
+{% block title %}Process Data - Eurostat Data Pipeline{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="fas fa-play me-2"></i>
+        Process Data
+    </h1>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-heart me-2"></i>
+                    Health Datasets Available for Processing
+                    {% if pagination %}
+                        <span class="badge bg-secondary ms-2">{{ pagination.total }} total</span>
+                    {% endif %}
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if datasets %}
+                    <!-- Search and Controls -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                                <input type="text" class="form-control" id="searchInput" 
+                                       placeholder="Search datasets..." 
+                                       value="{{ search_term or '' }}">
+                                <button class="btn btn-outline-secondary" type="button" onclick="searchDatasets()">
+                                    Search
+                                </button>
+                                {% if search_term %}
+                                <button class="btn btn-outline-danger" type="button" onclick="clearSearch()">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="d-flex justify-content-end align-items-center">
+                                <label class="me-2">Show:</label>
+                                <select class="form-select form-select-sm" style="width: auto;" onchange="changePerPage(this.value)">
+                                    <option value="20" {{ 'selected' if pagination.per_page == 20 }}>20</option>
+                                    <option value="50" {{ 'selected' if pagination.per_page == 50 }}>50</option>
+                                    <option value="100" {{ 'selected' if pagination.per_page == 100 }}>100</option>
+                                </select>
+                                <span class="ms-2 text-muted">per page</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form id="processingForm">
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="selectAll">
+                                <label class="form-check-label" for="selectAll">
+                                    <strong>Select All ({{ datasets|length }} on this page)</strong>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th width="50">Select</th>
+                                        <th>Dataset ID</th>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for dataset in datasets %}
+                                    <tr>
+                                        <td>
+                                            <div class="form-check">
+                                                <input class="form-check-input dataset-checkbox" 
+                                                       type="checkbox" 
+                                                       value="{{ dataset.id }}" 
+                                                       id="dataset_{{ dataset.id }}">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <code>{{ dataset.id }}</code>
+                                        </td>
+                                        <td>
+                                            <strong>{{ dataset.title[:60] }}{% if dataset.title|length > 60 %}...{% endif %}</strong>
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-info">{{ dataset.category }}</span>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        {% if pagination and pagination.total_pages > 1 %}
+                        <nav aria-label="Dataset pagination" class="mb-3">
+                            <ul class="pagination justify-content-center">
+                                <li class="page-item {{ 'disabled' if not pagination.has_prev }}">
+                                    <a class="page-link" href="{{ url_for('process_datasets', page=pagination.prev_num, per_page=pagination.per_page, search=search_term) if pagination.has_prev }}">
+                                        <i class="fas fa-chevron-left"></i> Previous
+                                    </a>
+                                </li>
+                                
+                                {% for page_num in range(1, pagination.total_pages + 1) %}
+                                    {% if page_num == pagination.page %}
+                                        <li class="page-item active">
+                                            <span class="page-link">{{ page_num }}</span>
+                                        </li>
+                                    {% elif page_num <= 3 or page_num > pagination.total_pages - 3 or (page_num >= pagination.page - 2 and page_num <= pagination.page + 2) %}
+                                        <li class="page-item">
+                                            <a class="page-link" href="{{ url_for('process_datasets', page=page_num, per_page=pagination.per_page, search=search_term) }}">{{ page_num }}</a>
+                                        </li>
+                                    {% elif page_num == 4 or page_num == pagination.total_pages - 3 %}
+                                        <li class="page-item disabled">
+                                            <span class="page-link">...</span>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                
+                                <li class="page-item {{ 'disabled' if not pagination.has_next }}">
+                                    <a class="page-link" href="{{ url_for('process_datasets', page=pagination.next_num, per_page=pagination.per_page, search=search_term) if pagination.has_next }}">
+                                        Next <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
+                        
+                        <!-- Page Info -->
+                        <div class="text-center text-muted mb-3">
+                            Showing {{ ((pagination.page - 1) * pagination.per_page + 1) }} to {{ (pagination.page * pagination.per_page) if pagination.page * pagination.per_page <= pagination.total else pagination.total }} of {{ pagination.total }} datasets
+                        </div>
+                        {% endif %}
+                        
+                        <div class="d-grid gap-2">
+                            <button type="button" class="btn btn-success btn-lg" onclick="startProcessing()">
+                                <i class="fas fa-rocket me-2"></i>
+                                Start Processing Selected Datasets
+                            </button>
+                        </div>
+                    </form>
+                {% else %}
+                    <div class="text-center py-4">
+                        <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                        <p class="text-muted">No health datasets available for processing.</p>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Processing Information
+                </h6>
+            </div>
+            <div class="card-body">
+                <h6>What happens when you process datasets?</h6>
+                <ul class="list-unstyled">
+                    <li><i class="fas fa-check text-success me-2"></i>Download dataset from Eurostat</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Detect schema automatically</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Create staging tables</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Generate dbt models</li>
+                    <li><i class="fas fa-check text-success me-2"></i>Create topic marts</li>
+                </ul>
+                
+                <hr>
+                
+                <h6>Quick Actions:</h6>
+                <div class="mb-2">
+                    <button class="btn btn-sm btn-outline-primary" onclick="selectRecommended()">
+                        Select Key Datasets
+                    </button>
+                </div>
+                <div class="mb-2">
+                    <button class="btn btn-sm btn-outline-info" onclick="selectCurrentPage()">
+                        Select Current Page
+                    </button>
+                </div>
+                <small class="text-muted">
+                    <strong>Key Datasets:</strong> Selects 4 important health datasets (BMI, Mental Health, Work Absence, Fruit/Vegetables) for comprehensive analysis.
+                </small>
+                
+                {% if pagination %}
+                <hr>
+                <h6>Dataset Statistics:</h6>
+                <ul class="list-unstyled small">
+                    <li><strong>Total Available:</strong> {{ pagination.total }}</li>
+                    <li><strong>Current Page:</strong> {{ pagination.page }} of {{ pagination.total_pages }}</li>
+                    <li><strong>Per Page:</strong> {{ pagination.per_page }}</li>
+                    {% if search_term %}
+                    <li><strong>Search:</strong> "{{ search_term }}"</li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card shadow">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-clock me-2"></i>
+                    Processing Status
+                </h6>
+            </div>
+            <div class="card-body">
+                <div id="processingStatus" style="display: none;">
+                    <div class="alert alert-info">
+                        <i class="fas fa-spinner fa-spin me-2"></i>
+                        Processing in progress...
+                    </div>
+                    <div class="progress mb-3">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                             role="progressbar" style="width: 100%"></div>
+                    </div>
+                    <p class="mb-0">
+                        <strong>Run ID:</strong> <span id="runId"></span>
+                    </p>
+                    <p class="mb-0">
+                        <strong>Datasets:</strong> <span id="datasetCount"></span>
+                    </p>
+                </div>
+                
+                <div id="noProcessing">
+                    <p class="text-muted mb-0">No processing jobs running.</p>
+                    <small class="text-muted">
+                        Select datasets and click "Start Processing" to begin.
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+// Select all functionality
+document.getElementById('selectAll').addEventListener('change', function() {
+    const checkboxes = document.querySelectorAll('.dataset-checkbox');
+    checkboxes.forEach(checkbox => {
+        checkbox.checked = this.checked;
+    });
+});
+
+// Search functionality
+function searchDatasets() {
+    const searchTerm = document.getElementById('searchInput').value;
+    const currentParams = new URLSearchParams(window.location.search);
+    currentParams.set('search', searchTerm);
+    currentParams.set('page', '1'); // Reset to first page
+    window.location.href = '{{ url_for("process_datasets") }}?' + currentParams.toString();
+}
+
+// Change per page
+function changePerPage(perPage) {
+    const currentParams = new URLSearchParams(window.location.search);
+    currentParams.set('per_page', perPage);
+    currentParams.set('page', '1'); // Reset to first page
+    window.location.href = '{{ url_for("process_datasets") }}?' + currentParams.toString();
+}
+
+// Enter key search
+document.getElementById('searchInput').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        searchDatasets();
+    }
+});
+
+// Clear search
+function clearSearch() {
+    const currentParams = new URLSearchParams(window.location.search);
+    currentParams.delete('search');
+    currentParams.set('page', '1');
+    window.location.href = '{{ url_for("process_datasets") }}?' + currentParams.toString();
+}
+
+// Select recommended datasets
+function selectRecommended() {
+    // Clear all first
+    document.querySelectorAll('.dataset-checkbox').forEach(cb => cb.checked = false);
+    
+    // Select key health datasets
+    const recommended = ['HLTH_EHIS_BM1I', 'HLTH_EHIS_MH1E', 'HLTH_EHIS_AW1D', 'HLTH_EHIS_FV3E'];
+    recommended.forEach(id => {
+        const checkbox = document.getElementById('dataset_' + id);
+        if (checkbox) checkbox.checked = true;
+    });
+}
+
+// Select all datasets on current page
+function selectCurrentPage() {
+    document.querySelectorAll('.dataset-checkbox').forEach(cb => cb.checked = true);
+    document.getElementById('selectAll').checked = true;
+}
+
+// Start processing
+function startProcessing() {
+    const selectedDatasets = [];
+    document.querySelectorAll('.dataset-checkbox:checked').forEach(checkbox => {
+        selectedDatasets.push(checkbox.value);
+    });
+    
+    if (selectedDatasets.length === 0) {
+        alert('Please select at least one dataset to process.');
+        return;
+    }
+    
+    // Show processing status
+    document.getElementById('noProcessing').style.display = 'none';
+    document.getElementById('processingStatus').style.display = 'block';
+    document.getElementById('datasetCount').textContent = selectedDatasets.length;
+    
+    // Make API call
+    fetch('/api/trigger_processing', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            dataset_ids: selectedDatasets
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            document.getElementById('runId').textContent = data.run_id;
+            
+            // Show success message
+            setTimeout(() => {
+                alert('Processing started successfully! Check the Airflow UI for progress.');
+            }, 1000);
+        } else {
+            alert('Error starting processing: ' + data.error);
+            // Hide processing status
+            document.getElementById('processingStatus').style.display = 'none';
+            document.getElementById('noProcessing').style.display = 'block';
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error starting processing. Please try again.');
+        // Hide processing status
+        document.getElementById('processingStatus').style.display = 'none';
+        document.getElementById('noProcessing').style.display = 'block';
+    });
+}
+</script>
+{% endblock %} 

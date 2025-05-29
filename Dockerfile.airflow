@@ -1,16 +1,14 @@
-# Dockerfile.airflow
+# Enhanced Eurostat Airflow Dockerfile - OPTIMIZED FOR FAST BUILDS
+# Optimized for the cleaned-up project with enhanced DAG and shared modules
 
-# Start with the official Apache Airflow image version specified in your docker-compose-airflow.yaml
-# Make sure this matches the AIRFLOW_IMAGE_NAME or the default (e.g., apache/airflow:3.0.1)
 FROM apache/airflow:3.0.1
 
 # Set the USER to root temporarily to install system dependencies
 USER root
 
-# Install system dependencies that your scripts might need
-# - curl (if SourceData.py uses it)
-# - libpq-dev (for psycopg2, if your scripts connect to PostgreSQL directly)
-# The base Airflow image might already have some of these.
+# Install system dependencies for enhanced scripts (cached layer)
+# - curl for SourceData.py data downloads
+# - libpq-dev for psycopg2 (PostgreSQL connections)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     libpq-dev \
@@ -19,26 +17,38 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Switch back to the airflow user
 USER airflow
 
-# Copy your project's requirements file
-# Ensure this requirements.txt contains all dependencies for SourceData.py, jsonParser.py, load_to_postgres.py
+# OPTIMIZATION: Copy requirements FIRST for better layer caching
+# This layer will only rebuild if requirements change
 COPY requirements-airflow.txt /requirements.txt
 
-# Install Python dependencies
-# Use --user if you encounter permission issues, though PIP_USER might be set in base image
+# OPTIMIZATION: Install dependencies from requirements file
+# Use Flask 3.x compatible versions of all dependencies
 RUN pip install --no-cache-dir -r /requirements.txt
 
-# Copy your Python scripts into a directory within the Airflow image.
-# We'll put them in /opt/airflow/scripts for organization.
-# Make sure your scripts (SourceData.py, jsonParser.py, load_to_postgres.py)
-# are in a local 'scripts' directory in your project root.
+# OPTIMIZATION: Install Airflow providers separately (they're often already included)
+RUN pip install --no-cache-dir --no-deps \
+    apache-airflow-providers-postgres>=5.0.0 \
+    apache-airflow-providers-common-sql>=1.0.0 \
+    || echo "Providers already included in base image"
+
+# Set Python path EARLY for better caching
+ENV PYTHONPATH="${PYTHONPATH}:/opt/airflow/scripts:/opt/airflow/scripts/shared"
+
+# Set environment variables for enhanced pipeline (cached layer)
+ENV ENHANCED_PIPELINE_MODE=true
+ENV USE_SHARED_MODULES=true
+ENV AIRFLOW_VAR_USE_SHARED_HEALTH_DATASETS=true
+ENV AIRFLOW_VAR_ENHANCED_BATCH_SIZE=2000
+ENV AIRFLOW_VAR_ENABLE_STREAMING_LOAD=true
+
+# Create necessary directories (cached layer)
+RUN mkdir -p \
+    /opt/airflow/temp_enhanced_downloads \
+    /opt/airflow/logs/enhanced_pipeline \
+    /opt/airflow/data_cache
+
+# OPTIMIZATION: Copy scripts LAST (most frequently changed)
+# This ensures script changes don't invalidate dependency cache
 COPY ./scripts/ /opt/airflow/scripts/
 
-# If you have other Python modules or files at the root that your scripts import, copy them too.
-# For example, if SourceData.py or jsonParser.py were in the root and are imported by DAGs or other scripts:
-# COPY SourceData.py /opt/airflow/app/SourceData.py
-# COPY jsonParser.py /opt/airflow/app/jsonParser.py
-# And then you might need to add /opt/airflow/app to PYTHONPATH if they are not in 'scripts'
-# ENV PYTHONPATH="${PYTHONPATH}:/opt/airflow/app"
-
-# Your DAGs will be mounted via volumes by docker-compose-airflow.yaml,
-# so no need to COPY dags/ here.
+# The enhanced DAG will be mounted via volumes in docker-compose-airflow.yaml

@@ -1,0 +1,156 @@
+{% extends "base.html" %}
+
+{% block title %}{{ dataset_id }} - Dataset Detail{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="fas fa-database me-2"></i>
+        Dataset: <code>{{ dataset_id }}</code>
+    </h1>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <a href="{{ url_for('datasets') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-1"></i>
+            Back to Datasets
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Dataset Information
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if dataset_info %}
+                    <h5>{{ dataset_info.title }}</h5>
+                    {% if dataset_info.description %}
+                        <p class="text-muted">{{ dataset_info.description }}</p>
+                    {% endif %}
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <strong>Category:</strong> 
+                            <span class="badge bg-secondary">{{ dataset_info.category }}</span>
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Last Updated:</strong> {{ dataset_info.last_updated or 'N/A' }}
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-muted">Dataset information not available.</p>
+                {% endif %}
+            </div>
+        </div>
+        
+        {% if processed and table_info %}
+        <div class="card shadow">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-table me-2"></i>
+                    Table Schema
+                </h6>
+            </div>
+            <div class="card-body">
+                <p><strong>Total Rows:</strong> {{ "{:,}".format(table_info.row_count) }}</p>
+                
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>Column Name</th>
+                                <th>Data Type</th>
+                                <th>Nullable</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for column in table_info.columns %}
+                            <tr>
+                                <td><code>{{ column.column_name }}</code></td>
+                                <td>{{ column.data_type }}</td>
+                                <td>
+                                    {% if column.is_nullable == 'YES' %}
+                                        <span class="badge bg-warning">Yes</span>
+                                    {% else %}
+                                        <span class="badge bg-success">No</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card shadow mb-4">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-cog me-2"></i>
+                    Processing Status
+                </h6>
+            </div>
+            <div class="card-body">
+                {% if processed %}
+                    <div class="alert alert-success">
+                        <i class="fas fa-check-circle me-2"></i>
+                        <strong>Processed</strong><br>
+                        This dataset has been processed and is available in the database.
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="/api/query_mart/{{ dataset_id.lower() }}?limit=10" 
+                           class="btn btn-outline-primary" target="_blank">
+                            <i class="fas fa-eye me-1"></i>
+                            View Sample Data
+                        </a>
+                    </div>
+                {% else %}
+                    <div class="alert alert-warning">
+                        <i class="fas fa-exclamation-triangle me-2"></i>
+                        <strong>Not Processed</strong><br>
+                        This dataset is available but hasn't been processed yet.
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('process_datasets') }}" class="btn btn-success">
+                            <i class="fas fa-play me-1"></i>
+                            Process This Dataset
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card shadow">
+            <div class="card-header">
+                <h6 class="m-0 font-weight-bold">
+                    <i class="fas fa-link me-2"></i>
+                    External Links
+                </h6>
+            </div>
+            <div class="card-body">
+                <div class="d-grid gap-2">
+                    <a href="https://ec.europa.eu/eurostat/databrowser/view/{{ dataset_id }}/default/table" 
+                       target="_blank" class="btn btn-outline-info">
+                        <i class="fas fa-external-link-alt me-1"></i>
+                        View on Eurostat
+                    </a>
+                    <a href="https://ec.europa.eu/eurostat/web/products-datasets/-/{{ dataset_id.lower() }}" 
+                       target="_blank" class="btn btn-outline-secondary">
+                        <i class="fas fa-file-alt me-1"></i>
+                        Dataset Info
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

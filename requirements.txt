@@ -13,3 +13,10 @@ ijson~=3.3.0          # For jsonParser.py
 pandas~=2.2.0         # For general data manipulation in scripts
 pyarrow~=20.0.0       # For Parquet handling or as a pandas accelerator
 requests~=2.32.0      # If scripts like SourceData.py make direct HTTP calls
+
+# Web interface dependencies
+flask~=3.0.0          # Web framework for the web interface
+gunicorn~=21.2.0      # WSGI server for production deployment
+
+# Added for Flask reloader
+watchdog
