@@ -1,0 +1,212 @@
+version: 2
+models:
+- name: dim_geo
+  description: Conformed dimension for geo
+  columns:
+  - name: geo_code
+    description: Primary key (geo_code) for geo.
+    tests:
+    - unique
+    - not_null
+  - name: geo_name
+    description: Descriptive name for geo (geo_name).
+- name: dim_sex
+  description: Conformed dimension for sex
+  columns:
+  - name: sex_code
+    description: Primary key (sex_code) for sex.
+    tests:
+    - unique
+    - not_null
+  - name: sex_name
+    description: Descriptive name for sex (sex_name).
+- name: dim_age
+  description: Conformed dimension for age
+  columns:
+  - name: age_code
+    description: Primary key (age_code) for age.
+    tests:
+    - unique
+    - not_null
+  - name: age_name
+    description: Descriptive name for age (age_name).
+- name: dim_time
+  description: Conformed dimension for time
+  columns:
+  - name: time_code
+    description: Primary key (time_code) for time.
+    tests:
+    - unique
+    - not_null
+  - name: time_name
+    description: Descriptive name for time (time_name).
+- name: dim_freq
+  description: Conformed dimension for freq
+  columns:
+  - name: freq_code
+    description: Primary key (freq_code) for freq.
+    tests:
+    - unique
+    - not_null
+  - name: freq_name
+    description: Descriptive name for freq (freq_name).
+- name: dim_resid
+  description: Conformed dimension for resid
+  columns:
+  - name: resid_code
+    description: Primary key (resid_code) for resid.
+    tests:
+    - unique
+    - not_null
+  - name: resid_name
+    description: Descriptive name for resid (resid_name).
+- name: dim_unit
+  description: Conformed dimension for unit
+  columns:
+  - name: unit_code
+    description: Primary key (unit_code) for unit.
+    tests:
+    - unique
+    - not_null
+  - name: unit_name
+    description: Descriptive name for unit (unit_name).
+- name: dim_icd10
+  description: Conformed dimension for icd10
+  columns:
+  - name: icd10_code
+    description: Primary key (icd10_code) for icd10.
+    tests:
+    - unique
+    - not_null
+  - name: icd10_name
+    description: Descriptive name for icd10 (icd10_name).
+- name: dim_isced11
+  description: Conformed dimension for isced11
+  columns:
+  - name: isced11_code
+    description: Primary key (isced11_code) for isced11.
+    tests:
+    - unique
+    - not_null
+  - name: isced11_name
+    description: Descriptive name for isced11 (isced11_name).
+- name: dim_hlth_pb
+  description: Conformed dimension for hlth_pb
+  columns:
+  - name: hlth_pb_code
+    description: Primary key (hlth_pb_code) for hlth_pb.
+    tests:
+    - unique
+    - not_null
+  - name: hlth_pb_name
+    description: Descriptive name for hlth_pb (hlth_pb_name).
+- name: dim_lev_limit
+  description: Conformed dimension for lev_limit
+  columns:
+  - name: lev_limit_code
+    description: Primary key (lev_limit_code) for lev_limit.
+    tests:
+    - unique
+    - not_null
+  - name: lev_limit_name
+    description: Descriptive name for lev_limit (lev_limit_name).
+- name: dim_deg_urb
+  description: Conformed dimension for deg_urb
+  columns:
+  - name: deg_urb_code
+    description: Primary key (deg_urb_code) for deg_urb.
+    tests:
+    - unique
+    - not_null
+  - name: deg_urb_name
+    description: Descriptive name for deg_urb (deg_urb_name).
+- name: dim_assist
+  description: Conformed dimension for assist
+  columns:
+  - name: assist_code
+    description: Primary key (assist_code) for assist.
+    tests:
+    - unique
+    - not_null
+  - name: assist_name
+    description: Descriptive name for assist (assist_name).
+- name: dim_smoking
+  description: Conformed dimension for smoking
+  columns:
+  - name: smoking_code
+    description: Primary key (smoking_code) for smoking.
+    tests:
+    - unique
+    - not_null
+  - name: smoking_name
+    description: Descriptive name for smoking (smoking_name).
+- name: dim_quant_inc
+  description: Conformed dimension for quant_inc
+  columns:
+  - name: quant_inc_code
+    description: Primary key (quant_inc_code) for quant_inc.
+    tests:
+    - unique
+    - not_null
+  - name: quant_inc_name
+    description: Descriptive name for quant_inc (quant_inc_name).
+- name: dim_n_portion
+  description: Conformed dimension for n_portion
+  columns:
+  - name: n_portion_code
+    description: Primary key (n_portion_code) for n_portion.
+    tests:
+    - unique
+    - not_null
+  - name: n_portion_name
+    description: Descriptive name for n_portion (n_portion_name).
+- name: dim_isced97
+  description: Conformed dimension for isced97
+  columns:
+  - name: isced97_code
+    description: Primary key (isced97_code) for isced97.
+    tests:
+    - unique
+    - not_null
+  - name: isced97_name
+    description: Descriptive name for isced97 (isced97_name).
+- name: dim_quantile
+  description: Conformed dimension for quantile
+  columns:
+  - name: quantile_code
+    description: Primary key (quantile_code) for quantile.
+    tests:
+    - unique
+    - not_null
+  - name: quantile_name
+    description: Descriptive name for quantile (quantile_name).
+- name: dim_bmi
+  description: Conformed dimension for bmi
+  columns:
+  - name: bmi_code
+    description: Primary key (bmi_code) for bmi.
+    tests:
+    - unique
+    - not_null
+  - name: bmi_name
+    description: Descriptive name for bmi (bmi_name).
+- name: dim_lev_diff
+  description: Conformed dimension for lev_diff
+  columns:
+  - name: lev_diff_code
+    description: Primary key (lev_diff_code) for lev_diff.
+    tests:
+    - unique
+    - not_null
+  - name: lev_diff_name
+    description: Descriptive name for lev_diff (lev_diff_name).
+- name: dim_yes_no
+  description: Conformed dimension for yes_no
+  columns:
+  - name: yes_no_code
+    description: Primary key (yes_no_code) for yes_no.
+    tests:
+    - unique
+    - not_null
+  - name: yes_no_name
+    description: Descriptive name for yes_no (yes_no_name).

@@ -4,15 +4,21 @@ Absence from work due to personal health problems,3,"HLTH_EHIS_AW1D,HLTH_EHIS_AW
 Activity rate of people,1,HLTH_DLM020
 "Arrears (mortgage or rent, utility bills or hire purchase)",1,HLTH_DM050
 Available beds in hospitals,1,HLTH_RS_BDSRG2
+Beds in nursing and other residential long-term care facilities,1,HLTH_RS_BDLTC
 Body mass index (BMI),8,"HLTH_EHIS_BM1B,HLTH_EHIS_BM1C,HLTH_EHIS_BM1D,HLTH_EHIS_BM1E,HLTH_EHIS_BM1I,HLTH_EHIS_BM1U,HLTH_EHIS_DE1,HLTH_EHIS_DE2"
+Breast cancer and cervical cancer screenings - historical data (2000-2021),1,HLTH_PS_SCRE
 Causes of death,8,"HLTH_CD_ACDR,HLTH_CD_YCDRF,HLTH_CD_YCDRM,HLTH_CD_YCDRT,HLTH_CD_YNRF,HLTH_CD_YNRM,HLTH_CD_YNRT,HLTH_CD_YSDR1"
+Causes of death - absolute number,1,HLTH_CD_ANR
 Causes of death - crude death rate,2,"HLTH_CD_ACDR2,HLTH_CD_YCDR2"
 Causes of death - death,1,HLTH_CD_MRO
 Causes of death - deaths,2,"HLTH_CD_ARO,HLTH_CD_YRO"
 Causes of death - infant mortality,4,"HLTH_CD_AINFO,HLTH_CD_AINFR,HLTH_CD_YINFO,HLTH_CD_YINFR"
 Causes of death - potential years of life lost,1,HLTH_CD_APYLL
-Causes of death - standardised death rate,3,"HLTH_CD_ASDR2,HLTH_CD_MSDR2,HLTH_CD_YSDR2"
+Causes of death - standardised death rate,4,"HLTH_CD_ASDR,HLTH_CD_ASDR2,HLTH_CD_MSDR2,HLTH_CD_YSDR2"
 Causes of death - years and potential years of life lost,1,HLTH_CD_YPYLL
+Consultation of a dentist per inhabitant,1,HLTH_HC_DENT
+Consultation of a medical doctor (in private practice or as outpatient) per inhabitant - historical data (1960-2013),1,HLTH_HC_PHYS
+Consultation of a medical doctor per inhabitant,1,HLTH_HC_PHYS2
 Consumption of fruits,1,HLTH_EHIS_DE7
 Consumption of vegetables,1,HLTH_EHIS_DE8
 Correction of vision problems,2,"HLTH_EHIS_VIE,HLTH_EHIS_VIU"
@@ -22,6 +28,11 @@ Daily consumption of fruit and vegetables,7,"HLTH_EHIS_FV3E,HLTH_EHIS_FV3I,HLTH_
 Daily exposure to tobacco smoke indoors,2,"HLTH_EHIS_SK4E,HLTH_EHIS_SK4U"
 Daily smokers,1,HLTH_EHIS_DE5
 Daily smokers of cigarettes,5,"HLTH_EHIS_SK3E,HLTH_EHIS_SK3I,HLTH_EHIS_SK3U,HLTH_EHIS_DE3,HLTH_EHIS_DE4"
+Deaths of residents related to dementias including Alzheimer,1,HLTH_CD_DAR
+Deaths related to infectious diseases,1,HLTH_CD_IDO
+Deaths related to transport accidents occurring in the country,1,HLTH_CD_TRO
+Detailed deaths related to transport accidents occurring in the EU,1,HLTH_CD_TROEU
+Devices for medical imaging,1,HLTH_RS_MEDIM
 Difficulties in household activities,5,"HLTH_EHIS_HA1D,HLTH_EHIS_HA1E,HLTH_EHIS_HA1HCS,HLTH_EHIS_HA1I,HLTH_EHIS_HA1U"
 Difficulties in personal care activities,5,"HLTH_EHIS_PC1D,HLTH_EHIS_PC1E,HLTH_EHIS_PC1HCS,HLTH_EHIS_PC1I,HLTH_EHIS_PC1U"
 Difficulties in personal care activities or household activities,5,"HLTH_EHIS_TAD,HLTH_EHIS_TAE,HLTH_EHIS_TAHCS,HLTH_EHIS_TAI,HLTH_EHIS_TAU"
@@ -32,6 +43,7 @@ Effort involved in performing work-related physical activity,3,"HLTH_EHIS_PE1E,H
 Employed people having a longstanding health problem or a difficulty in basic activities,1,HLTH_DLM180
 Employment,7,"HLTH_DLM050,HLTH_DLM080,HLTH_DLM090,HLTH_DLM100,HLTH_DLM110,HLTH_DLM120,HLTH_DLM130"
 Employment rate of people,1,HLTH_DLM010
+End-stage renal failure (ESRF) patients - historical data (1980-2014),1,HLTH_CO_REN
 Expenditure for selected health care functions,2,"HLTH_SHA11_HCHF,HLTH_SHA11_HCHP"
 Expenditure for selected health care providers,1,HLTH_SHA11_HPHF
 "Fetal, peri- and neonatal mortality rates",2,"HLTH_CD_APERRTO,HLTH_CD_YPERRTO"
@@ -48,13 +60,26 @@ Frequency of heavy episodic drinking,3,"HLTH_EHIS_AL3E,HLTH_EHIS_AL3I,HLTH_EHIS_
 Functional limitations,3,"HLTH_EHIS_PL1D,HLTH_EHIS_PL1E,HLTH_EHIS_PL1U"
 Hazardous alcohol drinkers,3,"HLTH_EHIS_AL2E,HLTH_EHIS_AL2I,HLTH_EHIS_AL2U"
 Health care expenditure,3,"HLTH_SHA11_HC,HLTH_SHA11_HF,HLTH_SHA11_HP"
-Health personnel,1,HLTH_RS_PRSRG
+"Health care expenditure - % of GDP, ENP-East countries",1,ENPE_HLTH_EXP
+Health graduates,1,HLTH_RS_GRD2
+Health graduates - historical data (1980-2021),1,HLTH_RS_GRD
+Health impacts of air pollution,1,HLTH_CD_IAP
+Health personnel,2,"HLTH_RS_PRS2,HLTH_RS_PRSRG"
+Health personnel (excluding nursing and caring professionals) - historical data (1980-2021),1,HLTH_RS_PRS1
+Health personnel employed in hospital - historical data (1980-2021),1,HLTH_RS_PRSHP1
+Health workforce migration,1,HLTH_RS_WKMG2
+Health workforce migration - historical data (2000-2021),1,HLTH_RS_WKMG
+Healthy life expectancy based on self-perceived health,1,HLTH_SILC_17
 Healthy life years,1,HLTH_HLYE
+Healthy life years (1995 - 2003),1,HLTH_HLYE_H
 Hospital beds,4,"HLTH_RS_BDS,HLTH_RS_BDS1,HLTH_RS_BDS2,HLTH_RS_BDSRG"
-Hospital days of in-patients,3,"HLTH_CO_HOSDAYF,HLTH_CO_HOSDAYM,HLTH_CO_HOSDAYT"
+Hospital days of in-patients,4,"HLTH_CO_HOSDAY,HLTH_CO_HOSDAYF,HLTH_CO_HOSDAYM,HLTH_CO_HOSDAYT"
 Hospital discharges,16,"HLTH_CO_DISCH1,HLTH_CO_DISCH1F,HLTH_CO_DISCH1M,HLTH_CO_DISCH1T,HLTH_CO_DISCH2,HLTH_CO_DISCH2F,HLTH_CO_DISCH2M,HLTH_CO_DISCH2T,HLTH_CO_DISCH3,HLTH_CO_DISCH3F,HLTH_CO_DISCH3M,HLTH_CO_DISCH3T,HLTH_CO_DISCH4,HLTH_CO_DISCH4F,HLTH_CO_DISCH4M,HLTH_CO_DISCH4T"
+Hospital discharges and length of stay for inpatient and curative care - historical data (until 2021),1,HLTH_CO_DISCHLS
+Hospital discharges and length of stay for inpatient curative care,1,HLTH_CO_INPAGG
+Hospital employment,1,HLTH_RS_PRSHP2
 Housing cost overburden rate,1,HLTH_DHC060
-In-patient average length of stay (days),3,"HLTH_CO_INPSTF,HLTH_CO_INPSTM,HLTH_CO_INPSTT"
+In-patient average length of stay (days),4,"HLTH_CO_INPST,HLTH_CO_INPSTF,HLTH_CO_INPSTM,HLTH_CO_INPSTT"
 In-work at-risk-of-poverty rate,1,HLTH_DPE050
 "Inability to afford a meal with meat, chicken, fish (or vegetarian equivalent) every second day",1,HLTH_DM030
 Inability to afford paying for one week annual holiday away from home,1,HLTH_DM020
@@ -70,13 +95,16 @@ Limitations in personal care activities,1,HLTH_EHIS_ST10
 Long-term care beds in nursing and residential care facilities,1,HLTH_RS_BDSNS
 Medical intervention for an accident resulting in injury,1,HLTH_EHIS_AC2E
 Medical technologies - examinations,1,HLTH_CO_EXAM
+Medical technology - historical data (1980-2016),1,HLTH_RS_EQUIP
 Need for help with household activities,3,"HLTH_EHIS_HAHLPD,HLTH_EHIS_HAHLPE,HLTH_EHIS_HAHLPU"
 Need for help with personal care activities,3,"HLTH_EHIS_PCHLPD,HLTH_EHIS_PCHLPE,HLTH_EHIS_PCHLPU"
 Need for help with personal care or household activities,3,"HLTH_EHIS_TADLH,HLTH_EHIS_TADLHI,HLTH_EHIS_TADLHU"
 Noise from neighbours or from the street,1,HLTH_DHC110
+"Non-residents among all hospital discharges, %",1,HLTH_CO_DISCHNR
 Not employed people but having a previous work experience,1,HLTH_DLM070
 Not employed people having a longstanding health problem or a difficulty in basic activities,1,HLTH_DLM190
 Nurses,1,HLTH_RS_NURSE
+Nursing and caring professionals - historical data (1980-2021),1,HLTH_RS_PRSNS
 Overall perceived social support,5,"HLTH_EHIS_SS1B,HLTH_EHIS_SS1C,HLTH_EHIS_SS1D,HLTH_EHIS_SS1E,HLTH_EHIS_SS1U"
 Overall satisfaction with the dwelling,1,HLTH_DHC020
 Overcrowding rate,1,HLTH_DHC040
@@ -135,9 +163,10 @@ Practice of daily physical activity,1,HLTH_EHIS_DE9
 Prevalence of disability,6,"HLTH_DB_EMACAG,HLTH_DB_EMEDAG,HLTH_DB_EMMAAG,HLTH_DB_EMNAAG,HLTH_DB_EMOCAG,HLTH_DB_EMRENA"
 Prevalence of the main basic activity difficulties,1,HLTH_DP050
 Prevalence of the main longstanding health problems,1,HLTH_DP030
+Preventive cancer screenings - programme data,1,HLTH_PS_PREV
 Psychological distress,1,HLTH_EHIS_ST7
 Psychological well-being (energy and vitality index),1,HLTH_EHIS_ST8
-Revenues of health care financing schemes,1,HLTH_SHA11_HFFS
+Revenues of health care financing schemes,2,"HLTH_SHA11_FS,HLTH_SHA11_HFFS"
 Self-perceived health,7,"HLTH_SILC_01,HLTH_SILC_02,HLTH_SILC_10,HLTH_SILC_18,HLTH_SILC_23,HLTH_SILC_24,HLTH_DH010"
 Self-perceived long-standing limitations in usual activities due to health problem,1,HLTH_SILC_06
 Self-reported breast examination,1,HLTH_EHIS_HC2
@@ -178,6 +207,8 @@ Share of persons who cannot afford a telephone,1,HLTH_DM070
 Share of persons who cannot afford a washing machine,1,HLTH_DM100
 Smoking of tobacco products,5,"HLTH_EHIS_SK1B,HLTH_EHIS_SK1C,HLTH_EHIS_SK1E,HLTH_EHIS_SK1I,HLTH_EHIS_SK1U"
 Surgical operations and procedures performed in hospitals,1,HLTH_CO_PROC2
+Surgical procedures,1,HLTH_CO_PROC3
+Technical resources in hospital,1,HLTH_RS_TECH
 Tenure status,1,HLTH_DHC010
 Tertiary educational attainment (age group 30-34),1,HLTH_DE020
 Time spent on health-enhancing (non-work-related) aerobic physical activity,3,"HLTH_EHIS_PE2E,HLTH_EHIS_PE2I,HLTH_EHIS_PE2U"
@@ -185,6 +216,6 @@ Time spent on health-enhancing non-work-related aerobic physical activity,1,HLTH
 Treatable and preventable mortality of residents,1,HLTH_CD_APR
 Unemployment rate of people,1,HLTH_DLM030
 Use of electronic cigarettes or similar electronic devices,1,HLTH_EHIS_SK6E
+Vaccination against influenza of population aged 65 and over,1,HLTH_PS_IMMU
 Walking and cycling at least 30 minutes per day,1,HLTH_EHIS_PE6E
 Young persons neither in employment nor in education and training,1,HLTH_DE030
-datasets_with_label_missing_primary_by_separator,37,"HLTH_HC_DENT,HLTH_HC_PHYS,HLTH_HC_PHYS2,HLTH_HLYE_H,HLTH_PS_IMMU,HLTH_PS_PREV,HLTH_PS_SCRE,HLTH_RS_BDLTC,HLTH_RS_EQUIP,HLTH_RS_GRD,HLTH_RS_GRD2,HLTH_RS_MEDIM,HLTH_RS_PRS1,HLTH_RS_PRS2,HLTH_RS_PRSHP1,HLTH_RS_PRSHP2,HLTH_RS_PRSNS,HLTH_RS_TECH,HLTH_RS_WKMG,HLTH_RS_WKMG2,HLTH_SHA11_FS,HLTH_SILC_17,HLTH_CD_ANR,HLTH_CD_ASDR,HLTH_CD_DAR,HLTH_CD_IAP,HLTH_CD_IDO,HLTH_CD_TRO,HLTH_CD_TROEU,HLTH_CO_DISCHLS,HLTH_CO_DISCHNR,HLTH_CO_HOSDAY,HLTH_CO_INPAGG,HLTH_CO_INPST,HLTH_CO_PROC3,HLTH_CO_REN,ENPE_HLTH_EXP"

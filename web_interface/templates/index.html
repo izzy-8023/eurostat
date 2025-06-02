@@ -162,6 +162,23 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <div class="card border-secondary">
+                            <div class="card-body text-center">
+                                <i class="fas fa-rss fa-3x text-secondary mb-3"></i>
+                                <h5>Check for Updates</h5>
+                                <p class="text-muted">Trigger RSS feed check for new datasets</p>
+                                <button id="triggerRssDagBtn" class="btn btn-secondary">
+                                    Check Now
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <!-- Placeholder for a future card -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -202,4 +219,48 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const triggerRssBtn = document.getElementById('triggerRssDagBtn');
+    if (triggerRssBtn) {
+        triggerRssBtn.addEventListener('click', function() {
+            if (!confirm('Are you sure you want to trigger the RSS feed check? This may re-process datasets if new updates are found.')) {
+                return;
+            }
+            
+            triggerRssBtn.disabled = true;
+            triggerRssBtn.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Checking...';
+
+            fetch("{{ url_for('trigger_rss_dag') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add any other necessary headers like CSRF token if your app uses them
+                },
+                // body: JSON.stringify({}) // No body needed for this specific trigger
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('RSS DAG triggered successfully! Run ID: ' + data.run_id);
+                    // Optionally, refresh part of the page or redirect
+                } else {
+                    alert('Error triggering RSS DAG: ' + (data.error || 'Unknown error'));
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Failed to trigger RSS DAG. Check console for details.');
+            })
+            .finally(() => {
+                triggerRssBtn.disabled = false;
+                triggerRssBtn.innerHTML = 'Check Now';
+            });
+        });
+    }
+});
+</script>
 {% endblock %} 

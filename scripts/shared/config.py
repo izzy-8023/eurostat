@@ -29,13 +29,7 @@ DB_ENV_VARS = {
 }
 
 # Health Datasets (consolidated from multiple files)
-HEALTH_DATASETS = [
-    'hlth_cd_ainfo', 'hlth_cd_ainfr', 'hlth_cd_yinfo', 'hlth_cd_yinfr',
-    'hlth_dh010', 'hlth_dh030', 'hlth_silc_02', 'hlth_silc_04', 
-    'hlth_silc_05', 'hlth_silc_07', 'hlth_silc_09', 'hlth_silc_11',
-    'hlth_silc_12', 'hlth_silc_18', 'hlth_silc_19', 'hlth_silc_20',
-    'hlth_silc_24', 'hlth_silc_27', 'hlth_silc_28'
-]
+HEALTH_DATASETS = []
 
 # Default Paths
 DEFAULT_PATHS = {

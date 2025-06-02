@@ -1,0 +1,902 @@
+version: 2
+sources:
+- name: eurostat_raw
+  schema: public
+  description: Raw Eurostat data tables loaded into the 'public' schema.
+  tables:
+  - name: hlth_cd_ainfo
+    description: Raw Eurostat table 'hlth_cd_ainfo' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_cd_ainfo (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_cd_ainfo (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_cd_ainfo (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_cd_ainfo (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_cd_ainfo (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_cd_ainfo (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_cd_ainfo (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_cd_ainfo (type: text)'
+    - name: icd10_key
+      description: 'Raw column icd10_key from hlth_cd_ainfo (type: text)'
+    - name: icd10_label
+      description: 'Raw column icd10_label from hlth_cd_ainfo (type: text)'
+    - name: resid_key
+      description: 'Raw column resid_key from hlth_cd_ainfo (type: text)'
+    - name: resid_label
+      description: 'Raw column resid_label from hlth_cd_ainfo (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_cd_ainfo (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_cd_ainfo (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_cd_ainfo (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_cd_ainfo (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_cd_ainfo (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_cd_ainfo (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_cd_ainfo (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_cd_ainfo (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_cd_ainfo (type: text)'
+  - name: hlth_ehis_sk2e
+    description: Raw Eurostat table 'hlth_ehis_sk2e' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_sk2e (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_sk2e (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_sk2e (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_sk2e (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_sk2e (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_sk2e (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_sk2e (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_sk2e (type: text)'
+    - name: isced11_key
+      description: 'Raw column isced11_key from hlth_ehis_sk2e (type: text)'
+    - name: isced11_label
+      description: 'Raw column isced11_label from hlth_ehis_sk2e (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_sk2e (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_sk2e (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_sk2e (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_sk2e (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_sk2e (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_sk2e (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_sk2e (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_sk2e (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_sk2e (type: text)'
+  - name: hlth_ehis_pc1e
+    description: Raw Eurostat table 'hlth_ehis_pc1e' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_pc1e (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_pc1e (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_pc1e (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_pc1e (type: text)'
+    - name: lev_limit_key
+      description: 'Raw column lev_limit_key from hlth_ehis_pc1e (type: text)'
+    - name: lev_limit_label
+      description: 'Raw column lev_limit_label from hlth_ehis_pc1e (type: text)'
+    - name: isced11_key
+      description: 'Raw column isced11_key from hlth_ehis_pc1e (type: text)'
+    - name: isced11_label
+      description: 'Raw column isced11_label from hlth_ehis_pc1e (type: text)'
+    - name: hlth_pb_key
+      description: 'Raw column hlth_pb_key from hlth_ehis_pc1e (type: text)'
+    - name: hlth_pb_label
+      description: 'Raw column hlth_pb_label from hlth_ehis_pc1e (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_pc1e (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_pc1e (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_pc1e (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_pc1e (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_pc1e (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_pc1e (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_pc1e (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_pc1e (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_pc1e (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_pc1e (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_pc1e (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_pc1e (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_pc1e (type: text)'
+  - name: hlth_ehis_pc1u
+    description: Raw Eurostat table 'hlth_ehis_pc1u' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_pc1u (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_pc1u (type: text)'
+    - name: hlth_pb_key
+      description: 'Raw column hlth_pb_key from hlth_ehis_pc1u (type: text)'
+    - name: hlth_pb_label
+      description: 'Raw column hlth_pb_label from hlth_ehis_pc1u (type: text)'
+    - name: lev_limit_key
+      description: 'Raw column lev_limit_key from hlth_ehis_pc1u (type: text)'
+    - name: lev_limit_label
+      description: 'Raw column lev_limit_label from hlth_ehis_pc1u (type: text)'
+    - name: deg_urb_key
+      description: 'Raw column deg_urb_key from hlth_ehis_pc1u (type: text)'
+    - name: deg_urb_label
+      description: 'Raw column deg_urb_label from hlth_ehis_pc1u (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_pc1u (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_pc1u (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_pc1u (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_pc1u (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_pc1u (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_pc1u (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_pc1u (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_pc1u (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_pc1u (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_pc1u (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_pc1u (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_pc1u (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_pc1u (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_pc1u (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_pc1u (type: text)'
+  - name: hlth_ehis_hahlpd
+    description: Raw Eurostat table 'hlth_ehis_hahlpd' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_hahlpd (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_hahlpd (type: text)'
+    - name: assist_key
+      description: 'Raw column assist_key from hlth_ehis_hahlpd (type: text)'
+    - name: assist_label
+      description: 'Raw column assist_label from hlth_ehis_hahlpd (type: text)'
+    - name: lev_limit_key
+      description: 'Raw column lev_limit_key from hlth_ehis_hahlpd (type: text)'
+    - name: lev_limit_label
+      description: 'Raw column lev_limit_label from hlth_ehis_hahlpd (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_hahlpd (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_hahlpd (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_hahlpd (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_hahlpd (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_hahlpd (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_hahlpd (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_hahlpd (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_hahlpd (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_hahlpd (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_hahlpd (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_hahlpd (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_hahlpd (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_hahlpd (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_hahlpd (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_hahlpd (type: text)'
+  - name: hlth_ehis_sk3e
+    description: Raw Eurostat table 'hlth_ehis_sk3e' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_sk3e (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_sk3e (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_sk3e (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_sk3e (type: text)'
+    - name: smoking_key
+      description: 'Raw column smoking_key from hlth_ehis_sk3e (type: text)'
+    - name: smoking_label
+      description: 'Raw column smoking_label from hlth_ehis_sk3e (type: text)'
+    - name: isced11_key
+      description: 'Raw column isced11_key from hlth_ehis_sk3e (type: text)'
+    - name: isced11_label
+      description: 'Raw column isced11_label from hlth_ehis_sk3e (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_sk3e (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_sk3e (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_sk3e (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_sk3e (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_sk3e (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_sk3e (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_sk3e (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_sk3e (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_sk3e (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_sk3e (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_sk3e (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_sk3e (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_sk3e (type: text)'
+  - name: hlth_ehis_sk2i
+    description: Raw Eurostat table 'hlth_ehis_sk2i' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_sk2i (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_sk2i (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_sk2i (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_sk2i (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_sk2i (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_sk2i (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_sk2i (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_sk2i (type: text)'
+    - name: quant_inc_key
+      description: 'Raw column quant_inc_key from hlth_ehis_sk2i (type: text)'
+    - name: quant_inc_label
+      description: 'Raw column quant_inc_label from hlth_ehis_sk2i (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_sk2i (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_sk2i (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_sk2i (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_sk2i (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_sk2i (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_sk2i (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_sk2i (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_sk2i (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_sk2i (type: text)'
+  - name: hlth_ehis_hahlpe
+    description: Raw Eurostat table 'hlth_ehis_hahlpe' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_hahlpe (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_hahlpe (type: text)'
+    - name: assist_key
+      description: 'Raw column assist_key from hlth_ehis_hahlpe (type: text)'
+    - name: assist_label
+      description: 'Raw column assist_label from hlth_ehis_hahlpe (type: text)'
+    - name: isced11_key
+      description: 'Raw column isced11_key from hlth_ehis_hahlpe (type: text)'
+    - name: isced11_label
+      description: 'Raw column isced11_label from hlth_ehis_hahlpe (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_hahlpe (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_hahlpe (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_hahlpe (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_hahlpe (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_hahlpe (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_hahlpe (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_hahlpe (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_hahlpe (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_hahlpe (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_hahlpe (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_hahlpe (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_hahlpe (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_hahlpe (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_hahlpe (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_hahlpe (type: text)'
+  - name: hlth_ehis_fv3e
+    description: Raw Eurostat table 'hlth_ehis_fv3e' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_fv3e (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_fv3e (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_fv3e (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_fv3e (type: text)'
+    - name: n_portion_key
+      description: 'Raw column n_portion_key from hlth_ehis_fv3e (type: text)'
+    - name: n_portion_label
+      description: 'Raw column n_portion_label from hlth_ehis_fv3e (type: text)'
+    - name: isced11_key
+      description: 'Raw column isced11_key from hlth_ehis_fv3e (type: text)'
+    - name: isced11_label
+      description: 'Raw column isced11_label from hlth_ehis_fv3e (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_fv3e (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_fv3e (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_fv3e (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_fv3e (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_fv3e (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_fv3e (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_fv3e (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_fv3e (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_fv3e (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_fv3e (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_fv3e (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_fv3e (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_fv3e (type: text)'
+  - name: hlth_ehis_sk3i
+    description: Raw Eurostat table 'hlth_ehis_sk3i' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_sk3i (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_sk3i (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_sk3i (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_sk3i (type: text)'
+    - name: smoking_key
+      description: 'Raw column smoking_key from hlth_ehis_sk3i (type: text)'
+    - name: smoking_label
+      description: 'Raw column smoking_label from hlth_ehis_sk3i (type: text)'
+    - name: quant_inc_key
+      description: 'Raw column quant_inc_key from hlth_ehis_sk3i (type: text)'
+    - name: quant_inc_label
+      description: 'Raw column quant_inc_label from hlth_ehis_sk3i (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_sk3i (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_sk3i (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_sk3i (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_sk3i (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_sk3i (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_sk3i (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_sk3i (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_sk3i (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_sk3i (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_sk3i (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_sk3i (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_sk3i (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_sk3i (type: text)'
+  - name: hlth_ehis_de3
+    description: Raw Eurostat table 'hlth_ehis_de3' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_de3 (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_de3 (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_de3 (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_de3 (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_de3 (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_de3 (type: text)'
+    - name: isced97_key
+      description: 'Raw column isced97_key from hlth_ehis_de3 (type: text)'
+    - name: isced97_label
+      description: 'Raw column isced97_label from hlth_ehis_de3 (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_de3 (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_de3 (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_de3 (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_de3 (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_de3 (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_de3 (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_de3 (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_de3 (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_de3 (type: text)'
+  - name: hlth_ehis_hahlpu
+    description: Raw Eurostat table 'hlth_ehis_hahlpu' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_hahlpu (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_hahlpu (type: text)'
+    - name: assist_key
+      description: 'Raw column assist_key from hlth_ehis_hahlpu (type: text)'
+    - name: assist_label
+      description: 'Raw column assist_label from hlth_ehis_hahlpu (type: text)'
+    - name: deg_urb_key
+      description: 'Raw column deg_urb_key from hlth_ehis_hahlpu (type: text)'
+    - name: deg_urb_label
+      description: 'Raw column deg_urb_label from hlth_ehis_hahlpu (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_hahlpu (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_hahlpu (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_hahlpu (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_hahlpu (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_hahlpu (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_hahlpu (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_hahlpu (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_hahlpu (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_hahlpu (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_hahlpu (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_hahlpu (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_hahlpu (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_hahlpu (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_hahlpu (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_hahlpu (type: text)'
+  - name: hlth_ehis_fv3i
+    description: Raw Eurostat table 'hlth_ehis_fv3i' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_fv3i (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_fv3i (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_fv3i (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_fv3i (type: text)'
+    - name: n_portion_key
+      description: 'Raw column n_portion_key from hlth_ehis_fv3i (type: text)'
+    - name: n_portion_label
+      description: 'Raw column n_portion_label from hlth_ehis_fv3i (type: text)'
+    - name: quant_inc_key
+      description: 'Raw column quant_inc_key from hlth_ehis_fv3i (type: text)'
+    - name: quant_inc_label
+      description: 'Raw column quant_inc_label from hlth_ehis_fv3i (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_fv3i (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_fv3i (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_fv3i (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_fv3i (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_fv3i (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_fv3i (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_fv3i (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_fv3i (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_fv3i (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_fv3i (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_fv3i (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_fv3i (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_fv3i (type: text)'
+  - name: hlth_ehis_sk3u
+    description: Raw Eurostat table 'hlth_ehis_sk3u' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_sk3u (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_sk3u (type: text)'
+    - name: smoking_key
+      description: 'Raw column smoking_key from hlth_ehis_sk3u (type: text)'
+    - name: smoking_label
+      description: 'Raw column smoking_label from hlth_ehis_sk3u (type: text)'
+    - name: deg_urb_key
+      description: 'Raw column deg_urb_key from hlth_ehis_sk3u (type: text)'
+    - name: deg_urb_label
+      description: 'Raw column deg_urb_label from hlth_ehis_sk3u (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_sk3u (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_sk3u (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_sk3u (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_sk3u (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_sk3u (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_sk3u (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_sk3u (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_sk3u (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_sk3u (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_sk3u (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_sk3u (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_sk3u (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_sk3u (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_sk3u (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_sk3u (type: text)'
+  - name: hlth_ehis_de4
+    description: Raw Eurostat table 'hlth_ehis_de4' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_de4 (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_de4 (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_de4 (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_de4 (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_de4 (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_de4 (type: text)'
+    - name: quantile_key
+      description: 'Raw column quantile_key from hlth_ehis_de4 (type: text)'
+    - name: quantile_label
+      description: 'Raw column quantile_label from hlth_ehis_de4 (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_de4 (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_de4 (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_de4 (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_de4 (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_de4 (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_de4 (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_de4 (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_de4 (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_de4 (type: text)'
+  - name: hlth_ehis_pc1i
+    description: Raw Eurostat table 'hlth_ehis_pc1i' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_pc1i (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_pc1i (type: text)'
+    - name: hlth_pb_key
+      description: 'Raw column hlth_pb_key from hlth_ehis_pc1i (type: text)'
+    - name: hlth_pb_label
+      description: 'Raw column hlth_pb_label from hlth_ehis_pc1i (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_pc1i (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_pc1i (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_pc1i (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_pc1i (type: text)'
+    - name: quant_inc_key
+      description: 'Raw column quant_inc_key from hlth_ehis_pc1i (type: text)'
+    - name: quant_inc_label
+      description: 'Raw column quant_inc_label from hlth_ehis_pc1i (type: text)'
+    - name: lev_limit_key
+      description: 'Raw column lev_limit_key from hlth_ehis_pc1i (type: text)'
+    - name: lev_limit_label
+      description: 'Raw column lev_limit_label from hlth_ehis_pc1i (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_pc1i (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_pc1i (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_pc1i (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_pc1i (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_pc1i (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_pc1i (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_pc1i (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_pc1i (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_pc1i (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_pc1i (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_pc1i (type: text)'
+  - name: hlth_ehis_fv3m
+    description: Raw Eurostat table 'hlth_ehis_fv3m' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_fv3m (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_fv3m (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_fv3m (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_fv3m (type: text)'
+    - name: n_portion_key
+      description: 'Raw column n_portion_key from hlth_ehis_fv3m (type: text)'
+    - name: n_portion_label
+      description: 'Raw column n_portion_label from hlth_ehis_fv3m (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_fv3m (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_fv3m (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_fv3m (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_fv3m (type: text)'
+    - name: bmi_key
+      description: 'Raw column bmi_key from hlth_ehis_fv3m (type: text)'
+    - name: bmi_label
+      description: 'Raw column bmi_label from hlth_ehis_fv3m (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_fv3m (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_fv3m (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_fv3m (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_fv3m (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_fv3m (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_fv3m (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_fv3m (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_fv3m (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_fv3m (type: text)'
+  - name: hlth_ehis_fv3u
+    description: Raw Eurostat table 'hlth_ehis_fv3u' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_fv3u (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_fv3u (type: text)'
+    - name: n_portion_key
+      description: 'Raw column n_portion_key from hlth_ehis_fv3u (type: text)'
+    - name: n_portion_label
+      description: 'Raw column n_portion_label from hlth_ehis_fv3u (type: text)'
+    - name: deg_urb_key
+      description: 'Raw column deg_urb_key from hlth_ehis_fv3u (type: text)'
+    - name: deg_urb_label
+      description: 'Raw column deg_urb_label from hlth_ehis_fv3u (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_fv3u (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_fv3u (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_fv3u (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_fv3u (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_fv3u (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_fv3u (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_fv3u (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_fv3u (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_fv3u (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_fv3u (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_fv3u (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_fv3u (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_fv3u (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_fv3u (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_fv3u (type: text)'
+  - name: hlth_ehis_pc1d
+    description: Raw Eurostat table 'hlth_ehis_pc1d' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_pc1d (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_pc1d (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_pc1d (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_pc1d (type: text)'
+    - name: hlth_pb_key
+      description: 'Raw column hlth_pb_key from hlth_ehis_pc1d (type: text)'
+    - name: hlth_pb_label
+      description: 'Raw column hlth_pb_label from hlth_ehis_pc1d (type: text)'
+    - name: lev_limit_key
+      description: 'Raw column lev_limit_key from hlth_ehis_pc1d (type: text)'
+    - name: lev_limit_label
+      description: 'Raw column lev_limit_label from hlth_ehis_pc1d (type: text)'
+    - name: lev_diff_key
+      description: 'Raw column lev_diff_key from hlth_ehis_pc1d (type: text)'
+    - name: lev_diff_label
+      description: 'Raw column lev_diff_label from hlth_ehis_pc1d (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_pc1d (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_pc1d (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_pc1d (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_pc1d (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_pc1d (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_pc1d (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_pc1d (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_pc1d (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_pc1d (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_pc1d (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_pc1d (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_pc1d (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_pc1d (type: text)'
+  - name: hlth_ehis_pc1hcs
+    description: Raw Eurostat table 'hlth_ehis_pc1hcs' loaded from source.
+    columns:
+    - name: freq_key
+      description: 'Raw column freq_key from hlth_ehis_pc1hcs (type: text)'
+    - name: freq_label
+      description: 'Raw column freq_label from hlth_ehis_pc1hcs (type: text)'
+    - name: hlth_pb_key
+      description: 'Raw column hlth_pb_key from hlth_ehis_pc1hcs (type: text)'
+    - name: hlth_pb_label
+      description: 'Raw column hlth_pb_label from hlth_ehis_pc1hcs (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_ehis_pc1hcs (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_ehis_pc1hcs (type: text)'
+    - name: age_key
+      description: 'Raw column age_key from hlth_ehis_pc1hcs (type: text)'
+    - name: age_label
+      description: 'Raw column age_label from hlth_ehis_pc1hcs (type: text)'
+    - name: yes_no_key
+      description: 'Raw column yes_no_key from hlth_ehis_pc1hcs (type: text)'
+    - name: yes_no_label
+      description: 'Raw column yes_no_label from hlth_ehis_pc1hcs (type: text)'
+    - name: lev_limit_key
+      description: 'Raw column lev_limit_key from hlth_ehis_pc1hcs (type: text)'
+    - name: lev_limit_label
+      description: 'Raw column lev_limit_label from hlth_ehis_pc1hcs (type: text)'
+    - name: unit_key
+      description: 'Raw column unit_key from hlth_ehis_pc1hcs (type: text)'
+    - name: unit_label
+      description: 'Raw column unit_label from hlth_ehis_pc1hcs (type: text)'
+    - name: geo_key
+      description: 'Raw column geo_key from hlth_ehis_pc1hcs (type: text)'
+    - name: geo_label
+      description: 'Raw column geo_label from hlth_ehis_pc1hcs (type: text)'
+    - name: time_key
+      description: 'Raw column time_key from hlth_ehis_pc1hcs (type: text)'
+    - name: time_label
+      description: 'Raw column time_label from hlth_ehis_pc1hcs (type: text)'
+    - name: linear_index
+      description: 'Raw column linear_index from hlth_ehis_pc1hcs (type: integer)'
+    - name: value
+      description: 'Raw column value from hlth_ehis_pc1hcs (type: numeric)'
+    - name: status_code
+      description: 'Raw column status_code from hlth_ehis_pc1hcs (type: text)'
+    - name: status_label
+      description: 'Raw column status_label from hlth_ehis_pc1hcs (type: text)'
+    - name: source_dataset_id
+      description: 'Raw column source_dataset_id from hlth_ehis_pc1hcs (type: text)'

@@ -16,6 +16,7 @@ from pathlib import Path
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import traceback
+import subprocess
 
 # Add scripts directory to path
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
@@ -406,7 +407,6 @@ def trigger_processing():
         config_json = json.dumps({'dataset_ids': dataset_ids})
         
         # Use Docker exec to trigger the DAG via Airflow CLI
-        import subprocess
         cmd = [
             'docker', 'exec', 'eurostat-airflow-scheduler-1',
             'airflow', 'dags', 'trigger',
@@ -435,6 +435,51 @@ def trigger_processing():
     except Exception as e:
         logger.error(f"Failed to trigger processing: {e}")
         return jsonify({'error': str(e)}), 500
+
+@app.route('/api/trigger_rss_dag', methods=['POST'])
+def trigger_rss_dag():
+    """Trigger the Eurostat Health RSS Monitor DAG using Docker exec"""
+    try:
+        # Generate unique run ID for the RSS DAG
+        dag_run_id = f"manual_rss_monitor__{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+        
+        # Docker exec command to trigger the RSS monitor DAG
+        # Assumes 'eurostat-airflow-scheduler-1' is the correct container name.
+        # Consider making this configurable if it changes often.
+        cmd = [
+            'docker', 'exec', 'eurostat-airflow-scheduler-1',
+            'airflow', 'dags', 'trigger',
+            'eurostat_health_rss_monitor_dag', # Target DAG ID
+            '--run-id', dag_run_id
+            # No specific --conf needed for this DAG trigger from UI initially
+            # but could be added if we want to pass params, e.g., force full scan.
+        ]
+        
+        logger.info(f"Attempting to trigger RSS DAG with command: {' '.join(cmd)}")
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=30)
+        
+        if result.returncode == 0:
+            logger.info(f"Successfully triggered RSS DAG. Run ID: {dag_run_id}. Output: {result.stdout}")
+            return jsonify({
+                'success': True,
+                'run_id': dag_run_id,
+                'message': 'Eurostat Health RSS Monitor DAG triggered successfully.',
+                'output': result.stdout
+            })
+        else:
+            logger.error(f"Failed to trigger RSS DAG. Return Code: {result.returncode}. Stderr: {result.stderr}. Stdout: {result.stdout}")
+            return jsonify({
+                'error': f'Failed to trigger RSS Monitor DAG: {result.stderr or result.stdout}',
+                'output': result.stdout,
+                'stderr': result.stderr
+            }), 500
+            
+    except subprocess.TimeoutExpired:
+        logger.error("Command timed out while trying to trigger RSS DAG.")
+        return jsonify({'error': 'Command timed out while triggering RSS Monitor DAG'}), 500
+    except Exception as e:
+        logger.error(f"An unexpected error occurred while triggering RSS DAG: {e}", exc_info=True)
+        return jsonify({'error': f'An unexpected error occurred: {str(e)}'}), 500
 
 @app.route('/topic_marts')
 def topic_marts():

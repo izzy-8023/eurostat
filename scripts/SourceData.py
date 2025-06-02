@@ -41,19 +41,19 @@ def download_eurostat_catalog(output_file_path):
     print(f"Attempting to download Eurostat catalog to {output_file_path}...")
     try:
         process = subprocess.run(curl_command, check=True, capture_output=True, text=True)
-        print(f"✅ Successfully downloaded catalog: {output_file_path}")
+        print(f"Successfully downloaded catalog: {output_file_path}")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"❌ Error during curl command execution for catalog download:")
+        print(f"Error during curl command execution for catalog download:")
         print(f"Command: {' '.join(e.cmd)}")
         print(f"Return code: {e.returncode}")
         print(f"Stderr: {e.stderr}")
         return False
     except FileNotFoundError:
-        print("❌ Error: curl command not found. Please ensure curl is installed and in your PATH.")
+        print("Error: curl command not found. Please ensure curl is installed and in your PATH.")
         return False
     except Exception as e:
-        print(f"❌ An unexpected error occurred during catalog download: {e}")
+        print(f"An unexpected error occurred during catalog download: {e}")
         return False
 
 # --- Enhanced Health Dataset Detection ---
@@ -112,7 +112,7 @@ def health_dataset_list(obj, keyword="HLTH"):
 def export_dataset_details_to_csv(dataset_details, csv_file_name):
     """Enhanced CSV export with better error handling."""
     if not dataset_details:
-        print("⚠️ No dataset details to export to CSV.")
+        print("No dataset details to export to CSV.")
         return
 
     print(f"📄 Exporting detailed dataset information to {csv_file_name}...")
@@ -122,11 +122,11 @@ def export_dataset_details_to_csv(dataset_details, csv_file_name):
             csv_writer.writerow(['ID', 'Label', 'CreatedDate', 'UpdateDataDate', 'UpdateStructureDate'])
             for row_data in dataset_details:
                 csv_writer.writerow(row_data)
-        print(f"✅ Successfully exported {len(dataset_details)} datasets to {csv_file_name}")
+        print(f"Successfully exported {len(dataset_details)} datasets to {csv_file_name}")
     except IOError as e:
-        print(f"❌ Error writing to CSV file {csv_file_name}: {e}")
+        print(f"Error writing to CSV file {csv_file_name}: {e}")
     except Exception as e:
-        print(f"❌ An unexpected error occurred during CSV export: {e}")
+        print(f"An unexpected error occurred during CSV export: {e}")
 
 # --- Enhanced Download Worker with Shared Config ---
 def download_dataset_worker(dataset_id, api_config, output_directory):
@@ -148,16 +148,16 @@ def download_dataset_worker(dataset_id, api_config, output_directory):
             f.write(response.content)
         return output_filename
     except requests.exceptions.Timeout:
-        print(f"\n⏱️ Request timed out downloading {dataset_id}")
+        print(f"\n Request timed out downloading {dataset_id}")
         return None
     except requests.exceptions.RequestException as e:
-        print(f"\n❌ Download error for {dataset_id}: {e}")
+        print(f"\n Download error for {dataset_id}: {e}")
         return None
     except IOError as e:
-        print(f"\n💾 File write error for {output_filename}: {e}")
+        print(f"\n File write error for {output_filename}: {e}")
         return None
     except Exception as e:
-        print(f"\n❌ Unexpected error downloading {dataset_id}: {e}")
+        print(f"\n Unexpected error downloading {dataset_id}: {e}")
         return None
 
 # --- Enhanced Concurrent Download Orchestrator ---
@@ -167,8 +167,8 @@ def download_datasets_concurrently(dataset_ids, api_config, output_dir, max_work
     downloaded_files = []
     failed_downloads = 0
     
-    print(f"\n🚀 Downloading {total_datasets} datasets using up to {max_workers} threads...")
-    print(f"📁 Saving to directory: {output_dir}")
+    print(f"\n Downloading {total_datasets} datasets using up to {max_workers} threads...")
+    print(f"Saving to directory: {output_dir}")
 
     with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
         futures = {executor.submit(download_dataset_worker, ds_id, api_config, output_dir): ds_id for ds_id in dataset_ids}
@@ -181,13 +181,13 @@ def download_datasets_concurrently(dataset_ids, api_config, output_dir, max_work
                 else:
                     failed_downloads += 1
             except Exception as e:
-                print(f"\n❌ Error processing future for {dataset_id}: {e}")
+                print(f"\n Error processing future for {dataset_id}: {e}")
                 failed_downloads += 1
             processed_count = i + 1
-            print(f"\r📊 Download progress: {processed_count}/{total_datasets} ({failed_downloads} failed)...", end="", flush=True)
+            print(f"\r Download progress: {processed_count}/{total_datasets} ({failed_downloads} failed)...", end="", flush=True)
 
     print("\n" + "="*50)
-    print("✅ Dataset download process completed.")
+    print(" Dataset download process completed.")
     print("="*50)
     return downloaded_files, failed_downloads
 
