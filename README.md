@@ -91,6 +91,7 @@ graph TD
 .
 ├── dags/                  # Airflow DAGs for data orchestration
 ├── dbt_project/           # dbt project for data transformation
+├── scripts/               # python scripts for data ingestion, dbt models generation
 ├── web_interface/         # Flask web application and API
 │   ├── app.py             # Main Flask application file
 │   └── templates/         # HTML templates for the web UI
@@ -105,7 +106,7 @@ graph TD
 To get the project running locally, follow these steps:
 
 1.  **Prerequisites:**
-    *   Docker and Docker Compose must be installed on your system.
+    *   Docker must be installed on your system.
     *   Ensure you have a `.env` file configured with your environment variables (e.g., database credentials).
 
 2.  **Clone the Repository:**
@@ -117,11 +118,12 @@ To get the project running locally, follow these steps:
 3.  **Build and Run the Containers:**
     Use Docker Compose to build the images and start all the services in detached mode.
     ```bash
-    docker-compose up --build -d
+    docker compose -f docker-compose.yml -f docker-compose-airflow.yaml up -d --build
     ```
 
 4.  **Access the Services:**
     *   **Web Interface:** Open your browser and navigate to `http://localhost:5001`.
     *   **Airflow UI:** Open your browser and navigate to `http://localhost:8080`.
+    *   **PgAdmin UI:** Open your browser and navigate to `http://localhost:5050`.
 
 This will start the Flask web application, the Airflow scheduler and webserver, and the PostgreSQL database.
