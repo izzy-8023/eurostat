@@ -111,8 +111,8 @@ To get the project running locally, follow these steps:
 
 2.  **Clone the Repository:**
     ```bash
-    git clone <repository-url>
-    cd <repository-directory>
+    git clone https://github.com/izzy-8023/eurostat.git
+    cd eurostat
     ```
 
 3.  **Build and Run the Containers:**
