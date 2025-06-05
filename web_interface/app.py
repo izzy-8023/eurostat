@@ -5,9 +5,10 @@ Simplified Eurostat Dataset Web Interface
 A lightweight Flask web application for browsing and processing Eurostat datasets.
 """
 # Web UI
-from flask import Flask, render_template, request, jsonify, redirect, url_for
+from flask import Flask, render_template, request, jsonify, redirect, url_for, Response
 import requests
 import json
+import numpy as np
 import logging
 import os
 import sys
@@ -17,9 +18,12 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 import traceback
 import subprocess
+import csv
+import psycopg2.sql as sql # Import the sql module
+import pandas as pd
 
-# Add scripts directory to path
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'scripts'))
+# Add scripts directory to pathxw
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -68,7 +72,6 @@ def get_dataset_stats():
             total_count = 0
             if health_csv_path.exists():
                 try:
-                    import pandas as pd
                     df = pd.read_csv(health_csv_path)
                     total_count = len(df)
                 except Exception as e:
@@ -127,7 +130,7 @@ def check_if_processed(dataset_id):
     try:
         with conn.cursor() as cur:
             # Check if the dataset table exists in public schema (using lowercase dataset_id)
-            cur.execute(f"SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = '{dataset_id.lower()}')")
+            cur.execute("SELECT EXISTS(SELECT 1 FROM information_schema.tables WHERE table_schema = 'public' AND table_name = %s)", (dataset_id.lower(),))
             return cur.fetchone()[0]
     except Exception as e:
         return False
@@ -141,7 +144,6 @@ def get_health_datasets():
         return []
     
     try:
-        import pandas as pd
         df = pd.read_csv(health_csv_path)
         
         # Map CSV columns to expected format
@@ -154,7 +156,6 @@ def get_health_datasets():
             if last_updated:
                 try:
                     # Parse the ISO format date and convert to readable format
-                    from datetime import datetime
                     dt = datetime.fromisoformat(last_updated.replace('Z', '+00:00'))
                     last_updated = dt.strftime('%Y-%m-%d')
                 except:
@@ -176,6 +177,36 @@ def get_health_datasets():
         logger.error(f"Failed to load health datasets: {e}")
         return []
 
+def update_grouped_datasets():
+    """Run the grouping logic to update the grouped_datasets_summary.csv"""
+    # This will execute the logic in group.py and update the CSV
+    # Assuming group.py writes to grouped_datasets_summary.csv as its output
+    pass  # The logic is already executed when imported
+
+def get_grouped_datasets():
+    """Read grouped datasets from CSV and return as a list of dictionaries"""
+    # Update the grouped datasets before reading
+    update_grouped_datasets()
+    grouped_datasets = []
+    grouped_csv_path = Path(__file__).parent.parent / 'grouped_datasets_summary.csv'
+    if not grouped_csv_path.exists():
+        return grouped_datasets
+
+    try:
+        with open(grouped_csv_path, 'r', encoding='utf-8') as csvfile:
+            csv_reader = csv.DictReader(csvfile)
+            for row in csv_reader:
+                grouped_datasets.append({
+                    'group_name': row['group_name'],
+                    'dataset_count': int(row['dataset_count']),
+                    'dataset_ids': row['dataset_ids'].split(','),
+                    'id': row['group_name']  # Add 'id' field for template compatibility
+                })
+    except Exception as e:
+        logger.error(f"Failed to read grouped datasets CSV: {e}")
+
+    return grouped_datasets
+
 # Routes
 @app.route('/')
 def index():
@@ -185,33 +216,32 @@ def index():
 
 @app.route('/datasets')
 def datasets():
-    """Dataset browser - Health datasets only"""
+    """Dataset browser - Grouped datasets by topics"""
     search = request.args.get('search', '')
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 50, type=int)
-    
-    # Only show health datasets
-    all_health_datasets = get_health_datasets()
-    
+
+    # Get grouped datasets
+    all_grouped_datasets = get_grouped_datasets()
+
     # Filter by search if provided
     if search:
         filtered_datasets = [
-            d for d in all_health_datasets 
-            if search.lower() in d.get('title', '').lower() or 
-               search.lower() in d.get('id', '').lower()
+            d for d in all_grouped_datasets 
+            if search.lower() in d.get('group_name', '').lower()
         ]
     else:
-        filtered_datasets = all_health_datasets
-    
+        filtered_datasets = all_grouped_datasets
+
     # Calculate pagination
     total_datasets = len(filtered_datasets)
     total_pages = (total_datasets + per_page - 1) // per_page
     start_idx = (page - 1) * per_page
     end_idx = start_idx + per_page
-    
+
     # Get datasets for current page
     datasets_page = filtered_datasets[start_idx:end_idx]
-    
+
     # Pagination info
     pagination = {
         'page': page,
@@ -223,11 +253,121 @@ def datasets():
         'prev_num': page - 1 if page > 1 else None,
         'next_num': page + 1 if page < total_pages else None
     }
+
+    return render_template('datasets.html', datasets=datasets_page, pagination=pagination, search_term=search)
+
+@app.route('/group/<group_name>')
+def group_detail(group_name):
+    """Display datasets within a specific group"""
+    # This function will find the datasets for the given group_name
+    # and render a simple detail page for them.
+    all_groups = get_grouped_datasets()
+    target_group = next((g for g in all_groups if g.get('group_name') == group_name), None)
+
+    if not target_group:
+        return "Group not found", 404
+
+    # For now, just display the dataset IDs in that group.
+    # A more advanced implementation would fetch full details for each dataset.
+    dataset_ids = target_group.get('dataset_ids', [])
     
-    return render_template('datasets.html', 
-                         datasets=datasets_page,
-                         pagination=pagination,
-                         search_term=search)
+    # Let's get full dataset info for the IDs
+    all_datasets = get_health_datasets() # Assuming these are health datasets
+    
+    datasets_in_group = [
+        d for d in all_datasets if d['id'] in dataset_ids
+    ]
+
+    return render_template('group_detail.html', group=target_group, datasets=datasets_in_group)
+
+@app.route('/dataset/<dataset_id>/visualize')
+def visualize_dataset(dataset_id):
+    """Render the visualization page for a dataset."""
+    # This page will fetch data from the chart_data API endpoint.
+    # We can pass dataset info if needed, but for now, the client-side JS will handle fetching.
+    return render_template('visualize_dataset.html', dataset_id=dataset_id)
+
+@app.route('/api/dataset/<dataset_id>/chart-data')
+def chart_data(dataset_id):
+    """Provide processed data for charting."""
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({"error": "Database connection failed"}), 500
+
+    table_name = f"fct_{dataset_id.lower()}"
+    time_code = request.args.get('time_code', None)
+
+    # Basic validation
+    if not all(c.isalnum() or c == '_' for c in table_name):
+        return jsonify({"error": "Invalid dataset ID format"}), 400
+
+    try:
+        with conn.cursor() as cur:
+            # Check if table exists
+            cur.execute("SELECT to_regclass(%s);", (f"dbt_prod.{table_name}",))
+            if cur.fetchone()[0] is None:
+                return jsonify({"error": "Dataset table not found"}), 404
+ 
+            # Get all available time_codes (years)
+            query_years = sql.SQL(
+                'SELECT DISTINCT time_code FROM dbt_prod.{} ORDER BY time_code DESC;'
+            ).format(sql.Identifier(table_name))
+            cur.execute(query_years)
+            available_years = [str(row[0]) for row in cur.fetchall()]
+
+            # Determine which year to query
+            year_to_query = time_code if time_code else available_years[0] if available_years else None
+            if year_to_query is None:
+                return jsonify({"error": "No data available for any year"}), 404
+
+            # Prepare safe SQL query for the selected year, removing ORDER BY as it will be handled in pandas
+            query = sql.SQL(
+                'SELECT geo_code, value FROM dbt_prod.{} WHERE value IS NOT NULL AND time_code = %s;'
+            ).format(sql.Identifier(table_name))
+
+            cur.execute(query, (year_to_query,))
+            rows = cur.fetchall()
+
+        # Create DataFrame from raw db rows
+        raw_df = pd.DataFrame(rows, columns=['geo_code', 'value'])
+
+        # Clean data: convert 'value' to numeric, which handles non-numeric strings
+        raw_df['value'] = pd.to_numeric(raw_df['value'], errors='coerce')
+        raw_df.dropna(subset=['value'], inplace=True)
+
+        # Group by geo_code and calculate the mean to handle potential duplicates
+        df = raw_df.groupby('geo_code')['value'].mean().reset_index()
+        
+        # Sort values for better chart presentation (longest bar at the top)
+        df.sort_values(by='value', ascending=True, inplace=True)
+
+        # Chart.js color palette
+        colors = ['#4e73df', '#1cc88a', '#36b9cc', '#f6c23e', '#e74a3b', '#858796', '#5a5c69', '#f8f9fc', '#e6194B', '#3cb44b']
+
+        chart_datasets = [{
+            "label": f'Data for {year_to_query}',
+            "data": df['value'].tolist(), # Values are now clean floats
+            "backgroundColor": colors[0],
+            "borderColor": colors[0],
+            "borderWidth": 1
+        }]
+
+        chart_data = {
+            "labels": df['geo_code'].tolist(),
+            "datasets": chart_datasets,
+            "available_years": available_years,
+            "current_year": year_to_query
+        }
+
+        return jsonify(chart_data)
+
+    except Exception as e:
+        logger.error(f"Error fetching chart data for {dataset_id}: {e}", exc_info=True)
+        return jsonify({"error": str(e)}), 500
+    
+    finally:
+        if conn:
+            conn.close()
 
 @app.route('/dataset/<dataset_id>')
 def dataset_detail(dataset_id):
@@ -238,7 +378,6 @@ def dataset_detail(dataset_id):
     health_csv_path = Path(__file__).parent.parent / 'health_datasets.csv'
     if health_csv_path.exists():
         try:
-            import pandas as pd
             df = pd.read_csv(health_csv_path)
             health_dataset = df[df['ID'] == dataset_id]
             
@@ -305,7 +444,7 @@ def dataset_detail(dataset_id):
     # Get table info if processed
     table_info = None
     if processed:
-        table_info = get_table_info(dataset_id.lower())
+        table_info = get_table_info(f"fct_{dataset_id.lower()}")
     
     return render_template('dataset_detail.html', 
                          dataset_id=dataset_id,
@@ -321,17 +460,21 @@ def get_table_info(table_name):
     
     try:
         with conn.cursor(cursor_factory=RealDictCursor) as cur:
-            # Get column info
+            # Get column info from dbt_prod schema
             cur.execute("""
                 SELECT column_name, data_type, is_nullable
                 FROM information_schema.columns 
-                WHERE table_name = %s
+                WHERE table_name = %s AND table_schema = 'dbt_prod'
                 ORDER BY ordinal_position
             """, (table_name,))
             columns = cur.fetchall()
             
+            # If no columns are found, the table likely doesn't exist in dbt_prod
+            if not columns:
+                return None
+
             # Get row count
-            cur.execute(f"SELECT COUNT(*) as count FROM {table_name}")
+            cur.execute(sql.SQL("SELECT COUNT(*) as count FROM dbt_prod.{}").format(sql.Identifier(table_name)))
             row_count = cur.fetchone()['count']
             
             return {
@@ -614,15 +757,17 @@ def query_mart(mart_name):
                     continue
                     
                 try:
-                    # Use proper schema qualification
-                    qualified_table = f"{schema_name}.{mart_name}"
-                    cur.execute(f"SELECT * FROM {qualified_table} LIMIT %s", (limit,))
+                    # Use proper schema qualification to prevent SQL injection
+                    query = sql.SQL("SELECT * FROM {}.{} LIMIT %s").format(
+                        sql.Identifier(schema_name), sql.Identifier(mart_name)
+                    )
+                    cur.execute(query, (limit,))
                     rows = cur.fetchall()
                     schema_used = schema_name
                     success = True
                     break
                 except Exception as e:
-                    logger.debug(f"Failed to query {qualified_table}: {e}")
+                    logger.debug(f"Failed to query {schema_name}.{mart_name}: {e}")
                     continue
             
             if not success:
@@ -643,6 +788,16 @@ def query_mart(mart_name):
         return jsonify({'error': f'Query failed: {str(e)}'}), 500
     finally:
         conn.close()
+
+@app.route('/update_grouped_datasets', methods=['POST'])
+def update_grouped_datasets_route():
+    """Route to update the grouped datasets list"""
+    try:
+        update_grouped_datasets()
+        return jsonify({'success': True, 'message': 'Grouped datasets updated successfully.'})
+    except Exception as e:
+        logger.error(f"Failed to update grouped datasets: {e}")
+        return jsonify({'success': False, 'message': 'Failed to update grouped datasets.'}), 500
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=5001) 

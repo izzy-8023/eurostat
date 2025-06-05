@@ -20,3 +20,11 @@ gunicorn~=21.2.0      # WSGI server for production deployment
 
 # Added for Flask reloader
 watchdog
+
+# Additional dependencies
+python-dotenv
+
+# Airflow providers
+apache-airflow-providers-common-sql
+apache-airflow-providers-docker
+apache-airflow-providers-postgres

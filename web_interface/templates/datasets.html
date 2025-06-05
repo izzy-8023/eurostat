@@ -6,7 +6,7 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">
         <i class="fas fa-heart me-2"></i>
-        Health Datasets
+        Health Data Topics
         {% if pagination %}
             <span class="badge bg-secondary ms-2">{{ pagination.total }} total</span>
         {% endif %}
@@ -21,7 +21,7 @@
                 <i class="fas fa-search"></i>
             </span>
             <input type="text" class="form-control" id="searchInput" 
-                   placeholder="Search health datasets..." 
+                   placeholder="Search health data topics..." 
                    value="{{ search_term or '' }}">
             <button class="btn btn-outline-secondary" type="button" onclick="searchDatasets()">
                 Search
@@ -50,7 +50,7 @@
 <div class="card shadow">
     <div class="card-header">
         <h6 class="m-0 font-weight-bold">
-            Available Health Datasets ({{ datasets|length }} on this page)
+            Available Health Data Topics ({{ datasets|length }} on this page)
         </h6>
     </div>
     <div class="card-body">
@@ -59,7 +59,6 @@
                 <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
                             <th>Title</th>
                             <th>Category</th>
                             <th>Status</th>
@@ -70,10 +69,9 @@
                         {% for dataset in datasets %}
                         <tr>
                             <td>
-                                <code>{{ dataset.id }}</code>
-                            </td>
-                            <td>
-                                <strong>{{ dataset.title[:80] }}{% if dataset.title|length > 80 %}...{% endif %}</strong>
+                                <strong>{{ dataset.group_name[:80] }}{% if dataset.group_name|length > 80 %}...{% endif %}</strong>
+                                <br>
+                                <span class="badge bg-light text-dark">{{ dataset.dataset_count }} datasets</span>
                                 {% if dataset.description %}
                                     <br><small class="text-muted">{{ dataset.description[:100] }}{% if dataset.description|length > 100 %}...{% endif %}</small>
                                 {% endif %}
@@ -89,10 +87,17 @@
                                 {% endif %}
                             </td>
                             <td>
-                                <a href="{{ url_for('dataset_detail', dataset_id=dataset.id) }}" 
-                                   class="btn btn-sm btn-outline-primary">
+                                <a href="{{ url_for('group_detail', group_name=dataset.id) }}" 
+                                   class="btn btn-sm btn-outline-primary" title="View datasets in this topic">
                                     <i class="fas fa-eye"></i> View
                                 </a>
+                                <button class="btn btn-sm btn-outline-success ms-1" 
+                                        onclick="processTopic(this)" 
+                                        data-dataset-ids="{{ dataset.dataset_ids|join(',') }}"
+                                        data-group-name="{{ dataset.group_name }}"
+                                        title="Process all datasets in this topic">
+                                    <i class="fas fa-rocket"></i> Process
+                                </button>
                             </td>
                         </tr>
                         {% endfor %}
@@ -144,15 +149,15 @@
                 <i class="fas fa-search fa-3x text-muted mb-3"></i>
                 <p class="text-muted">No health datasets found matching your criteria.</p>
                 <a href="{{ url_for('datasets') }}" class="btn btn-primary">
-                    View All Health Datasets
+                    View All Health Data Topics
                 </a>
             </div>
         {% endif %}
     </div>
 </div>
-{% endblock %}
 
-{% block scripts %}
+<button id="update-button" class="btn btn-primary">Update Grouped Datasets</button>
+
 <script>
 // Search functionality
 function searchDatasets() {
@@ -184,6 +189,65 @@ document.getElementById('searchInput').addEventListener('keypress', function(e) 
     if (e.key === 'Enter') {
         searchDatasets();
     }
+});
+
+function processTopic(button) {
+    const datasetIds = button.getAttribute('data-dataset-ids').split(',');
+    const groupName = button.getAttribute('data-group-name');
+
+    if (!datasetIds || datasetIds.length === 0) {
+        alert('No dataset IDs found for this topic.');
+        return;
+    }
+
+    if (!confirm(`Are you sure you want to process all ${datasetIds.length} datasets in the topic "${groupName}"?`)) {
+        return;
+    }
+
+    // You can use a more sophisticated modal/notification library instead of alerts
+    alert(`Starting processing for topic: "${groupName}". Check the processing status for progress.`);
+
+    fetch('/api/trigger_processing', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ dataset_ids: datasetIds })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Optional: redirect to a processing status page or show a more persistent notification
+            console.log('Processing triggered successfully:', data);
+            alert(`Successfully triggered DAG run: ${data.run_id}`);
+        } else {
+            alert('Failed to trigger processing: ' + data.error);
+        }
+    })
+    .catch(error => {
+        alert('An error occurred while triggering the processing job.');
+        console.error('Error:', error);
+    });
+}
+
+document.getElementById('update-button').addEventListener('click', function() {
+    fetch('/update_grouped_datasets', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+        if (data.success) {
+            location.reload();
+        }
+    })
+    .catch(error => {
+        alert('An error occurred while updating grouped datasets.');
+        console.error('Error:', error);
+    });
 });
 </script>
 {% endblock %} 

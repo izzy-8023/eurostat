@@ -3,15 +3,16 @@ import os
 import logging
 import psycopg2 # For connecting to PostgreSQL
 from pathlib import Path
+import glob # Added import
 
 # --- Script Configuration ---
 # TODO: IMPORTANT - Replace with your actual database connection details
 # Consider using environment variables for security.
-DB_NAME = "eurostat_data"
-DB_USER = "eurostat_user"
-DB_PASSWORD = "mysecretpassword"
-DB_HOST = "localhost"  # Or 'localhost' if running outside Docker, matching your dbt profiles.yml. TEMPORARILY SET TO LOCALHOST FOR LOCAL EXECUTION
-DB_PORT = "5432"
+DB_NAME = os.environ.get("DB_NAME", "eurostat_data")
+DB_USER = os.environ.get("DB_USER", "eurostat_user")
+DB_PASSWORD = os.environ.get("DB_PASSWORD", "mysecretpassword")
+DB_HOST = os.environ.get("DB_HOST", "db")  # Or 'localhost' if running outside Docker, matching your dbt profiles.yml.
+DB_PORT = os.environ.get("DB_PORT", "5432")
 
 # Schema in PostgreSQL where your raw Eurostat tables reside
 DB_RAW_SCHEMA = "public"
@@ -26,17 +27,32 @@ SOURCES_DIR_PATH = os.path.join(DBT_PROJECT_ROOT, 'models', 'sources') # New pat
 SOURCES_FILE_PATH = os.path.join(SOURCES_DIR_PATH, 'sources.yml')
 DIM_MODELS_PATH = os.path.join(DBT_PROJECT_ROOT, 'models', 'dimensions')
 FACT_MODELS_PATH = os.path.join(DBT_PROJECT_ROOT, 'models', 'facts')
+STG_MODELS_PATH = os.path.join(DBT_PROJECT_ROOT, 'models', 'staging') # Added staging models path
 
 # Stems to exclude when auto-discovering dimensions
 # These are typically measure names or generic metadata not suitable for conformed dimensions
 EXCLUDED_DIMENSION_STEMS = ['value', 'status', 'source_dataset', 'linear_index', 'time_format'] # Add more if needed
 
 MEASURE_COLUMNS = ['value']
-METADATA_FACT_COLUMNS = ['status_code', 'status_label', 'source_dataset_id', 'linear_index']
+METADATA_FACT_COLUMNS = ['source_dataset_id'] # Removed status_code, status_label, linear_index
 
 # --- Logging Setup ---
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
+# Helper function to clean directories
+def clean_generated_model_files(directory_path, patterns):
+    """Removes files matching specified patterns from a directory."""
+    logging.info(f"Cleaning patterns {patterns} from directory {directory_path}...")
+    for pattern in patterns:
+        files_to_delete = glob.glob(os.path.join(directory_path, pattern))
+        if not files_to_delete:
+            logging.info(f"No files found for pattern '{pattern}' in {directory_path}.")
+        for f_path in files_to_delete:
+            try:
+                os.remove(f_path)
+                logging.info(f"Removed stale file: {f_path}")
+            except OSError as e:
+                logging.error(f"Error removing file {f_path}: {e}")
 
 # --- Database Interaction & sources.yml Generation ---
 def get_db_connection():
@@ -55,20 +71,38 @@ def get_db_connection():
         logging.error(f"Error connecting to PostgreSQL: {e}")
         raise
 
-def introspect_database_schema(conn):
+def introspect_database_schema(conn, processed_dataset_ids_filter=None):
     """Introspects the database to find tables and their columns."""
     tables_schema = {}
     try:
         with conn.cursor() as cur:
-            table_query = f"""
-            SELECT table_name
-            FROM information_schema.tables
-            WHERE table_schema = '{DB_RAW_SCHEMA}'
-              AND table_name LIKE '{EUROSTAT_TABLE_PATTERN}';
-            """
-            cur.execute(table_query)
+            params = [DB_RAW_SCHEMA]
+            if processed_dataset_ids_filter and isinstance(processed_dataset_ids_filter, list) and len(processed_dataset_ids_filter) > 0:
+                # Convert dataset_ids to lowercase as table names are often stored as such
+                lower_case_ids = [dataset_id.lower() for dataset_id in processed_dataset_ids_filter]
+                table_query = f""" 
+                SELECT table_name
+                FROM information_schema.tables
+                WHERE table_schema = %s
+                  AND table_name = ANY(%s);
+                """
+                params.append(lower_case_ids)
+                logging.info(f"Introspecting specific tables: {lower_case_ids} in schema '{DB_RAW_SCHEMA}'.")
+            else:
+                table_query = f"""
+                SELECT table_name
+                FROM information_schema.tables
+                WHERE table_schema = %s
+                  AND table_name LIKE %s;
+                """
+                params.append(EUROSTAT_TABLE_PATTERN)
+                logging.info(f"Introspecting tables in schema '{DB_RAW_SCHEMA}' matching pattern '{EUROSTAT_TABLE_PATTERN}'.")
+
+            cur.execute(table_query, tuple(params))
             tables = [row[0] for row in cur.fetchall()]
-            logging.info(f"Found {len(tables)} tables in schema '{DB_RAW_SCHEMA}' matching pattern '{EUROSTAT_TABLE_PATTERN}'.")
+            # The logging line below might be slightly redundant or could be combined with the one above.
+            # For now, let's keep it to confirm the number of tables found after filtering.
+            logging.info(f"Found {len(tables)} tables matching criteria.")
 
             for table_name in tables:
                 column_query = f"""
@@ -78,7 +112,7 @@ def introspect_database_schema(conn):
                   AND table_name = '{table_name}'
                 ORDER BY ordinal_position;
                 """
-                cur.execute(column_query, (DB_RAW_SCHEMA, table_name)) # This line had an error, corrected.
+                cur.execute(column_query)
                 columns = []
                 for row in cur.fetchall():
                     columns.append({"name": row[0], "description": f"Raw column {row[0]} from {table_name} (type: {row[1]})"})
@@ -235,22 +269,26 @@ def generate_fact_model_sql(source_table_name, source_table_columns_info, discov
             select_clauses.append(f"    source_table.{col_name},")
             
     # Clean up trailing commas from the select_clauses list before joining
-    final_select_parts = []
-    for i, clause in enumerate(select_clauses):
-        is_last_data_clause = True # Assume it's last unless a data clause follows
-        if not clause.strip().startswith("--"): # Only consider data clauses for comma logic
-            for next_clause in select_clauses[i+1:]:
-                if not next_clause.strip().startswith("--"):
-                    is_last_data_clause = False
-                    break
-            if is_last_data_clause:
-                final_select_parts.append(clause.rstrip(','))
-            else:
-                final_select_parts.append(clause.rstrip(',') + ",")
-        else:
-            final_select_parts.append(clause) # Keep comments as is
+    processed_select_parts = []
+    last_data_clause_idx = -1
+    for i in range(len(select_clauses) - 1, -1, -1):
+        if not select_clauses[i].strip().startswith("--"):
+            last_data_clause_idx = i
+            break
 
-    select_statement = "\n".join(final_select_parts)
+    for i, clause in enumerate(select_clauses):
+        stripped_clause_content = clause.strip()
+        if not stripped_clause_content.startswith("--") and stripped_clause_content: # It's a data clause and not empty
+            # Remove any existing trailing comma, then add one back if not the last data clause
+            current_clause_main_part = clause.rstrip(',')
+            if i < last_data_clause_idx:
+                 processed_select_parts.append(current_clause_main_part + ",")
+            else:
+                 processed_select_parts.append(current_clause_main_part)
+        else: # It's a comment or an empty line (though select_clauses shouldn't have fully empty lines)
+            processed_select_parts.append(clause)
+            
+    select_statement = "\n".join(processed_select_parts)
 
     sql = f"""{{{{ config(materialized='view') }}}}
 
@@ -265,7 +303,7 @@ FROM {{{{ source('eurostat_raw', '{source_table_name}') }}}} source_table
 """
     return sql
 
-def generate_schema_yml_suggestions(dim_models_generated_config, fact_models_generated_sources):
+def generate_schema_yml_suggestions(dim_models_generated_config, fact_models_generated_sources, discovered_dimension_stems_param):
     logging.info("\n--- Suggested schema.yml updates ---")
     dim_schema_models = []
     fact_schema_models = []
@@ -287,7 +325,7 @@ def generate_schema_yml_suggestions(dim_models_generated_config, fact_models_gen
 
     for fact_model_name, source_table_name in fact_models_generated_sources.items():
         cols_for_fact_schema = []
-        for stem in discovered_dimension_stems: 
+        for stem in discovered_dimension_stems_param: 
              # FK column in fact is now the _code column itself, e.g., geo_code
              fk_code_col = f"{stem}_code" 
              dim_table_ref = f"dim_{stem}"
@@ -349,23 +387,33 @@ def generate_schema_yml_suggestions(dim_models_generated_config, fact_models_gen
         logging.info("No fact model schemas to generate.")
 
 # --- Main Orchestration ---
-# Global variable to store discovered stems for schema.yml generation
-discovered_dimension_stems = {}
-
-def main():
-    global discovered_dimension_stems # Allow main to modify the global
-    logging.info("Starting dbt star schema generation process...")
+def main(processed_dataset_ids_filter=None):
+    if processed_dataset_ids_filter:
+        logging.info(f"Starting dbt star schema generation, filtered for: {processed_dataset_ids_filter}")
+    else:
+        logging.info("Starting dbt star schema generation process...")
 
     # Create necessary directories
     os.makedirs(SOURCES_DIR_PATH, exist_ok=True)
     os.makedirs(DIM_MODELS_PATH, exist_ok=True)
     os.makedirs(FACT_MODELS_PATH, exist_ok=True)
+    os.makedirs(STG_MODELS_PATH, exist_ok=True) # Ensure staging directory exists
+
+    # Clean previously generated models and schema files to prevent stale models
+    # when filters are applied or after a database reset.
+    clean_generated_model_files(DIM_MODELS_PATH, ["dim_*.sql", "schema_dimensions.yml"])
+    clean_generated_model_files(FACT_MODELS_PATH, ["fct_*.sql", "schema_facts.yml"])
+    # It's crucial to also clean staging models, as they may be stale from previous runs
+    # and cause "source not found" errors if the database has been reset.
+    clean_generated_model_files(STG_MODELS_PATH, ["stg_*.sql", "schema_staging.yml"])
+
+    # Note: sources.yml is in SOURCES_DIR_PATH and is overwritten, so no specific cleaning needed there.
 
     # 1. Introspect DB and generate/update sources.yml
     conn = None
     try:
         conn = get_db_connection()
-        tables_schema = introspect_database_schema(conn)
+        tables_schema = introspect_database_schema(conn, processed_dataset_ids_filter)
         if not tables_schema:
             logging.warning("No tables found in the database matching criteria. Exiting model generation.")
             return
@@ -391,8 +439,8 @@ def main():
         return
 
     # 2. Discover Dimension Stems from the current sources.yml
-    discovered_dimension_stems = discover_dimension_stems(current_sources_data)
-    if not discovered_dimension_stems:
+    discovered_stems = discover_dimension_stems(current_sources_data)
+    if not discovered_stems:
         logging.warning("No dimension stems discovered. Only fact views (without dimensional links) might be generated if any.")
         # Still proceed to generate fact views, they might just not have FKs if no dims are made
 
@@ -402,7 +450,7 @@ def main():
     # 3. Generate Dimension Models
     logging.info("\n--- Generating Dimension Models ---")
     dim_models_generated_config = {} # For schema.yml
-    for dim_stem, dim_config_details in discovered_dimension_stems.items():
+    for dim_stem, dim_config_details in discovered_stems.items():
         dim_sql = generate_dim_model_sql(dim_stem, dim_config_details, all_source_tables_with_columns)
         dim_model_name = f"dim_{dim_stem}"
         dim_file_path = os.path.join(DIM_MODELS_PATH, f"{dim_model_name}.sql")
@@ -424,7 +472,7 @@ def main():
             logging.warning(f"Skipping fact view for {table_name} due to missing column definitions.")
             continue
             
-        fact_sql = generate_fact_model_sql(table_name, table_columns_info, discovered_dimension_stems)
+        fact_sql = generate_fact_model_sql(table_name, table_columns_info, discovered_stems)
         fact_model_name = f"fct_{table_name}"
         fact_file_path = os.path.join(FACT_MODELS_PATH, f"{fact_model_name}.sql")
         try:
@@ -437,7 +485,7 @@ def main():
     
     # 5. Suggest schema.yml updates
     if dim_models_generated_config or fact_models_generated_sources:
-        generate_schema_yml_suggestions(dim_models_generated_config, fact_models_generated_sources)
+        generate_schema_yml_suggestions(dim_models_generated_config, fact_models_generated_sources, discovered_stems)
 
     logging.info("\nStar schema dbt model generation process complete.")
     logging.warning("Reminder: Obsolete models (e.g., stg_*.sql from previous logic) and generator scripts "
@@ -446,4 +494,6 @@ def main():
 
 
 if __name__ == '__main__':
+    # For direct execution, no filter is passed by default.
+    # Add command line argument parsing here if needed for standalone runs with filters.
     main() 

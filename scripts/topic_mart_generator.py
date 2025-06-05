@@ -142,17 +142,17 @@ class TopicMartGenerator:
                         topic_groups[group_name] = dataset_ids
                     else:
                         logger.warning(f"Group '{group_name}' has no valid dataset_ids after parsing.")
-
+                    
         except FileNotFoundError:
             logger.error(f"Topic groups CSV file not found: {csv_file_path}")
             # return {} # Return empty if file not found, or raise error
         except Exception as e:
             logger.error(f"Failed to load topic groups from {csv_file_path}: {e}")
             # return {} # Return empty on other errors
-        
+            
         logger.info(f"Loaded {len(topic_groups)} topic groups from {csv_file_path} to be processed.")
         return topic_groups
-
+    
     def _generate_star_topic_mart_sql(self, topic_name: str, dataset_ids_in_topic: List[str]) -> Optional[str]:
         """
         Generates the SQL for a single topic-based mart model using star schema fact views.
@@ -240,7 +240,7 @@ class TopicMartGenerator:
 
             dataset_sql = f"SELECT\n{dataset_sql_select_block}\nFROM {{{{ ref('fct_{dataset_id.lower()}') }}}}\nWHERE value IS NOT NULL OR status_code IS NOT NULL" # Retaining original WHERE clause logic
             union_parts.append(dataset_sql)
-
+        
         if not union_parts:
             logger.warning(f"No SQL parts generated for topic mart '{topic_name}'. Mart not generated.")
             return None
@@ -256,9 +256,9 @@ class TopicMartGenerator:
             full_sql = f"{header}\n{'\nUNION ALL\n'.join(union_parts)}"
         else: # Single dataset topic mart (if load_topic_groups allows it, or for robustness)
             full_sql = f"{header}\n{union_parts[0]}"
-            
+        
         return full_sql
-
+    
     def generate_topic_documentation(self, topic_name: str, dataset_ids: List[str], mart_sql: str) -> Dict[str, Any]:
         """Generates a basic description for the topic mart model."""
         # This is a simplified version. Could be expanded based on actual columns.
@@ -308,7 +308,7 @@ class TopicMartGenerator:
             return results
 
         os.makedirs(MART_MODELS_OUTPUT_DIR, exist_ok=True)
-
+        
         for topic_name, dataset_ids in topic_groups.items():
             if topic_filter and topic_name not in topic_filter:
                 continue

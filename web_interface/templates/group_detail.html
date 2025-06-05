@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}{{ group.group_name }} - Data Group{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">
+        <i class="fas fa-layer-group me-2"></i>
+        {{ group.group_name }}
+    </h1>
+    <a href="{{ url_for('datasets') }}" class="btn btn-sm btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Back to All Topics
+    </a>
+</div>
+
+<div class="card shadow">
+    <div class="card-header">
+        <h6 class="m-0 font-weight-bold">
+            Datasets in this Topic ({{ group.dataset_count }})
+        </h6>
+    </div>
+    <div class="card-body">
+        <p>The following {{ group.dataset_count }} datasets are part of the '{{ group.group_name }}' topic.</p>
+        
+        {% if datasets %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Title</th>
+                            <th>Status</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for dataset in datasets %}
+                        <tr>
+                            <td>
+                                <code>{{ dataset.id }}</code>
+                            </td>
+                            <td>
+                                <strong>{{ dataset.title }}</strong>
+                                {% if dataset.description and dataset.description != dataset.title %}
+                                    <br><small class="text-muted">{{ dataset.description[:120] }}...</small>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if dataset.processed %}
+                                    <span class="badge bg-success">Processed</span>
+                                {% else %}
+                                    <span class="badge bg-warning">Available</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge bg-light text-dark">{{ dataset.last_updated or 'N/A' }}</span>
+                            </td>
+                            <td>
+                                <a href="{{ url_for('dataset_detail', dataset_id=dataset.id) }}" 
+                                   class="btn btn-sm btn-outline-primary" title="View raw data and schema">
+                                    <i class="fas fa-eye"></i> View Details
+                                </a>
+                                {% if dataset.processed %}
+                                <a href="{{ url_for('visualize_dataset', dataset_id=dataset.id, group_name=group.group_name) }}" 
+                                   class="btn btn-sm btn-outline-info ms-1" title="Visualize this dataset">
+                                    <i class="fas fa-chart-line"></i> Visualize
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <div class="text-center py-4">
+                <i class="fas fa-exclamation-triangle fa-3x text-warning mb-3"></i>
+                <p class="text-muted">No dataset details could be loaded for this group.</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 

@@ -2,72 +2,69 @@ import json
 import logging # Optional: for logging within the util
 from datetime import datetime, timezone
 import os # For local testing path joining
+import ijson
 
 logger = logging.getLogger(__name__) # Optional
 
-def get_metadata_from_dataset_json(json_file_path: str) -> dict | None:
+def get_metadata_from_dataset_json(file_path: str):
     """
-    Parses a downloaded Eurostat dataset JSON file (for a single dataset)
-    to extract its title (label) and last update date.
+    Efficiently extracts 'label' and update date from a Eurostat JSON file.
+    It performs up to two passes to handle different metadata structures without
+    loading the entire file into memory.
 
-    Args:
-        json_file_path: Path to the downloaded .json file for a single dataset.
-
-    Returns:
-        A dictionary with {"title": "...", "update_data_date": "YYYY-MM-DDTHH:MM:SSZ"} 
-        or None if extraction fails or essential fields are missing.
-        The update_data_date should be an ISO 8601 string.
+    Pass 1: Checks for top-level 'label', 'updated', or 'lastUpdate' keys.
+    Pass 2 (if needed): Scans 'extension.annotation' for an object with
+              type 'UPDATE_DATA' to find a nested update date.
     """
+    title = None
+    update_date = None
+
+    # --- Pass 1: Check for top-level keys ---
     try:
-        with open(json_file_path, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-        
-        # Extract title (label)
-        # Common locations for title/label in Eurostat JSON:
-        title = data.get('label')
-        if not title and 'concept' in data and isinstance(data['concept'], list) and len(data['concept']) > 0:
-            # Sometimes the main label is within a concept array
-            # This is speculative, adjust based on actual single dataset JSON structure
-            if isinstance(data['concept'][0], dict):
-                 title = data['concept'][0].get('label')
-
-
-        # Extract last update date
-        # Common locations for update date in Eurostat JSON for a single dataset:
-        # 1. Root level 'updated' key
-        # 2. 'extension.annotation' with type 'UPDATE_DATA' (less common for single file, more for catalog)
-        # 3. 'version' or 'publicationDate' might also be candidates if 'updated' is missing.
-        
-        update_date_str = data.get('updated') # Often the most direct for single dataset files
-
-        if not update_date_str and data.get('extension') and data['extension'].get('annotation'):
-            for annotation in data['extension']['annotation']:
-                if isinstance(annotation, dict) and annotation.get('type') == 'UPDATE_DATA':
-                    update_date_str = annotation.get('date')
+        with open(file_path, 'rb') as f:
+            # Use ijson.kvitems on the root to get key-value pairs.
+            # This is a generator, so we can break early.
+            top_level_items = ijson.kvitems(f, '')
+            for key, value in top_level_items:
+                if key == 'label':
+                    title = value
+                if key == 'updated' or key == 'lastUpdate':
+                    update_date = value
+                
+                # Optimization: if we have what we might find at the top level, stop this pass.
+                # Or if we hit a very large object.
+                if (title and update_date) or key in ['dimension', 'value']:
                     break
-        
-        # Add more fallbacks if necessary based on your inspection of a sample single-dataset JSON file.
-        # e.g. check data.get('version'), data.get('publicationDate') etc.
-
-        if not title or not update_date_str:
-            logger.warning(f"Could not extract essential metadata (title or update_date) from {json_file_path}. Title found: {title}, UpdateDate found: {update_date_str}")
-            return None
-
-        # Basic validation/normalization of the date string (optional but good)
-        # For now, we assume it's already a valid ISO string.
-        # If it's just a date like "2023-10-26", you might want to append a default time.
-        # Example: if len(update_date_str) == 10: update_date_str += "T00:00:00Z"
-
-        return {"title": title, "update_data_date": update_date_str}
-
-    except FileNotFoundError:
-        logger.error(f"File not found for metadata extraction: {json_file_path}")
-        return None
-    except json.JSONDecodeError as e:
-        logger.error(f"JSON decode error for {json_file_path}: {e}")
-        return None
     except Exception as e:
-        logger.error(f"Unexpected error parsing {json_file_path}: {e}")
+        # This can happen for empty files or if the top-level isn't an object.
+        logger.warning(f"Could not perform first-pass metadata scan on {file_path}: {e}")
+
+    # --- Pass 2: Check for nested update date if not found in Pass 1 ---
+    if not update_date:
+        try:
+            with open(file_path, 'rb') as f:
+                # ijson.items iterates over an array at a given prefix.
+                annotations = ijson.items(f, 'extension.annotation.item')
+                for annotation in annotations:
+                    # Each 'annotation' is a full dict from the array, loaded into memory one by one.
+                    # This is safe as these annotation objects are small.
+                    if isinstance(annotation, dict) and annotation.get('type') == 'UPDATE_DATA':
+                        date_val = annotation.get('date')
+                        if date_val:
+                            update_date = date_val
+                            break # Found the update date, exit annotation loop
+        except Exception as e:
+            logger.warning(f"Could not perform second-pass (annotation) metadata scan on {file_path}: {e}")
+
+    # --- Final Result ---
+    if title or update_date:
+        if not title:
+            logger.warning(f"Found update_date but not title for {file_path}")
+        if not update_date:
+            logger.warning(f"Found title but not update_date for {file_path}")
+        return {"title": title, "update_data_date": update_date}
+    else:
+        logger.warning(f"Could not find title or update date in {file_path} after all parsing attempts.")
         return None
 
 def get_dataset_metadata_from_main_catalog(dataset_id_to_find: str, main_catalog_json_path: str) -> dict | None:

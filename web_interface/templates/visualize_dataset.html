@@ -1,0 +1,165 @@
+{% extends "base.html" %}
+
+{% block title %}Visualize Dataset: {{ dataset_id }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-2 text-gray-800">Visualize Dataset: <strong>{{ dataset_id }}</strong></h1>
+    <p class="mb-4">
+        This chart displays the data for the selected dataset. 
+        Use the buttons below to view data for a specific year.
+    </p>
+    
+    <!-- Year Selector Buttons -->
+    <div id="year-selector" class="mb-4">
+        <!-- Buttons will be dynamically inserted here -->
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Dataset Chart</h6>
+        </div>
+        <div class="card-body">
+            <div class="chart-container" style="position: relative; height:60vh; width:100%">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div id="loading" class="text-center" style="display: none;">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <p>Loading chart data...</p>
+            </div>
+            <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    // Register the datalabels plugin globally
+    Chart.register(ChartDataLabels);
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const loadingDiv = document.getElementById('loading');
+    const errorMessageDiv = document.getElementById('error-message');
+    const yearSelectorDiv = document.getElementById('year-selector');
+    let myChart;
+
+    async function fetchDataAndRenderChart(year = null) {
+        loadingDiv.style.display = 'block';
+        errorMessageDiv.style.display = 'none';
+        
+        let url = `/api/dataset/{{ dataset_id }}/chart-data`;
+        if (year) {
+            url += `?time_code=${year}`;
+        }
+
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Failed to fetch data');
+            }
+            
+            const chartData = await response.json();
+            
+            // Update year selector buttons
+            updateYearSelector(chartData.available_years, chartData.current_year);
+            
+            // Render chart
+            renderChart(chartData);
+
+        } catch (error) {
+            errorMessageDiv.textContent = `Error: ${error.message}`;
+            errorMessageDiv.style.display = 'block';
+        } finally {
+            loadingDiv.style.display = 'none';
+        }
+    }
+
+    function updateYearSelector(years, currentYear) {
+        yearSelectorDiv.innerHTML = ''; // Clear existing buttons
+        years.forEach(year => {
+            const button = document.createElement('button');
+            button.textContent = year;
+            button.classList.add('btn', 'btn-sm', 'mr-1', 'mb-1');
+            if (year.toString() === currentYear.toString()) {
+                button.classList.add('btn-primary');
+            } else {
+                button.classList.add('btn-outline-primary');
+            }
+            button.onclick = () => fetchDataAndRenderChart(year);
+            yearSelectorDiv.appendChild(button);
+        });
+    }
+
+    function renderChart(data) {
+        if (myChart) {
+            myChart.destroy();
+        }
+        
+        // Dynamically adjust chart height based on the number of labels
+        const chartContainer = document.querySelector('.chart-container');
+        const numLabels = data.labels.length;
+        // e.g., 30px per bar + 100px for padding/margins, with a min height.
+        const newHeight = Math.max(400, numLabels * 30 + 100); 
+        chartContainer.style.height = `${newHeight}px`;
+
+        myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: data.labels,
+                datasets: data.datasets
+            },
+            options: {
+                indexAxis: 'y', // This makes the bar chart horizontal
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Value'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Country'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: `Data for {{ dataset_id }} - Year ${data.current_year}`
+                    },
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'end',
+                        formatter: (value) => {
+                            return value.toFixed(1);
+                        },
+                        color: 'black',
+                        font: {
+                            weight: 'bold'
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // Initial fetch
+    fetchDataAndRenderChart();
+});
+</script>
+{% endblock %} 

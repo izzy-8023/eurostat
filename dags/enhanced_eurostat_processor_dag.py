@@ -21,6 +21,7 @@ import logging
 from pathlib import Path
 import os
 import sys
+import subprocess
 
 from airflow import DAG
 from airflow.decorators import task
@@ -100,7 +101,7 @@ def validate_environment(**context) -> Dict[str, Any]:
         script_paths = [
             '/opt/airflow/scripts/SourceData.py',
             '/opt/airflow/scripts/json_to_postgres_loader.py',
-            '/opt/airflow/scripts/consolidated_model_generator.py',
+            # '/opt/airflow/scripts/consolidated_model_generator.py', # Deprecated
             '/opt/airflow/scripts/topic_mart_generator.py'
         ]
         
@@ -424,72 +425,41 @@ def extract_source_metadata_task(loading_results: Dict[str, Any], processing_pla
     return datasets_metadata
 
 @task(dag=dag)
-def generate_dbt_star_schema_files_task(processing_plan: Dict[str, Any], loading_results: Dict[str, Any], source_metadata: Dict[str, Any], **context) -> Dict[str, Any]:
+def generate_dbt_star_schema_files_task(
+    processing_plan: Dict[str, Any], 
+    loading_results: Dict[str, Any], 
+    source_metadata: Dict[str, Any], 
+    **context
+) -> Dict[str, Any]:
     """
-    Generate dbt sources, dimension models, and fact models using generate_dbt_star_schema.py
-    
-    Args:
-        processing_plan: Processing plan
-        loading_results: Results from loading task
-        source_metadata: Metadata extracted from the downloaded JSON file
-    
-    Returns:
-        Star schema generation results
+    Generates dbt dimension and fact models, and updates sources.yml.
+    Dynamically scopes generation to successfully loaded datasets.
     """
-    import subprocess
-    import os
+    scripts_dir = '/opt/airflow/scripts'
+    if scripts_dir not in sys.path:
+        sys.path.append(scripts_dir)
+    
+    import generate_dbt_star_schema # Your script
 
-    logger.info(f" звездное небо (starry sky) Generating dbt sources, dimensions, and facts...")
+    successfully_loaded_dataset_ids = loading_results.get('successful_loads', [])
     
-    # Ensure environment variables for database connection are set if the script uses them
-    # For example, if your script uses os.environ.get('EUROSTAT_POSTGRES_HOST'), etc.
-    # These should ideally be configured in Airflow connections and passed to the script
-    # or set in the BashOperator's env parameter.
-    # For now, assuming the script can access them or uses its internal defaults if run in an env where they are set.
+    if not successfully_loaded_dataset_ids:
+        logger.info("No datasets successfully loaded. Skipping dbt star schema file generation.")
+        return {"status": "skipped_no_loaded_data", "generated_files_count": 0}
 
-    script_path = '/opt/airflow/scripts/generate_dbt_star_schema.py'
-    
-    # The script uses internal paths relative to its own location for output,
-    # and DB connections are hardcoded or via its own env var loading.
-    # It doesn't take dataset_ids as an argument as it introspects the DB.
-    cmd = ['python', script_path]
-    
-    generation_results = {
-        'star_schema_generated': False,
-        'output': '',
-        'errors': ''
-    }
-    
+    logger.info(f"Starting dbt star schema generation, filtered for: {successfully_loaded_dataset_ids}")
+
     try:
-        # Assuming the script's execution directory allows relative pathing to dbt_project
-        # e.g., if script is in /opt/airflow/scripts and dbt_project is /opt/airflow/dbt_project
-        # The script defines DBT_PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..', 'dbt_project')
-        # So, if this DAG runs the script from /opt/airflow/scripts/, it should find ../dbt_project correctly.
-        
-        # Set PYTHONPATH to include the shared modules directory if not already globally available
-        env = os.environ.copy()
-        env['PYTHONPATH'] = f"{env.get('PYTHONPATH', '')}:{os.path.dirname(script_path)}/shared"
-
-        logger.info(f"Executing command: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True, env=env, cwd=os.path.dirname(script_path)) # Run from script's dir
-        
-        generation_results['star_schema_generated'] = True
-        generation_results['output'] = result.stdout
-        logger.info(f"✅ Star schema files generated successfully.")
-        logger.debug(f"Output: {result.stdout}")
-        
-    except subprocess.CalledProcessError as e:
-        error_msg = f"Star schema generation failed: {e.stderr}"
-        logger.error(f"❌ {error_msg}")
-        generation_results['errors'] = e.stderr
-        raise AirflowException(error_msg)
-    except FileNotFoundError:
-        error_msg = f"Script {script_path} not found. Ensure it's in the correct Airflow scripts directory."
-        logger.error(f"❌ {error_msg}")
-        generation_results['errors'] = error_msg
-        raise AirflowException(error_msg)
-        
-    return generation_results
+        # Assuming generate_dbt_star_schema.main() is modified to accept this filter
+        # and uses it to scope its operations.
+        generate_dbt_star_schema.main(
+            processed_dataset_ids_filter=successfully_loaded_dataset_ids
+        )
+        logger.info(f"generate_dbt_star_schema.py executed for loaded datasets.")
+        return {"status": "completed", "processed_filter_used": True, "dataset_count": len(successfully_loaded_dataset_ids)}
+    except Exception as e:
+        logger.error(f"Error during dbt star schema file generation: {e}", exc_info=True)
+        raise AirflowException(f"generate_dbt_star_schema_files_task failed: {e}")
 
 @task(dag=dag)
 def generate_topic_marts(processing_plan: Dict[str, Any], star_schema_results: Dict[str, Any], **context) -> Dict[str, Any]:
@@ -560,108 +530,116 @@ def generate_topic_marts(processing_plan: Dict[str, Any], star_schema_results: D
     return mart_results
 
 @task(dag=dag)
-def run_dbt_pipeline(star_schema_results: Dict[str, Any], mart_generation_results: Dict[str, Any], **context) -> Dict[str, Any]:
+def run_dbt_pipeline(
+    star_schema_results: Dict[str, Any], 
+    mart_generation_results: Dict[str, Any],
+    loading_results: Dict[str, Any],  # Contains 'successful_loads'
+    processing_plan: Dict[str, Any], 
+    **context
+) -> Dict[str, Any]:
     """
-    Execute the complete dbt pipeline: run --full-refresh, then test.
-    
-    Args:
-        star_schema_results: Results from star schema file generation.
-        mart_generation_results: Results from topic mart generation.
-    
-    Returns:
-        dbt execution results
+    Run dbt models, tests, and generate documentation.
+    Dynamically selects models based on successfully loaded datasets.
     """
-    import subprocess
-    import os
-    
+    import subprocess  # Ensure subprocess is imported within the task
+    import os          # Ensure os is imported (often useful with subprocess)
+
     logger.info("🚀 Running dbt pipeline (full-refresh & test)...")
     
-    dbt_project_dir = '/opt/airflow/dbt_project' # Centralize path
-    # Ensure profiles.yml is in dbt_project_dir or DBT_PROFILES_DIR points to its location
-    # The existing env['DBT_PROFILES_DIR'] = '/opt/airflow/dbt_project' seems to handle this.
-
-    env = os.environ.copy()
-    env['DBT_PROFILES_DIR'] = dbt_project_dir # Standard practice
-    # Add EUROSTAT_POSTGRES_... env vars if your profiles.yml uses them and they are not globally set in Airflow worker
-    # Example: env['EUROSTAT_POSTGRES_HOST'] = Variable.get('EUROSTAT_POSTGRES_HOST', default_var='localhost')
-    # For now, assuming they are available in the execution environment as before.
-
-    execution_results = {
-        'dbt_run_stdout': '',
-        'dbt_run_stderr': '',
-        'dbt_run_success': False,
-        'dbt_test_stdout': '',
-        'dbt_test_stderr': '',
-        'dbt_test_success': False,
-        'failed_models': [], # Kept for consistency if needed, but full refresh errors are critical
-        'models_built': 0,
-        'tests_passed': 0,
-        'tests_failed': 0
+    DBT_PROJECT_DIR = "/opt/airflow/dbt_project"  # Make sure this is correct
+    DBT_PROFILES_DIR = "/opt/airflow/dbt_project" # Assuming profiles.yml is in dbt_project
+    dbt_results = {
+        "run_success": False,
+        "run_output": "",
+        "run_error": "",
+        "test_success": False,
+        "test_output": "",
+        "test_error": "",
+        "docs_success": False,
+        "docs_error": ""
     }
-    
+
+    successful_dataset_ids = loading_results.get('successful_loads', [])
+    dbt_select_args = [] # Arguments for dbt --select
+
+    if successful_dataset_ids:
+        logger.info(f"DBT_PIPELINE: Building dbt selection for successfully loaded datasets: {successful_dataset_ids}")
+        # Selectors for the source tables and all their downstream children
+        # Example: "source:eurostat_raw.hlth_ehis_fv3e+"
+        dbt_selectors = [f"source:eurostat_raw.{dataset_id.lower()}+" for dataset_id in successful_dataset_ids]
+        
+        if dbt_selectors:
+            dbt_select_args.extend(['--select'])
+            dbt_select_args.extend(dbt_selectors)
+            logger.info(f"DBT_PIPELINE: dbt operations will be scoped to: {' '.join(dbt_selectors)}")
+    else:
+        logger.info("DBT_PIPELINE: No datasets were successfully loaded in this run. "
+                    "dbt will be instructed to select no models by using a non-existent tag.")
+        dbt_select_args.extend(['--select', 'tag:__no_data_loaded_skip_dbt__'])
+
+    base_dbt_args = ['--project-dir', DBT_PROJECT_DIR, '--profiles-dir', DBT_PROFILES_DIR]
+    # Consider adding --target if not using default, e.g., ['--target', 'prod']
+    # For now, assuming default target from profiles.yml is used.
+
+    # dbt run
+    logger.info("⚙️ Running dbt run --full-refresh...")
+    dbt_run_cmd = ['dbt', 'run', '--full-refresh'] + base_dbt_args + dbt_select_args
+    logger.info(f"Executing dbt run command: {' '.join(dbt_run_cmd)}")
     try:
-        logger.info("⚙️ Running dbt run --full-refresh...")
-        run_cmd = [
-            'dbt', 'run',
-            '--full-refresh',
-            '--project-dir', dbt_project_dir,
-            # '--profiles-dir', dbt_project_dir # DBT_PROFILES_DIR in env should cover this
-        ]
-        
-        dbt_run_result = subprocess.run(run_cmd, capture_output=True, text=True, env=env, cwd=dbt_project_dir) # Run from dbt_project_dir
-        execution_results['dbt_run_stdout'] = dbt_run_result.stdout
-        execution_results['dbt_run_stderr'] = dbt_run_result.stderr
-
-        if dbt_run_result.returncode == 0:
-            logger.info("✅ dbt run --full-refresh completed successfully.")
-            logger.debug(f"Run output:\n{dbt_run_result.stdout}")
-            execution_results['dbt_run_success'] = True
-            # Simple parsing for models built (can be enhanced)
-            execution_results['models_built'] = dbt_run_result.stdout.count('OK created') + dbt_run_result.stdout.count('OK loaded') 
-        else:
-            logger.error(f"❌ dbt run --full-refresh failed. Return code: {dbt_run_result.returncode}")
-            logger.error(f"Stderr:\n{dbt_run_result.stderr}")
-            logger.error(f"Stdout:\n{dbt_run_result.stdout}")
-            # If run fails, don't proceed to test, re-raise to fail the task
-            raise subprocess.CalledProcessError(dbt_run_result.returncode, run_cmd, output=dbt_run_result.stdout, stderr=dbt_run_result.stderr)
-
-        logger.info("🔎 Running dbt test...")
-        test_cmd = [
-            'dbt', 'test',
-            '--project-dir', dbt_project_dir,
-            # '--profiles-dir', dbt_project_dir
-        ]
-        dbt_test_result = subprocess.run(test_cmd, capture_output=True, text=True, env=env, cwd=dbt_project_dir)
-        execution_results['dbt_test_stdout'] = dbt_test_result.stdout
-        execution_results['dbt_test_stderr'] = dbt_test_result.stderr
-        
-        if dbt_test_result.returncode == 0:
-            logger.info("✅ dbt test completed successfully.")
-            logger.debug(f"Test output:\n{dbt_test_result.stdout}")
-            execution_results['dbt_test_success'] = True
-            # Add more detailed test parsing if needed
-            execution_results['tests_passed'] = dbt_test_result.stdout.count('PASS') 
-        else:
-            logger.warning(f"⚠️ dbt test completed with failures or errors. Return code: {dbt_test_result.returncode}")
-            logger.warning(f"Test stderr:\n{dbt_test_result.stderr}")
-            logger.warning(f"Test stdout:\n{dbt_test_result.stdout}")
-            execution_results['tests_failed'] = dbt_test_result.stdout.count('FAIL')
-            # Decide if a test failure should fail the DAG task. Often, it should.
-            # For now, just logging as warning but we can make it raise an exception.
-
+        run_result = subprocess.run(dbt_run_cmd, capture_output=True, text=True, check=True)
+        dbt_results["run_success"] = True
+        dbt_results["run_output"] = run_result.stdout
+        logger.info("✅ dbt run --full-refresh completed successfully.")
+        logger.debug(f"dbt run stdout:\\n{run_result.stdout}")
     except subprocess.CalledProcessError as e:
-        # This will catch the re-raised error from dbt run failure
-        error_msg = f"dbt pipeline execution failed: {e.stderr if e.stderr else e.stdout}"
-        logger.error(f"❌ {error_msg}")
-        execution_results['failed_models'].append(error_msg) # Or a more generic error field
-        raise AirflowException(error_msg) # Fail the task
-    except FileNotFoundError as e:
-        error_msg = f"dbt command not found or dbt project directory incorrect: {e}"
-        logger.error(f"❌ {error_msg}")
-        raise AirflowException(error_msg)
-    
-    logger.info(f"🏁 dbt pipeline completed. Models built: {execution_results['models_built']}, Tests passed: {execution_results['tests_passed']}, Tests failed: {execution_results['tests_failed']}")
-    return execution_results
+        dbt_results["run_error"] = f"Stderr:\\n{e.stderr}\\nStdout:\\n{e.stdout}"
+        logger.error(f"❌ dbt run --full-refresh failed. Return code: {e.returncode}")
+        logger.error(dbt_results["run_error"])
+        # Optionally, re-raise to fail the task immediately
+        # raise AirflowException(f"dbt run failed: {dbt_results['run_error']}") from e
+
+    # dbt test (only if run was successful, or always try to test what was built)
+    # Let's run test even if some models in the selection failed to build, to get test results on what did build.
+    logger.info("🧪 Running dbt test...")
+    dbt_test_cmd = ['dbt', 'test'] + base_dbt_args + dbt_select_args
+    logger.info(f"Executing dbt test command: {' '.join(dbt_test_cmd)}")
+    try:
+        test_result = subprocess.run(dbt_test_cmd, capture_output=True, text=True, check=True)
+        dbt_results["test_success"] = True
+        dbt_results["test_output"] = test_result.stdout
+        logger.info("✅ dbt test completed successfully.")
+        logger.debug(f"dbt test stdout:\\n{test_result.stdout}")
+    except subprocess.CalledProcessError as e:
+        dbt_results["test_error"] = f"Stderr:\\n{e.stderr}\\nStdout:\\n{e.stdout}"
+        logger.error(f"❌ dbt test failed. Return code: {e.returncode}")
+        logger.error(dbt_results["test_error"])
+
+    # dbt docs generate
+    # Scoping docs generation to selected models to prevent compilation errors
+    # for models whose sources may not be in the dynamically generated sources.yml.
+    logger.info("📚 Generating dbt documentation...")
+    dbt_docs_cmd = ['dbt', 'docs', 'generate'] + base_dbt_args + dbt_select_args
+    logger.info(f"Executing dbt docs command: {' '.join(dbt_docs_cmd)}")
+    try:
+        docs_result = subprocess.run(dbt_docs_cmd, capture_output=True, text=True, check=True)
+        dbt_results["docs_success"] = True
+        logger.info("✅ dbt docs generate completed successfully.")
+    except subprocess.CalledProcessError as e:
+        dbt_results["docs_error"] = f"Stderr:\\n{e.stderr}\\nStdout:\\n{e.stdout}"
+        logger.error(f"❌ dbt docs generate failed: {dbt_results['docs_error']}")
+
+    # Fail the task if critical dbt steps failed
+    if not dbt_results["run_success"]: # or (not dbt_results["test_success"] if tests are critical)
+        # Construct a summary of errors
+        error_summary = "dbt pipeline execution failed:"
+        if dbt_results["run_error"]:
+            error_summary += f"\\nRUN ERRORS:\\n{dbt_results['run_error']}"
+        if dbt_results["test_error"]:
+            error_summary += f"\\nTEST ERRORS:\\n{dbt_results['test_error']}"
+        raise AirflowException(error_summary)
+
+    logger.info("✅ dbt pipeline execution finished.")
+    return dbt_results
 
 @task(dag=dag)
 def update_processed_log_db_task(dbt_execution_results: Dict[str, Any], 
@@ -684,8 +662,8 @@ def update_processed_log_db_task(dbt_execution_results: Dict[str, Any],
     # Get processing_remarks_map from processing_plan
     processing_remarks_map = processing_plan.get('processing_remarks', {})
 
-    if not dbt_execution_results.get('dbt_run_success', False):
-        logger.warning("dbt run was not successful. Skipping update to processed_dataset_log.")
+    if not dbt_execution_results.get('run_success', False):
+        logger.warning("dbt run command did not complete successfully (based on run_success flag). Skipping update to processed_dataset_log.")
         return
 
     # We need the list of datasets that were part of this successful run.
@@ -741,7 +719,7 @@ def generate_pipeline_summary(
             'pipeline_id': context.get('run_id', 'unknown'),
             'datasets_processed': len(processing_plan.get('datasets', [])),
             'total_rows_loaded': loading_results.get('total_rows_loaded', 0),
-            'dbt_success': execution_results.get('dbt_run_success', False),
+            'dbt_success': execution_results.get('run_success', False),
             'pipeline_success': True
         }
         
@@ -771,7 +749,7 @@ loading = enhanced_load_to_database(plan, downloads)
 source_metadata_results = extract_source_metadata_task(loading_results=loading, processing_plan=plan)
 star_schema_files = generate_dbt_star_schema_files_task(processing_plan=plan, loading_results=loading, source_metadata=source_metadata_results)
 topic_mart_files = generate_topic_marts(processing_plan=plan, star_schema_results=star_schema_files)
-dbt_execution = run_dbt_pipeline(star_schema_results=star_schema_files, mart_generation_results=topic_mart_files)
+dbt_execution = run_dbt_pipeline(star_schema_results=star_schema_files, mart_generation_results=topic_mart_files, loading_results=loading, processing_plan=plan)
 
 # NEW: update_processed_log_db_task after dbt_execution
 log_update = update_processed_log_db_task(

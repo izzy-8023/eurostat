@@ -75,7 +75,7 @@ x-airflow-common:
     # The following line can be used to set a custom config file, stored in the local config folder
     AIRFLOW_CONFIG: '/opt/airflow/config/airflow.cfg'
     # Eurostat database connection (separate from Airflow's own database)
-    EUROSTAT_POSTGRES_HOST: eurostat_postgres_db
+    EUROSTAT_POSTGRES_HOST: db
     EUROSTAT_POSTGRES_PORT: 5432
     EUROSTAT_POSTGRES_DB: eurostat_data
     EUROSTAT_POSTGRES_USER: eurostat_user
