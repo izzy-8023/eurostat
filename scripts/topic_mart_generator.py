@@ -10,6 +10,7 @@ import sys
 import os
 import yaml
 import csv
+import argparse
 from pathlib import Path
 from typing import Dict, List, Tuple, Any, Set, Optional
 import logging
@@ -34,13 +35,13 @@ GROUPED_DATASETS_CSV_PATH = Path(os.path.dirname(__file__)).parent / 'grouped_da
 
 # Stems to exclude when auto-discovering dimensions from sources.yml
 # Should align with generate_dbt_star_schema.py
-EXCLUDED_DIMENSION_STEMS = ['value', 'status', 'source_dataset', 'linear_index', 'time_format']
+EXCLUDED_DIMENSION_STEMS = ['value', 'status', 'source_dataset', 'time_format']
 
 # Define the standard set of columns expected in the output topic marts
 # These will guide the SELECT statements from the fact views
 MART_MEASURE_COLUMNS = ['value']
-MART_METADATA_COLUMNS = ['status_code', 'status_label', 'linear_index'] # Assuming these are in fct views
-MART_SOURCE_ID_COLUMN = 'source_dataset_code' # To identify original dataset
+MART_METADATA_COLUMNS = []  # Removed linear_index as we don't want it in mart models
+MART_SOURCE_ID_COLUMN = 'source_dataset_code'  # To identify original dataset
 
 class TopicMartGenerator:
     """Generate topic-based mart models from star schema fact views"""
@@ -238,7 +239,7 @@ class TopicMartGenerator:
 
             dataset_sql_select_block = "\n".join(final_select_lines)
 
-            dataset_sql = f"SELECT\n{dataset_sql_select_block}\nFROM {{{{ ref('fct_{dataset_id.lower()}') }}}}\nWHERE value IS NOT NULL OR status_code IS NOT NULL" # Retaining original WHERE clause logic
+            dataset_sql = f"SELECT\n{dataset_sql_select_block}\nFROM {{{{ ref('fct_{dataset_id.lower()}') }}}}\nWHERE value IS NOT NULL" # Removed status_code check from WHERE clause
             union_parts.append(dataset_sql)
         
         if not union_parts:
@@ -361,7 +362,7 @@ class TopicMartGenerator:
                 model_name = mart_schema_entry["name"]
                 columns_for_schema = []
                 
-                # Attempt to get actual columns from a generated mart SQL (if needed and robustly possible)
+                # Attempt to get actual columns from a generated mart SQL if possible
                 # For now, rely on discovered_stems and standard columns
                 
                 # Add FKs based on discovered stems that would likely be in the mart
@@ -414,50 +415,67 @@ class TopicMartGenerator:
             logger.error(f"Could not generate YAML for topic marts schema.yml: {e}")
 
 def main():
-    """Main function to generate topic marts"""
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    
-    # Argument parsing (simplified for now, can be expanded)
-    # Defaulting to the configured GROUPED_DATASETS_CSV_PATH
-    # In a real CLI, you'd use argparse to allow overriding this.
-    csv_file_path = GROUPED_DATASETS_CSV_PATH 
-    # topic_filter = None # Example: ['Some Specific Topic']
-    topic_filter = [] # Process all topics by default
-
-    logger.info(f"Starting topic mart generation using CSV: {csv_file_path}")
-    if topic_filter:
-        logger.info(f"Filtering for topics: {topic_filter}")
-
-    generator = TopicMartGenerator()
-    
-    # The generate_topic_marts method now handles most of the orchestration.
-    # It loads sources.yml, discovers stems, loads topic groups, generates SQLs, and collects schema info.
-    mart_generation_results = generator.generate_topic_marts(
-        grouped_datasets_csv_path=csv_file_path, 
-        topic_filter=topic_filter if topic_filter else None
+    """Main entry point for the script"""
+    # Set up logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
 
-    generated_count = len(mart_generation_results.get("generated_marts", []))
-    failed_count = len(mart_generation_results.get("failed_marts", []))
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Generate topic-based mart models for Eurostat datasets')
+    parser.add_argument('--datasets', type=str, help='Comma-separated list of dataset IDs to generate marts for')
+    args = parser.parse_args()
 
-    logger.info(f"Mart generation complete. Generated: {generated_count}, Failed: {failed_count}.")
-
-    if generated_count > 0:
-        logger.info(f"Generated mart models: {mart_generation_results['generated_marts']}")
-        # Call schema generation if any marts were successfully created and schema info was collected
-        if mart_generation_results.get("schemas"):
-            logger.info("Proceeding to generate schema.yml for created marts.")
-            generator.generate_marts_schema(mart_generation_results)
-        else:
-            logger.warning("No schema information was collected during mart generation, skipping schema.yml output.")
+    # Initialize generator
+    generator = TopicMartGenerator()
     
-    if failed_count > 0:
-        logger.warning(f"Failed to generate marts for topics: {mart_generation_results['failed_marts']}")
+    # Load sources.yml and discover dimension stems
+    if not generator._load_sources_yml():
+        logger.error("Failed to load sources.yml. Exiting.")
+        sys.exit(1)
+    
+    if not generator._discover_dimension_stems_from_sources():
+        logger.error("Failed to discover dimension stems. Exiting.")
+        sys.exit(1)
 
-    logger.info("Topic mart generation process finished.")
+    # Load topic groups
+    topic_groups = generator.load_topic_groups(GROUPED_DATASETS_CSV_PATH)
+    if not topic_groups:
+        logger.error("No topic groups found. Exiting.")
+        sys.exit(1)
+
+    # Filter topic groups based on provided datasets if any
+    if args.datasets:
+        dataset_list = [d.strip() for d in args.datasets.split(',')]
+        logger.info(f"Filtering topic groups to only include datasets: {dataset_list}")
+        
+        # Filter topic groups to only include those that have at least one dataset from the provided list
+        filtered_topic_groups = {}
+        for topic_name, datasets in topic_groups.items():
+            # Check if any of the datasets in this topic are in our provided list
+            if any(dataset in dataset_list for dataset in datasets):
+                # Only include datasets that are in our provided list
+                filtered_datasets = [d for d in datasets if d in dataset_list]
+                if filtered_datasets:  # Only add if there are still datasets after filtering
+                    filtered_topic_groups[topic_name] = filtered_datasets
+        
+        topic_groups = filtered_topic_groups
+        logger.info(f"After filtering, {len(topic_groups)} topic groups remain")
+
+    # Generate marts
+    mart_generation_results = generator.generate_topic_marts(
+        GROUPED_DATASETS_CSV_PATH,
+        topic_filter=list(topic_groups.keys())  # Pass the filtered topic names
+    )
+
+    # Generate schema
+    generator.generate_marts_schema(mart_generation_results)
+
+    # Log summary
+    logger.info(f"Generated {len(mart_generation_results.get('generated_marts', []))} mart models")
+    if mart_generation_results.get('skipped_topics'):
+        logger.info(f"Skipped {len(mart_generation_results['skipped_topics'])} topics due to various issues")
 
 if __name__ == '__main__':
-    # For direct execution. 
-    # Consider adding proper CLI argument parsing here (e.g., using argparse) 
-    # if you need to specify CSV path or topic filters dynamically from command line.
     main() 

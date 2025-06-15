@@ -1,42 +1,29 @@
 version: 2
 models:
-- name: mart_causes_of_death___infant_mortality
-  description: 'Topic mart for ''Causes of death - infant mortality''.
+- name: mart_physicians
+  description: 'Topic mart for ''Physicians''.
 
-    Consolidates data from 4 Eurostat fact views related to this topic: HLTH_CD_AINFO,
-    HLTH_CD_AINFR, HLTH_CD_YINFO, HLTH_CD_YINFR.
+    Consolidates data from 4 Eurostat fact views related to this topic: HLTH_RS_PHYS,
+    HLTH_RS_PHYSCAT, HLTH_RS_PHYSREG, HLTH_RS_SPEC.
 
     Provides a unified view with harmonized dimension foreign keys and measures.
 
-    Columns include: various conformed dimension foreign keys, value, status_code,
-    status_label, linear_index, and source_dataset_code.
+    Columns include: various conformed dimension foreign keys, value, , and source_dataset_code.
 
     Materialized as a table.'
   columns:
-  - name: geo_code
-    description: Foreign key to dim_geo.geo_code, linking to geo dimension.
-    tests:
-    - relationships:
-        to: dim_geo
-        field: geo_code
   - name: freq_code
     description: Foreign key to dim_freq.freq_code, linking to freq dimension.
     tests:
     - relationships:
         to: dim_freq
         field: freq_code
-  - name: age_code
-    description: Foreign key to dim_age.age_code, linking to age dimension.
+  - name: unit_code
+    description: Foreign key to dim_unit.unit_code, linking to unit dimension.
     tests:
     - relationships:
-        to: dim_age
-        field: age_code
-  - name: resid_code
-    description: Foreign key to dim_resid.resid_code, linking to resid dimension.
-    tests:
-    - relationships:
-        to: dim_resid
-        field: resid_code
+        to: dim_unit
+        field: unit_code
   - name: time_code
     description: Foreign key to dim_time.time_code, linking to time dimension.
     tests:
@@ -49,28 +36,28 @@ models:
     - relationships:
         to: dim_sex
         field: sex_code
-  - name: icd10_code
-    description: Foreign key to dim_icd10.icd10_code, linking to icd10 dimension.
+  - name: geo_code
+    description: Foreign key to dim_geo.geo_code, linking to geo dimension.
     tests:
     - relationships:
-        to: dim_icd10
-        field: icd10_code
-  - name: unit_code
-    description: Foreign key to dim_unit.unit_code, linking to unit dimension.
+        to: dim_geo
+        field: geo_code
+  - name: age_code
+    description: Foreign key to dim_age.age_code, linking to age dimension.
     tests:
     - relationships:
-        to: dim_unit
-        field: unit_code
+        to: dim_age
+        field: age_code
+  - name: med_spec_code
+    description: Foreign key to dim_med_spec.med_spec_code, linking to med_spec dimension.
+    tests:
+    - relationships:
+        to: dim_med_spec
+        field: med_spec_code
   - name: value
     description: Measure value.
     tests:
     - not_null
-  - name: status_code
-    description: 'Metadata column: status_code.'
-  - name: status_label
-    description: 'Metadata column: status_label.'
-  - name: linear_index
-    description: 'Metadata column: linear_index.'
   - name: source_dataset_code
     description: Identifier of the original Eurostat dataset for this row.
     tests:

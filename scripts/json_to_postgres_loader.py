@@ -14,7 +14,7 @@ import ijson # For streaming JSON
 import io # For in-memory text buffer (StringIO)
 import csv # For robust CSV formatting
 import logging # For logging
-import time # For timing, if we want to add it later
+import time # For timing
 import sys
 
 # Add shared modules to path
@@ -362,9 +362,9 @@ def main():
     )
     
     if success:
-        print(f"✅ Successfully processed {args.input_file}")
+        print(f" Successfully processed {args.input_file}")
     else:
-        print(f"❌ Failed to process {args.input_file}")
+        print(f" Failed to process {args.input_file}")
         sys.exit(1)
 
 if __name__ == "__main__":

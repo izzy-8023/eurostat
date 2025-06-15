@@ -1,258 +1,214 @@
 version: 2
 models:
-- name: fct_hlth_cd_ainfo
-  description: Fact view for source table 'hlth_cd_ainfo'. Contains measures and foreign
+- name: fct_hlth_rs_phys
+  description: Fact view for source table 'hlth_rs_phys'. Contains measures and foreign
     keys to conformed dimensions.
   columns:
-  - name: resid_code
-    description: Foreign key to dim_resid.resid_code, linking to the resid dimension.
-    tests:
-    - relationships:
-        to: dim_resid
-        field: resid_code
-  - name: geo_code
-    description: Foreign key to dim_geo.geo_code, linking to the geo dimension.
-    tests:
-    - relationships:
-        to: dim_geo
-        field: geo_code
-  - name: sex_code
-    description: Foreign key to dim_sex.sex_code, linking to the sex dimension.
-    tests:
-    - relationships:
-        to: dim_sex
-        field: sex_code
-  - name: time_code
-    description: Foreign key to dim_time.time_code, linking to the time dimension.
-    tests:
-    - relationships:
-        to: dim_time
-        field: time_code
-  - name: age_code
-    description: Foreign key to dim_age.age_code, linking to the age dimension.
-    tests:
-    - relationships:
-        to: dim_age
-        field: age_code
   - name: freq_code
     description: Foreign key to dim_freq.freq_code, linking to the freq dimension.
     tests:
     - relationships:
         to: dim_freq
         field: freq_code
-  - name: unit_code
-    description: Foreign key to dim_unit.unit_code, linking to the unit dimension.
-    tests:
-    - relationships:
-        to: dim_unit
-        field: unit_code
-  - name: icd10_code
-    description: Foreign key to dim_icd10.icd10_code, linking to the icd10 dimension.
-    tests:
-    - relationships:
-        to: dim_icd10
-        field: icd10_code
-  - name: value
-    description: Measure value from source table.
-    tests:
-    - not_null
-  - name: status_code
-    description: Metadata column status_code from source table.
-  - name: status_label
-    description: Metadata column status_label from source table.
-  - name: source_dataset_id
-    description: Metadata column source_dataset_id from source table.
-  - name: linear_index
-    description: Metadata column linear_index from source table.
-- name: fct_hlth_cd_ainfr
-  description: Fact view for source table 'hlth_cd_ainfr'. Contains measures and foreign
-    keys to conformed dimensions.
-  columns:
-  - name: resid_code
-    description: Foreign key to dim_resid.resid_code, linking to the resid dimension.
-    tests:
-    - relationships:
-        to: dim_resid
-        field: resid_code
-  - name: geo_code
-    description: Foreign key to dim_geo.geo_code, linking to the geo dimension.
-    tests:
-    - relationships:
-        to: dim_geo
-        field: geo_code
-  - name: sex_code
-    description: Foreign key to dim_sex.sex_code, linking to the sex dimension.
-    tests:
-    - relationships:
-        to: dim_sex
-        field: sex_code
   - name: time_code
     description: Foreign key to dim_time.time_code, linking to the time dimension.
     tests:
     - relationships:
         to: dim_time
         field: time_code
-  - name: age_code
-    description: Foreign key to dim_age.age_code, linking to the age dimension.
-    tests:
-    - relationships:
-        to: dim_age
-        field: age_code
-  - name: freq_code
-    description: Foreign key to dim_freq.freq_code, linking to the freq dimension.
-    tests:
-    - relationships:
-        to: dim_freq
-        field: freq_code
-  - name: unit_code
-    description: Foreign key to dim_unit.unit_code, linking to the unit dimension.
-    tests:
-    - relationships:
-        to: dim_unit
-        field: unit_code
-  - name: icd10_code
-    description: Foreign key to dim_icd10.icd10_code, linking to the icd10 dimension.
-    tests:
-    - relationships:
-        to: dim_icd10
-        field: icd10_code
-  - name: value
-    description: Measure value from source table.
-    tests:
-    - not_null
-  - name: status_code
-    description: Metadata column status_code from source table.
-  - name: status_label
-    description: Metadata column status_label from source table.
-  - name: source_dataset_id
-    description: Metadata column source_dataset_id from source table.
-  - name: linear_index
-    description: Metadata column linear_index from source table.
-- name: fct_hlth_cd_yinfo
-  description: Fact view for source table 'hlth_cd_yinfo'. Contains measures and foreign
-    keys to conformed dimensions.
-  columns:
-  - name: resid_code
-    description: Foreign key to dim_resid.resid_code, linking to the resid dimension.
-    tests:
-    - relationships:
-        to: dim_resid
-        field: resid_code
   - name: geo_code
     description: Foreign key to dim_geo.geo_code, linking to the geo dimension.
     tests:
     - relationships:
         to: dim_geo
         field: geo_code
-  - name: sex_code
-    description: Foreign key to dim_sex.sex_code, linking to the sex dimension.
-    tests:
-    - relationships:
-        to: dim_sex
-        field: sex_code
-  - name: time_code
-    description: Foreign key to dim_time.time_code, linking to the time dimension.
-    tests:
-    - relationships:
-        to: dim_time
-        field: time_code
   - name: age_code
     description: Foreign key to dim_age.age_code, linking to the age dimension.
     tests:
     - relationships:
         to: dim_age
         field: age_code
-  - name: freq_code
-    description: Foreign key to dim_freq.freq_code, linking to the freq dimension.
+  - name: sex_code
+    description: Foreign key to dim_sex.sex_code, linking to the sex dimension.
     tests:
     - relationships:
-        to: dim_freq
-        field: freq_code
+        to: dim_sex
+        field: sex_code
   - name: unit_code
     description: Foreign key to dim_unit.unit_code, linking to the unit dimension.
     tests:
     - relationships:
         to: dim_unit
         field: unit_code
-  - name: icd10_code
-    description: Foreign key to dim_icd10.icd10_code, linking to the icd10 dimension.
+  - name: med_spec_code
+    description: Foreign key to dim_med_spec.med_spec_code, linking to the med_spec
+      dimension.
     tests:
     - relationships:
-        to: dim_icd10
-        field: icd10_code
+        to: dim_med_spec
+        field: med_spec_code
   - name: value
     description: Measure value from source table.
     tests:
     - not_null
-  - name: status_code
-    description: Metadata column status_code from source table.
-  - name: status_label
-    description: Metadata column status_label from source table.
   - name: source_dataset_id
     description: Metadata column source_dataset_id from source table.
-  - name: linear_index
-    description: Metadata column linear_index from source table.
-- name: fct_hlth_cd_yinfr
-  description: Fact view for source table 'hlth_cd_yinfr'. Contains measures and foreign
-    keys to conformed dimensions.
+- name: fct_hlth_rs_physcat
+  description: Fact view for source table 'hlth_rs_physcat'. Contains measures and
+    foreign keys to conformed dimensions.
   columns:
-  - name: resid_code
-    description: Foreign key to dim_resid.resid_code, linking to the resid dimension.
+  - name: freq_code
+    description: Foreign key to dim_freq.freq_code, linking to the freq dimension.
     tests:
     - relationships:
-        to: dim_resid
-        field: resid_code
+        to: dim_freq
+        field: freq_code
+  - name: time_code
+    description: Foreign key to dim_time.time_code, linking to the time dimension.
+    tests:
+    - relationships:
+        to: dim_time
+        field: time_code
   - name: geo_code
     description: Foreign key to dim_geo.geo_code, linking to the geo dimension.
     tests:
     - relationships:
         to: dim_geo
         field: geo_code
-  - name: sex_code
-    description: Foreign key to dim_sex.sex_code, linking to the sex dimension.
-    tests:
-    - relationships:
-        to: dim_sex
-        field: sex_code
-  - name: time_code
-    description: Foreign key to dim_time.time_code, linking to the time dimension.
-    tests:
-    - relationships:
-        to: dim_time
-        field: time_code
   - name: age_code
     description: Foreign key to dim_age.age_code, linking to the age dimension.
     tests:
     - relationships:
         to: dim_age
         field: age_code
-  - name: freq_code
-    description: Foreign key to dim_freq.freq_code, linking to the freq dimension.
+  - name: sex_code
+    description: Foreign key to dim_sex.sex_code, linking to the sex dimension.
     tests:
     - relationships:
-        to: dim_freq
-        field: freq_code
+        to: dim_sex
+        field: sex_code
   - name: unit_code
     description: Foreign key to dim_unit.unit_code, linking to the unit dimension.
     tests:
     - relationships:
         to: dim_unit
         field: unit_code
-  - name: icd10_code
-    description: Foreign key to dim_icd10.icd10_code, linking to the icd10 dimension.
+  - name: med_spec_code
+    description: Foreign key to dim_med_spec.med_spec_code, linking to the med_spec
+      dimension.
     tests:
     - relationships:
-        to: dim_icd10
-        field: icd10_code
+        to: dim_med_spec
+        field: med_spec_code
   - name: value
     description: Measure value from source table.
     tests:
     - not_null
-  - name: status_code
-    description: Metadata column status_code from source table.
-  - name: status_label
-    description: Metadata column status_label from source table.
   - name: source_dataset_id
     description: Metadata column source_dataset_id from source table.
-  - name: linear_index
-    description: Metadata column linear_index from source table.
+- name: fct_hlth_rs_physreg
+  description: Fact view for source table 'hlth_rs_physreg'. Contains measures and
+    foreign keys to conformed dimensions.
+  columns:
+  - name: freq_code
+    description: Foreign key to dim_freq.freq_code, linking to the freq dimension.
+    tests:
+    - relationships:
+        to: dim_freq
+        field: freq_code
+  - name: time_code
+    description: Foreign key to dim_time.time_code, linking to the time dimension.
+    tests:
+    - relationships:
+        to: dim_time
+        field: time_code
+  - name: geo_code
+    description: Foreign key to dim_geo.geo_code, linking to the geo dimension.
+    tests:
+    - relationships:
+        to: dim_geo
+        field: geo_code
+  - name: age_code
+    description: Foreign key to dim_age.age_code, linking to the age dimension.
+    tests:
+    - relationships:
+        to: dim_age
+        field: age_code
+  - name: sex_code
+    description: Foreign key to dim_sex.sex_code, linking to the sex dimension.
+    tests:
+    - relationships:
+        to: dim_sex
+        field: sex_code
+  - name: unit_code
+    description: Foreign key to dim_unit.unit_code, linking to the unit dimension.
+    tests:
+    - relationships:
+        to: dim_unit
+        field: unit_code
+  - name: med_spec_code
+    description: Foreign key to dim_med_spec.med_spec_code, linking to the med_spec
+      dimension.
+    tests:
+    - relationships:
+        to: dim_med_spec
+        field: med_spec_code
+  - name: value
+    description: Measure value from source table.
+    tests:
+    - not_null
+  - name: source_dataset_id
+    description: Metadata column source_dataset_id from source table.
+- name: fct_hlth_rs_spec
+  description: Fact view for source table 'hlth_rs_spec'. Contains measures and foreign
+    keys to conformed dimensions.
+  columns:
+  - name: freq_code
+    description: Foreign key to dim_freq.freq_code, linking to the freq dimension.
+    tests:
+    - relationships:
+        to: dim_freq
+        field: freq_code
+  - name: time_code
+    description: Foreign key to dim_time.time_code, linking to the time dimension.
+    tests:
+    - relationships:
+        to: dim_time
+        field: time_code
+  - name: geo_code
+    description: Foreign key to dim_geo.geo_code, linking to the geo dimension.
+    tests:
+    - relationships:
+        to: dim_geo
+        field: geo_code
+  - name: age_code
+    description: Foreign key to dim_age.age_code, linking to the age dimension.
+    tests:
+    - relationships:
+        to: dim_age
+        field: age_code
+  - name: sex_code
+    description: Foreign key to dim_sex.sex_code, linking to the sex dimension.
+    tests:
+    - relationships:
+        to: dim_sex
+        field: sex_code
+  - name: unit_code
+    description: Foreign key to dim_unit.unit_code, linking to the unit dimension.
+    tests:
+    - relationships:
+        to: dim_unit
+        field: unit_code
+  - name: med_spec_code
+    description: Foreign key to dim_med_spec.med_spec_code, linking to the med_spec
+      dimension.
+    tests:
+    - relationships:
+        to: dim_med_spec
+        field: med_spec_code
+  - name: value
+    description: Measure value from source table.
+    tests:
+    - not_null
+  - name: source_dataset_id
+    description: Metadata column source_dataset_id from source table.

@@ -42,7 +42,7 @@ def detect_column_patterns(columns: List[Tuple[str, str]]) -> Dict[str, Any]:
     # Find status columns
     patterns['status_columns'] = [col for col in column_names if 'status' in col]
     
-    # Find key-label pairs (common in Eurostat data)
+    # Find key-label pairs 
     for col_name, col_type in columns:
         if col_name.endswith(EUROSTAT_COLUMN_PATTERNS['dimension_key_suffix']):
             dimension = col_name[:-len(EUROSTAT_COLUMN_PATTERNS['dimension_key_suffix'])]

@@ -4,183 +4,135 @@ sources:
   schema: public
   description: Raw Eurostat data tables loaded into the 'public' schema.
   tables:
-  - name: hlth_cd_ainfo
-    description: Raw Eurostat table 'hlth_cd_ainfo' loaded from source.
+  - name: hlth_rs_phys
+    description: Raw Eurostat table 'hlth_rs_phys' loaded from source.
     columns:
     - name: freq_key
-      description: 'Raw column freq_key from hlth_cd_ainfo (type: text)'
+      description: 'Raw column freq_key from hlth_rs_phys (type: text)'
     - name: freq_label
-      description: 'Raw column freq_label from hlth_cd_ainfo (type: text)'
+      description: 'Raw column freq_label from hlth_rs_phys (type: text)'
     - name: unit_key
-      description: 'Raw column unit_key from hlth_cd_ainfo (type: text)'
+      description: 'Raw column unit_key from hlth_rs_phys (type: text)'
     - name: unit_label
-      description: 'Raw column unit_label from hlth_cd_ainfo (type: text)'
-    - name: sex_key
-      description: 'Raw column sex_key from hlth_cd_ainfo (type: text)'
-    - name: sex_label
-      description: 'Raw column sex_label from hlth_cd_ainfo (type: text)'
+      description: 'Raw column unit_label from hlth_rs_phys (type: text)'
     - name: age_key
-      description: 'Raw column age_key from hlth_cd_ainfo (type: text)'
+      description: 'Raw column age_key from hlth_rs_phys (type: text)'
     - name: age_label
-      description: 'Raw column age_label from hlth_cd_ainfo (type: text)'
-    - name: icd10_key
-      description: 'Raw column icd10_key from hlth_cd_ainfo (type: text)'
-    - name: icd10_label
-      description: 'Raw column icd10_label from hlth_cd_ainfo (type: text)'
-    - name: resid_key
-      description: 'Raw column resid_key from hlth_cd_ainfo (type: text)'
-    - name: resid_label
-      description: 'Raw column resid_label from hlth_cd_ainfo (type: text)'
+      description: 'Raw column age_label from hlth_rs_phys (type: text)'
+    - name: sex_key
+      description: 'Raw column sex_key from hlth_rs_phys (type: text)'
+    - name: sex_label
+      description: 'Raw column sex_label from hlth_rs_phys (type: text)'
     - name: geo_key
-      description: 'Raw column geo_key from hlth_cd_ainfo (type: text)'
+      description: 'Raw column geo_key from hlth_rs_phys (type: text)'
     - name: geo_label
-      description: 'Raw column geo_label from hlth_cd_ainfo (type: text)'
+      description: 'Raw column geo_label from hlth_rs_phys (type: text)'
     - name: time_key
-      description: 'Raw column time_key from hlth_cd_ainfo (type: text)'
+      description: 'Raw column time_key from hlth_rs_phys (type: text)'
     - name: time_label
-      description: 'Raw column time_label from hlth_cd_ainfo (type: text)'
+      description: 'Raw column time_label from hlth_rs_phys (type: text)'
     - name: linear_index
-      description: 'Raw column linear_index from hlth_cd_ainfo (type: integer)'
+      description: 'Raw column linear_index from hlth_rs_phys (type: integer)'
     - name: value
-      description: 'Raw column value from hlth_cd_ainfo (type: numeric)'
+      description: 'Raw column value from hlth_rs_phys (type: numeric)'
     - name: status_code
-      description: 'Raw column status_code from hlth_cd_ainfo (type: text)'
+      description: 'Raw column status_code from hlth_rs_phys (type: text)'
     - name: status_label
-      description: 'Raw column status_label from hlth_cd_ainfo (type: text)'
+      description: 'Raw column status_label from hlth_rs_phys (type: text)'
     - name: source_dataset_id
-      description: 'Raw column source_dataset_id from hlth_cd_ainfo (type: text)'
-  - name: hlth_cd_ainfr
-    description: Raw Eurostat table 'hlth_cd_ainfr' loaded from source.
+      description: 'Raw column source_dataset_id from hlth_rs_phys (type: text)'
+  - name: hlth_rs_physcat
+    description: Raw Eurostat table 'hlth_rs_physcat' loaded from source.
     columns:
     - name: freq_key
-      description: 'Raw column freq_key from hlth_cd_ainfr (type: text)'
+      description: 'Raw column freq_key from hlth_rs_physcat (type: text)'
     - name: freq_label
-      description: 'Raw column freq_label from hlth_cd_ainfr (type: text)'
+      description: 'Raw column freq_label from hlth_rs_physcat (type: text)'
     - name: unit_key
-      description: 'Raw column unit_key from hlth_cd_ainfr (type: text)'
+      description: 'Raw column unit_key from hlth_rs_physcat (type: text)'
     - name: unit_label
-      description: 'Raw column unit_label from hlth_cd_ainfr (type: text)'
-    - name: sex_key
-      description: 'Raw column sex_key from hlth_cd_ainfr (type: text)'
-    - name: sex_label
-      description: 'Raw column sex_label from hlth_cd_ainfr (type: text)'
-    - name: age_key
-      description: 'Raw column age_key from hlth_cd_ainfr (type: text)'
-    - name: age_label
-      description: 'Raw column age_label from hlth_cd_ainfr (type: text)'
-    - name: icd10_key
-      description: 'Raw column icd10_key from hlth_cd_ainfr (type: text)'
-    - name: icd10_label
-      description: 'Raw column icd10_label from hlth_cd_ainfr (type: text)'
-    - name: resid_key
-      description: 'Raw column resid_key from hlth_cd_ainfr (type: text)'
-    - name: resid_label
-      description: 'Raw column resid_label from hlth_cd_ainfr (type: text)'
+      description: 'Raw column unit_label from hlth_rs_physcat (type: text)'
+    - name: med_spec_key
+      description: 'Raw column med_spec_key from hlth_rs_physcat (type: text)'
+    - name: med_spec_label
+      description: 'Raw column med_spec_label from hlth_rs_physcat (type: text)'
     - name: geo_key
-      description: 'Raw column geo_key from hlth_cd_ainfr (type: text)'
+      description: 'Raw column geo_key from hlth_rs_physcat (type: text)'
     - name: geo_label
-      description: 'Raw column geo_label from hlth_cd_ainfr (type: text)'
+      description: 'Raw column geo_label from hlth_rs_physcat (type: text)'
     - name: time_key
-      description: 'Raw column time_key from hlth_cd_ainfr (type: text)'
+      description: 'Raw column time_key from hlth_rs_physcat (type: text)'
     - name: time_label
-      description: 'Raw column time_label from hlth_cd_ainfr (type: text)'
+      description: 'Raw column time_label from hlth_rs_physcat (type: text)'
     - name: linear_index
-      description: 'Raw column linear_index from hlth_cd_ainfr (type: integer)'
+      description: 'Raw column linear_index from hlth_rs_physcat (type: integer)'
     - name: value
-      description: 'Raw column value from hlth_cd_ainfr (type: numeric)'
+      description: 'Raw column value from hlth_rs_physcat (type: numeric)'
     - name: status_code
-      description: 'Raw column status_code from hlth_cd_ainfr (type: text)'
+      description: 'Raw column status_code from hlth_rs_physcat (type: text)'
     - name: status_label
-      description: 'Raw column status_label from hlth_cd_ainfr (type: text)'
+      description: 'Raw column status_label from hlth_rs_physcat (type: text)'
     - name: source_dataset_id
-      description: 'Raw column source_dataset_id from hlth_cd_ainfr (type: text)'
-  - name: hlth_cd_yinfo
-    description: Raw Eurostat table 'hlth_cd_yinfo' loaded from source.
+      description: 'Raw column source_dataset_id from hlth_rs_physcat (type: text)'
+  - name: hlth_rs_physreg
+    description: Raw Eurostat table 'hlth_rs_physreg' loaded from source.
     columns:
     - name: freq_key
-      description: 'Raw column freq_key from hlth_cd_yinfo (type: text)'
+      description: 'Raw column freq_key from hlth_rs_physreg (type: text)'
     - name: freq_label
-      description: 'Raw column freq_label from hlth_cd_yinfo (type: text)'
+      description: 'Raw column freq_label from hlth_rs_physreg (type: text)'
     - name: unit_key
-      description: 'Raw column unit_key from hlth_cd_yinfo (type: text)'
+      description: 'Raw column unit_key from hlth_rs_physreg (type: text)'
     - name: unit_label
-      description: 'Raw column unit_label from hlth_cd_yinfo (type: text)'
-    - name: sex_key
-      description: 'Raw column sex_key from hlth_cd_yinfo (type: text)'
-    - name: sex_label
-      description: 'Raw column sex_label from hlth_cd_yinfo (type: text)'
-    - name: age_key
-      description: 'Raw column age_key from hlth_cd_yinfo (type: text)'
-    - name: age_label
-      description: 'Raw column age_label from hlth_cd_yinfo (type: text)'
-    - name: icd10_key
-      description: 'Raw column icd10_key from hlth_cd_yinfo (type: text)'
-    - name: icd10_label
-      description: 'Raw column icd10_label from hlth_cd_yinfo (type: text)'
-    - name: resid_key
-      description: 'Raw column resid_key from hlth_cd_yinfo (type: text)'
-    - name: resid_label
-      description: 'Raw column resid_label from hlth_cd_yinfo (type: text)'
+      description: 'Raw column unit_label from hlth_rs_physreg (type: text)'
     - name: geo_key
-      description: 'Raw column geo_key from hlth_cd_yinfo (type: text)'
+      description: 'Raw column geo_key from hlth_rs_physreg (type: text)'
     - name: geo_label
-      description: 'Raw column geo_label from hlth_cd_yinfo (type: text)'
+      description: 'Raw column geo_label from hlth_rs_physreg (type: text)'
     - name: time_key
-      description: 'Raw column time_key from hlth_cd_yinfo (type: text)'
+      description: 'Raw column time_key from hlth_rs_physreg (type: text)'
     - name: time_label
-      description: 'Raw column time_label from hlth_cd_yinfo (type: text)'
+      description: 'Raw column time_label from hlth_rs_physreg (type: text)'
     - name: linear_index
-      description: 'Raw column linear_index from hlth_cd_yinfo (type: integer)'
+      description: 'Raw column linear_index from hlth_rs_physreg (type: integer)'
     - name: value
-      description: 'Raw column value from hlth_cd_yinfo (type: numeric)'
+      description: 'Raw column value from hlth_rs_physreg (type: numeric)'
     - name: status_code
-      description: 'Raw column status_code from hlth_cd_yinfo (type: text)'
+      description: 'Raw column status_code from hlth_rs_physreg (type: text)'
     - name: status_label
-      description: 'Raw column status_label from hlth_cd_yinfo (type: text)'
+      description: 'Raw column status_label from hlth_rs_physreg (type: text)'
     - name: source_dataset_id
-      description: 'Raw column source_dataset_id from hlth_cd_yinfo (type: text)'
-  - name: hlth_cd_yinfr
-    description: Raw Eurostat table 'hlth_cd_yinfr' loaded from source.
+      description: 'Raw column source_dataset_id from hlth_rs_physreg (type: text)'
+  - name: hlth_rs_spec
+    description: Raw Eurostat table 'hlth_rs_spec' loaded from source.
     columns:
     - name: freq_key
-      description: 'Raw column freq_key from hlth_cd_yinfr (type: text)'
+      description: 'Raw column freq_key from hlth_rs_spec (type: text)'
     - name: freq_label
-      description: 'Raw column freq_label from hlth_cd_yinfr (type: text)'
+      description: 'Raw column freq_label from hlth_rs_spec (type: text)'
     - name: unit_key
-      description: 'Raw column unit_key from hlth_cd_yinfr (type: text)'
+      description: 'Raw column unit_key from hlth_rs_spec (type: text)'
     - name: unit_label
-      description: 'Raw column unit_label from hlth_cd_yinfr (type: text)'
-    - name: sex_key
-      description: 'Raw column sex_key from hlth_cd_yinfr (type: text)'
-    - name: sex_label
-      description: 'Raw column sex_label from hlth_cd_yinfr (type: text)'
-    - name: age_key
-      description: 'Raw column age_key from hlth_cd_yinfr (type: text)'
-    - name: age_label
-      description: 'Raw column age_label from hlth_cd_yinfr (type: text)'
-    - name: icd10_key
-      description: 'Raw column icd10_key from hlth_cd_yinfr (type: text)'
-    - name: icd10_label
-      description: 'Raw column icd10_label from hlth_cd_yinfr (type: text)'
-    - name: resid_key
-      description: 'Raw column resid_key from hlth_cd_yinfr (type: text)'
-    - name: resid_label
-      description: 'Raw column resid_label from hlth_cd_yinfr (type: text)'
+      description: 'Raw column unit_label from hlth_rs_spec (type: text)'
+    - name: med_spec_key
+      description: 'Raw column med_spec_key from hlth_rs_spec (type: text)'
+    - name: med_spec_label
+      description: 'Raw column med_spec_label from hlth_rs_spec (type: text)'
     - name: geo_key
-      description: 'Raw column geo_key from hlth_cd_yinfr (type: text)'
+      description: 'Raw column geo_key from hlth_rs_spec (type: text)'
     - name: geo_label
-      description: 'Raw column geo_label from hlth_cd_yinfr (type: text)'
+      description: 'Raw column geo_label from hlth_rs_spec (type: text)'
     - name: time_key
-      description: 'Raw column time_key from hlth_cd_yinfr (type: text)'
+      description: 'Raw column time_key from hlth_rs_spec (type: text)'
     - name: time_label
-      description: 'Raw column time_label from hlth_cd_yinfr (type: text)'
+      description: 'Raw column time_label from hlth_rs_spec (type: text)'
     - name: linear_index
-      description: 'Raw column linear_index from hlth_cd_yinfr (type: integer)'
+      description: 'Raw column linear_index from hlth_rs_spec (type: integer)'
     - name: value
-      description: 'Raw column value from hlth_cd_yinfr (type: numeric)'
+      description: 'Raw column value from hlth_rs_spec (type: numeric)'
     - name: status_code
-      description: 'Raw column status_code from hlth_cd_yinfr (type: text)'
+      description: 'Raw column status_code from hlth_rs_spec (type: text)'
     - name: status_label
-      description: 'Raw column status_label from hlth_cd_yinfr (type: text)'
+      description: 'Raw column status_label from hlth_rs_spec (type: text)'
     - name: source_dataset_id
-      description: 'Raw column source_dataset_id from hlth_cd_yinfr (type: text)'
+      description: 'Raw column source_dataset_id from hlth_rs_spec (type: text)'

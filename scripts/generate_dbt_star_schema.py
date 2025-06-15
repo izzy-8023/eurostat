@@ -1,25 +1,21 @@
 import yaml
 import os
 import logging
-import psycopg2 # For connecting to PostgreSQL
+import psycopg2 
 from pathlib import Path
-import glob # Added import
+import glob 
 
 # --- Script Configuration ---
-# TODO: IMPORTANT - Replace with your actual database connection details
-# Consider using environment variables for security.
 DB_NAME = os.environ.get("DB_NAME", "eurostat_data")
 DB_USER = os.environ.get("DB_USER", "eurostat_user")
 DB_PASSWORD = os.environ.get("DB_PASSWORD", "mysecretpassword")
-DB_HOST = os.environ.get("DB_HOST", "db")  # Or 'localhost' if running outside Docker, matching your dbt profiles.yml.
+DB_HOST = os.environ.get("DB_HOST", "db")  
 DB_PORT = os.environ.get("DB_PORT", "5432")
 
-# Schema in PostgreSQL where your raw Eurostat tables reside
+# Schema in PostgreSQL where the raw Eurostat tables reside
 DB_RAW_SCHEMA = "public"
-# Pattern to identify Eurostat tables (e.g., if they all start with 'hlth_')
-# Use None or a very general pattern like '%' to discover all tables in DB_RAW_SCHEMA,
-# but be specific if other unrelated tables exist there.
-# Example: EUROSTAT_TABLE_PATTERN = "hlth_%"
+# Pattern to identify Eurostat tables (all start with 'hlth_')
+# Use None or a very general pattern like '%' to discover all tables in DB_RAW_SCHEMA, Example: EUROSTAT_TABLE_PATTERN = "hlth_%"
 EUROSTAT_TABLE_PATTERN = "%" # Discover all tables in the schema
 
 DBT_PROJECT_ROOT = os.path.join(os.path.dirname(__file__), '..', 'dbt_project')
@@ -31,7 +27,7 @@ STG_MODELS_PATH = os.path.join(DBT_PROJECT_ROOT, 'models', 'staging') # Added st
 
 # Stems to exclude when auto-discovering dimensions
 # These are typically measure names or generic metadata not suitable for conformed dimensions
-EXCLUDED_DIMENSION_STEMS = ['value', 'status', 'source_dataset', 'linear_index', 'time_format'] # Add more if needed
+EXCLUDED_DIMENSION_STEMS = ['value', 'status', 'source_dataset', 'linear_index', 'time_format'] 
 
 MEASURE_COLUMNS = ['value']
 METADATA_FACT_COLUMNS = ['source_dataset_id'] # Removed status_code, status_label, linear_index
@@ -39,7 +35,7 @@ METADATA_FACT_COLUMNS = ['source_dataset_id'] # Removed status_code, status_labe
 # --- Logging Setup ---
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
-# Helper function to clean directories
+# Helper function to clean directories and to prevent stale models
 def clean_generated_model_files(directory_path, patterns):
     """Removes files matching specified patterns from a directory."""
     logging.info(f"Cleaning patterns {patterns} from directory {directory_path}...")
@@ -78,7 +74,7 @@ def introspect_database_schema(conn, processed_dataset_ids_filter=None):
         with conn.cursor() as cur:
             params = [DB_RAW_SCHEMA]
             if processed_dataset_ids_filter and isinstance(processed_dataset_ids_filter, list) and len(processed_dataset_ids_filter) > 0:
-                # Convert dataset_ids to lowercase as table names are often stored as such
+                # Convert dataset_ids to lowercase 
                 lower_case_ids = [dataset_id.lower() for dataset_id in processed_dataset_ids_filter]
                 table_query = f""" 
                 SELECT table_name
@@ -100,8 +96,8 @@ def introspect_database_schema(conn, processed_dataset_ids_filter=None):
 
             cur.execute(table_query, tuple(params))
             tables = [row[0] for row in cur.fetchall()]
-            # The logging line below might be slightly redundant or could be combined with the one above.
-            # For now, let's keep it to confirm the number of tables found after filtering.
+
+            # Confirm the number of tables found after filtering.
             logging.info(f"Found {len(tables)} tables matching criteria.")
 
             for table_name in tables:
@@ -182,8 +178,7 @@ def discover_dimension_stems(sources_data):
                         potential_stems[stem] = {"key_col": col_name, "label_col": actual_label_col, "tables_count": 0, "description": f"Conformed dimension for {stem}"}
                     potential_stems[stem]["tables_count"] +=1
     
-    # Optional: Filter stems based on frequency if needed (e.g., stem must appear in > N tables)
-    # For now, accept all discovered valid stems.
+
     logging.info(f"Discovered {len(potential_stems)} potential dimension stems: {list(potential_stems.keys())}")
     return potential_stems
 
@@ -299,7 +294,6 @@ SELECT
 {select_statement}
 FROM {{{{ source('eurostat_raw', '{source_table_name}') }}}} source_table
 
--- Optional: Add WHERE clauses from original staging logic if needed
 """
     return sql
 
@@ -403,7 +397,7 @@ def main(processed_dataset_ids_filter=None):
     # when filters are applied or after a database reset.
     clean_generated_model_files(DIM_MODELS_PATH, ["dim_*.sql", "schema_dimensions.yml"])
     clean_generated_model_files(FACT_MODELS_PATH, ["fct_*.sql", "schema_facts.yml"])
-    # It's crucial to also clean staging models, as they may be stale from previous runs
+    # clean staging models too, as they may be stale from previous runs
     # and cause "source not found" errors if the database has been reset.
     clean_generated_model_files(STG_MODELS_PATH, ["stg_*.sql", "schema_staging.yml"])
 
@@ -495,5 +489,4 @@ def main(processed_dataset_ids_filter=None):
 
 if __name__ == '__main__':
     # For direct execution, no filter is passed by default.
-    # Add command line argument parsing here if needed for standalone runs with filters.
     main() 

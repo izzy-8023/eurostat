@@ -47,7 +47,7 @@ DEFAULT_PATHS = {
 EUROSTAT_COLUMN_PATTERNS = {
     'dimension_key_suffix': '_key',
     'dimension_label_suffix': '_label',
-    'standard_columns': ['value', 'status_code', 'status_label', 'linear_index', 'source_dataset_id'],
+    'standard_columns': ['value', 'source_dataset_id'],
     'metadata_columns': ['dbt_updated_at', 'dataset_id']
 }
 
@@ -56,9 +56,6 @@ COLUMN_DESCRIPTIONS = {
     'dimension_key': "Code for {dimension} dimension",
     'dimension_label': "Label for {dimension} dimension",
     'value': "Numeric value for the indicator",
-    'linear_index': "Sequential index for the record",
-    'status_code': "Status code for the value",
-    'status_label': "Status description for the value",
     'source_dataset_id': "Source dataset identifier",
     'dbt_updated_at': "Timestamp when record was processed by dbt",
     'dataset_id': "Eurostat dataset identifier"

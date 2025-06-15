@@ -45,7 +45,7 @@ def fetch_rss_dataset_ids_task(rss_url: str = "https://ec.europa.eu/eurostat/api
     import xml.etree.ElementTree as ET
     import re
 
-    logger.info(f"📡 Fetching RSS feed from: {rss_url}")
+    logger.info(f"Fetching RSS feed from: {rss_url}")
     updated_ids = set()
     try:
         response = requests.get(rss_url, timeout=30)
@@ -77,19 +77,19 @@ def fetch_rss_dataset_ids_task(rss_url: str = "https://ec.europa.eu/eurostat/api
                     logger.debug(f"Skipping potential non-dataset ID or non-health ID from RSS: {found_id}")
 
         if not updated_ids:
-            logger.info("⚠️ No dataset identifiers extracted or matched typical pattern from the RSS feed items.")
+            logger.info("No dataset identifiers extracted or matched typical pattern from the RSS feed items.")
         else:
-            logger.info(f"✅ Found {len(updated_ids)} potential dataset identifiers in the RSS feed: {list(updated_ids)}")
+            logger.info(f"Found {len(updated_ids)} potential dataset identifiers in the RSS feed: {list(updated_ids)}")
         return list(updated_ids)
 
     except requests.exceptions.RequestException as e:
-        logger.error(f"❌ Error fetching RSS feed: {e}")
+        logger.error(f"Error fetching RSS feed: {e}")
         return [] # Return empty list on error to prevent downstream failures
     except ET.ParseError as e:
-        logger.error(f"❌ Error parsing RSS XML: {e}")
+        logger.error(f"Error parsing RSS XML: {e}")
         return []
     except Exception as e:
-        logger.error(f"❌ An unexpected error occurred during RSS processing: {e}")
+        logger.error(f"An unexpected error occurred during RSS processing: {e}")
         return []
 
 @task
@@ -103,14 +103,13 @@ def get_current_metadata_for_rss_ids_task(rss_dataset_ids: list[str]) -> dict[st
         logger.info("No dataset IDs from RSS to process for metadata lookup.")
         return {}
 
-    logger.info(f"🔎 Fetching current metadata for {len(rss_dataset_ids)} dataset(s) from main catalog: {MAIN_CATALOG_FILE_PATH}")
+    logger.info(f"Fetching current metadata for {len(rss_dataset_ids)} dataset(s) from main catalog: {MAIN_CATALOG_FILE_PATH}")
     datasets_current_metadata = {}
 
     # Check if main catalog file exists
     if not os.path.exists(MAIN_CATALOG_FILE_PATH):
-        logger.error(f"❌ Main catalog file not found at {MAIN_CATALOG_FILE_PATH}. Cannot fetch metadata.")
-        # Depending on strictness, you might want to raise an exception here
-        # For now, return empty, which will lead to no processing triggers.
+        logger.error(f"Main catalog file not found at {MAIN_CATALOG_FILE_PATH}. Cannot fetch metadata.")
+
         return {}
 
     for dataset_id in rss_dataset_ids:
@@ -148,7 +147,7 @@ def determine_datasets_to_process_task(current_datasets_metadata: dict[str, dict
         logger.info("No current metadata available. No datasets to process.")
         return {"ids_to_process": [], "processing_remarks": {}}
 
-    logger.info(f"🧠 Determining which of the {len(current_datasets_metadata)} dataset(s) need processing...")
+    logger.info(f"Determining which of the {len(current_datasets_metadata)} dataset(s) need processing...")
     ids_to_process = []
     processing_remarks = {}
 
@@ -161,7 +160,7 @@ def determine_datasets_to_process_task(current_datasets_metadata: dict[str, dict
             continue
 
         # Convert current source update date string to datetime object for comparison
-        # Assuming ISO 8601 format like "YYYY-MM-DDTHH:MM:SSZ" or "YYYY-MM-DDTHH:MM:SS+HH:MM"
+        # ISO 8601 format like "YYYY-MM-DDTHH:MM:SSZ" or "YYYY-MM-DDTHH:MM:SS+HH:MM"
         try:
             # psycopg2 will return timezone-aware datetime if the DB column is TIMESTAMPTZ
             # For strings from JSON, ensure they can be parsed to comparable datetime objects.
@@ -204,9 +203,9 @@ def determine_datasets_to_process_task(current_datasets_metadata: dict[str, dict
                     logger.info(f"Dataset {dataset_id} is already up-to-date (Current: {current_source_update_dt}, Stored: {stored_source_update_dt}). Skipping.")
     
     if ids_to_process:
-        logger.info(f"✅ Identified {len(ids_to_process)} dataset(s) to process/reprocess: {ids_to_process}")
+        logger.info(f"Identified {len(ids_to_process)} dataset(s) to process/reprocess: {ids_to_process}")
     else:
-        logger.info("ℹ️ No new or updated datasets identified for processing.")
+        logger.info("No new or updated datasets identified for processing.")
         
     return {"ids_to_process": ids_to_process, "processing_remarks": processing_remarks}
 
@@ -221,10 +220,6 @@ def branch_on_datasets_to_process(trigger_info: dict):
         return "trigger_enhanced_processor_dag_task" # Task ID of the TriggerDagRunOperator
     else:
         logger.info("No datasets to process. Skipping trigger.")
-        # To explicitly skip, you can return a list containing the ID of a DummyOperator task (e.g., 'skip_triggering_task')
-        # or if no downstream path is desired for the False branch, return None (or an empty list).
-        # For simplicity, if Airflow handles downstream skips well with just one branch target, this is fine.
-        # Otherwise, add a DummyOperator for the skip path.
         return "end_rss_monitoring_task" # Assuming a dummy end task for the skip path
 
 # --- DAG Definition ---
@@ -277,7 +272,3 @@ with DAG(
     # Task dependencies
     rss_ids >> current_metadata >> datasets_to_trigger_info >> branch_choice
     branch_choice >> [trigger_processor_dag, end_task] # Connect branch to both possible outcomes
-
-    # Make sure the trigger_processor_dag doesn't run if end_task is chosen
-    # The @task.branch decorator handles this: only the returned task_id(s) are executed.
-    # So, if "end_rss_monitoring_task" is returned, "trigger_enhanced_processor_dag_task" is skipped. 

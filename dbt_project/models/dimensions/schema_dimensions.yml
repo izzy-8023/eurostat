@@ -1,55 +1,5 @@
 version: 2
 models:
-- name: dim_resid
-  description: Conformed dimension for resid
-  columns:
-  - name: resid_code
-    description: Primary key (resid_code) for resid.
-    tests:
-    - unique
-    - not_null
-  - name: resid_name
-    description: Descriptive name for resid (resid_name).
-- name: dim_geo
-  description: Conformed dimension for geo
-  columns:
-  - name: geo_code
-    description: Primary key (geo_code) for geo.
-    tests:
-    - unique
-    - not_null
-  - name: geo_name
-    description: Descriptive name for geo (geo_name).
-- name: dim_sex
-  description: Conformed dimension for sex
-  columns:
-  - name: sex_code
-    description: Primary key (sex_code) for sex.
-    tests:
-    - unique
-    - not_null
-  - name: sex_name
-    description: Descriptive name for sex (sex_name).
-- name: dim_time
-  description: Conformed dimension for time
-  columns:
-  - name: time_code
-    description: Primary key (time_code) for time.
-    tests:
-    - unique
-    - not_null
-  - name: time_name
-    description: Descriptive name for time (time_name).
-- name: dim_age
-  description: Conformed dimension for age
-  columns:
-  - name: age_code
-    description: Primary key (age_code) for age.
-    tests:
-    - unique
-    - not_null
-  - name: age_name
-    description: Descriptive name for age (age_name).
 - name: dim_freq
   description: Conformed dimension for freq
   columns:
@@ -60,6 +10,46 @@ models:
     - not_null
   - name: freq_name
     description: Descriptive name for freq (freq_name).
+- name: dim_time
+  description: Conformed dimension for time
+  columns:
+  - name: time_code
+    description: Primary key (time_code) for time.
+    tests:
+    - unique
+    - not_null
+  - name: time_name
+    description: Descriptive name for time (time_name).
+- name: dim_geo
+  description: Conformed dimension for geo
+  columns:
+  - name: geo_code
+    description: Primary key (geo_code) for geo.
+    tests:
+    - unique
+    - not_null
+  - name: geo_name
+    description: Descriptive name for geo (geo_name).
+- name: dim_age
+  description: Conformed dimension for age
+  columns:
+  - name: age_code
+    description: Primary key (age_code) for age.
+    tests:
+    - unique
+    - not_null
+  - name: age_name
+    description: Descriptive name for age (age_name).
+- name: dim_sex
+  description: Conformed dimension for sex
+  columns:
+  - name: sex_code
+    description: Primary key (sex_code) for sex.
+    tests:
+    - unique
+    - not_null
+  - name: sex_name
+    description: Descriptive name for sex (sex_name).
 - name: dim_unit
   description: Conformed dimension for unit
   columns:
@@ -70,13 +60,13 @@ models:
     - not_null
   - name: unit_name
     description: Descriptive name for unit (unit_name).
-- name: dim_icd10
-  description: Conformed dimension for icd10
+- name: dim_med_spec
+  description: Conformed dimension for med_spec
   columns:
-  - name: icd10_code
-    description: Primary key (icd10_code) for icd10.
+  - name: med_spec_code
+    description: Primary key (med_spec_code) for med_spec.
     tests:
     - unique
     - not_null
-  - name: icd10_name
-    description: Descriptive name for icd10 (icd10_name).
+  - name: med_spec_name
+    description: Descriptive name for med_spec (med_spec_name).

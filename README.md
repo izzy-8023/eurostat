@@ -46,7 +46,7 @@ graph TD
 ## Technology Stack
 
 ### **1. Data Orchestration & Pipeline (Apache Airflow)**
-
+![image](DAGs.png)
 *   **Framework:** **Apache Airflow** is used for authoring, scheduling, and monitoring the data pipeline workflows (DAGs).
 *   **Dynamic DAG Generation:** The pipeline dynamically creates dbt models and configurations based on the datasets being processed.
 *   **Operators:**
@@ -57,23 +57,24 @@ graph TD
     *   **XComs:** Used to pass metadata between tasks, such as sending updated dataset IDs from the RSS check to downstream processing tasks.
 
 ### **2. Data Transformation (dbt)**
-
+![image](dbt.png)
 *   **Core:** **dbt-core** and **dbt-postgres** for managing the transformation workflow and connecting to PostgreSQL.
 *   **Modeling Strategy:**
     *   **Staging Models:** For basic cleaning, type casting, and column renaming.
     *   **Fact Models (`fct_`):** Represent key business facts with foreign keys to dimensional data.
+    *   **Dimension Models (`dim_`):** Represent key business dimensions
     *   **Data Marts (`mart_`):** Aggregated, wide tables purpose-built for analytics.
 *   **Features:** Jinja templating for modular SQL, custom macros, and `schema.yml` definitions for documentation and data integrity.
 
 ### **3. Backend & Web Interface (Flask)**
-
+![image](Dashboard.png)
 *   **Framework:** **Flask** serves as the core web framework.
 *   **Database Connectivity:** **Psycopg2** is used to connect to PostgreSQL, with the `psycopg2.sql` module leveraged to prevent SQL injection.
 *   **API & Data Handling:** Exposes a RESTful API to the frontend and uses **Pandas** for data cleaning and aggregation before serialization.
 *   **Server-Side Rendering:** **Jinja2** is used for rendering HTML templates.
 
 ### **4. Frontend & Visualization**
-
+![image](Viz.png)
 *   **Charting Library:** **Chart.js** is used for creating interactive and responsive data visualizations, rendered client-side.
 *   **Charting Plugins:** **`chartjs-plugin-datalabels`** is integrated to display numerical values on the chart bars.
 *   **Styling:** UI built with **HTML5**, **CSS3**, and **Bootstrap**.
@@ -124,6 +125,11 @@ To get the project running locally, follow these steps:
 4.  **Access the Services:**
     *   **Web Interface:** Open your browser and navigate to `http://localhost:5001`.
     *   **Airflow UI:** Open your browser and navigate to `http://localhost:8080`.
+        *   Username: `airflow`
+        *   Password: `airflow`
     *   **PgAdmin UI:** Open your browser and navigate to `http://localhost:5050`.
+        *   Host name/address: `db`
+        *   Username: `eurostat_user`
+        *   Password: `mysecretpassword`
 
 This will start the Flask web application, the Airflow scheduler and webserver, and the PostgreSQL database.

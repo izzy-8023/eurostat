@@ -1,4 +1,3 @@
-version: 2
 
 models: []
   # Dimension models will be auto-generated when datasets are processed

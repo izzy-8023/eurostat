@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Enhanced Eurostat Data Source Manager
+ Eurostat Data Source Manager
 
 This enhanced version integrates with shared modules to eliminate redundancy
 and improve maintainability while preserving all existing functionality.
@@ -24,11 +24,11 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'shared'))
 from shared.config import EUROSTAT_API_CONFIG, DEFAULT_PATHS, HEALTH_DATASETS
 from shared.database import EurostatDatabase
 
-# --- Enhanced Catalog Download with Shared Config ---
+# ---  Catalog Download with Shared Config ---
 def download_eurostat_catalog(output_file_path):
     """
     Downloads the latest Eurostat data catalog using curl and saves it to the specified path.
-    Enhanced to use shared configuration.
+    Uses shared configuration.
     """
     catalog_url = "https://ec.europa.eu/eurostat/api/dissemination/sdmx/2.1/dataflow/ESTAT/all/latest?format=json"
     curl_command = [
@@ -56,11 +56,11 @@ def download_eurostat_catalog(output_file_path):
         print(f"An unexpected error occurred during catalog download: {e}")
         return False
 
-# --- Enhanced Health Dataset Detection ---
+# --- Health Dataset Detection ---
 def health_dataset_list(obj, keyword="HLTH"):
     """
     Recursively searches a nested object for 'id' keys whose string value contains the keyword.
-    Enhanced with better error handling and logging.
+
     """
     matches = []
     seen = set()  # prevents duplicates
@@ -108,9 +108,9 @@ def health_dataset_list(obj, keyword="HLTH"):
     recurse(obj)
     return matches
 
-# --- Enhanced CSV Export ---
+# --- CSV Export ---
 def export_dataset_details_to_csv(dataset_details, csv_file_name):
-    """Enhanced CSV export with better error handling."""
+    """ CSV export with better error handling."""
     if not dataset_details:
         print("No dataset details to export to CSV.")
         return
@@ -128,9 +128,9 @@ def export_dataset_details_to_csv(dataset_details, csv_file_name):
     except Exception as e:
         print(f"An unexpected error occurred during CSV export: {e}")
 
-# --- Enhanced Download Worker with Shared Config ---
+# ---  Download Worker with Shared Config ---
 def download_dataset_worker(dataset_id, api_config, output_directory):
-    """Enhanced download worker with better error handling and logging."""
+    """download worker with error handling and logging."""
     host_url = api_config['host']
     service = api_config['service']
     version = api_config['version']
@@ -160,9 +160,9 @@ def download_dataset_worker(dataset_id, api_config, output_directory):
         print(f"\n Unexpected error downloading {dataset_id}: {e}")
         return None
 
-# --- Enhanced Concurrent Download Orchestrator ---
+# --- Concurrent Download Orchestrator ---
 def download_datasets_concurrently(dataset_ids, api_config, output_dir, max_workers):
-    """Enhanced orchestrator with better progress tracking."""
+    """ orchestrator with progress tracking."""
     total_datasets = len(dataset_ids)
     downloaded_files = []
     failed_downloads = 0
@@ -191,49 +191,49 @@ def download_datasets_concurrently(dataset_ids, api_config, output_dir, max_work
     print("="*50)
     return downloaded_files, failed_downloads
 
-# --- Enhanced Catalog Loading with Database Integration ---
+# ---  Catalog Loading with Database Integration ---
 def load_and_filter_catalog(catalog_file_path, keyword_filter, db=None):
     """
-    Enhanced catalog loading with optional database tracking.
+    catalog loading with optional database tracking.
     """
     try:
-        print(f"📖 Loading catalog from {catalog_file_path}...")
+        print(f" Loading catalog from {catalog_file_path}...")
         with open(catalog_file_path, "r", encoding='utf-8') as f:
             catalog_data = json.load(f)
 
-        print(f"🔍 Filtering datasets with keyword '{keyword_filter}'...")
+        print(f" Filtering datasets with keyword '{keyword_filter}'...")
         dataset_details_list = health_dataset_list(catalog_data, keyword=keyword_filter)
 
         if not dataset_details_list:
-             print(f"⚠️ No datasets found with keyword '{keyword_filter}'.")
+             print(f" No datasets found with keyword '{keyword_filter}'.")
              return None
 
-        print(f"✅ Found {len(dataset_details_list)} matching datasets.")
+        print(f" Found {len(dataset_details_list)} matching datasets.")
         
         # Optional: Track in database
         if db:
             try:
                 # Could add catalog metadata tracking here
-                print(f"📊 Database tracking available (not implemented in this version)")
+                print(f" Database tracking available (not implemented in this version)")
             except Exception as e:
-                print(f"⚠️ Database tracking failed: {e}")
+                print(f" Database tracking failed: {e}")
         
         return dataset_details_list
 
     except FileNotFoundError:
-        print(f"❌ Error: Catalog file '{catalog_file_path}' not found.")
+        print(f" Error: Catalog file '{catalog_file_path}' not found.")
         return None
     except json.JSONDecodeError:
-         print(f"❌ Error: Catalog file '{catalog_file_path}' is not valid JSON.")
+         print(f" Error: Catalog file '{catalog_file_path}' is not valid JSON.")
          return None
     except Exception as e:
-        print(f"❌ Error loading or processing catalog: {e}")
+        print(f" Error loading or processing catalog: {e}")
         return None
 
-# --- Enhanced RSS Feed Processing ---
+# ---  RSS Feed Processing ---
 def fetch_and_parse_rss_feed(rss_url):
-    """Enhanced RSS feed processing with better error handling."""
-    print(f"📡 Fetching RSS feed from: {rss_url}")
+    """ RSS feed processing with better error handling."""
+    print(f" Fetching RSS feed from: {rss_url}")
     updated_ids = set()
     try:
         response = requests.get(rss_url, timeout=30)
@@ -262,23 +262,23 @@ def fetch_and_parse_rss_feed(rss_url):
                           updated_ids.add(found_id)
 
         if not updated_ids:
-             print("⚠️ Warning: No dataset identifiers extracted from the RSS feed items.")
+             print(" Warning: No dataset identifiers extracted from the RSS feed items.")
         else:
-             print(f"✅ Found {len(updated_ids)} unique dataset identifiers in the RSS feed.")
+             print(f" Found {len(updated_ids)} unique dataset identifiers in the RSS feed.")
         return updated_ids
 
     except requests.exceptions.RequestException as e:
-        print(f"❌ Error fetching RSS feed: {e}")
+        print(f" Error fetching RSS feed: {e}")
         return set()
     except ET.ParseError as e:
-        print(f"❌ Error parsing RSS XML: {e}")
+        print(f" Error parsing RSS XML: {e}")
         return set()
     except Exception as e:
-        print(f"❌ An unexpected error occurred during RSS processing: {e}")
+        print(f" An unexpected error occurred during RSS processing: {e}")
         return set()
 
 def check_health_datasets_in_rss(local_health_ids_set, updated_ids_from_rss_set):
-    """Enhanced comparison with better type handling."""
+    """ comparison with better type handling."""
     if not isinstance(local_health_ids_set, set):
         local_health_ids_set = set(local_health_ids_set)
     if not isinstance(updated_ids_from_rss_set, set):
@@ -288,9 +288,9 @@ def check_health_datasets_in_rss(local_health_ids_set, updated_ids_from_rss_set)
     return updated_health_datasets
 
 def main():
-    """Enhanced main function with shared configuration."""
+    """ main function with shared configuration."""
     # --- Argument Parsing ---
-    parser = argparse.ArgumentParser(description="Enhanced Eurostat Data Processor with Shared Modules")
+    parser = argparse.ArgumentParser(description=" Eurostat Data Processor with Shared Modules")
     
     parser.add_argument(
         "--action",
@@ -350,15 +350,15 @@ def main():
     if args.enable_db_tracking:
         try:
             db = EurostatDatabase()
-            print("✅ Database tracking enabled")
+            print(" Database tracking enabled")
         except Exception as e:
-            print(f"⚠️ Database tracking failed to initialize: {e}")
+            print(f" Database tracking failed to initialize: {e}")
 
     os.makedirs(args.data_dir, exist_ok=True)
     os.makedirs(args.output_dir, exist_ok=True)
 
-    print("🚀 Enhanced Eurostat Data Processor Starting...")
-    print(f"📊 Using shared API configuration: {API_CONFIG['host']}")
+    print("  Eurostat Data Processor Starting...")
+    print(f" Using shared API configuration: {API_CONFIG['host']}")
 
     # --- Stage 0: Download Catalog ---
     catalog_needed_for_other_actions = args.action in ['export-details', 'calculate-size', 'download-datasets', 'all'] or \
@@ -368,9 +368,9 @@ def main():
         if not args.skip_download or not os.path.exists(args.catalog_file):
             print("\n--- Stage 0: Initial Catalog Download ---")
             if not download_eurostat_catalog(args.catalog_file):
-                print(f"❌ Failed to download initial catalog to {args.catalog_file}. Some actions might fail.")
+                print(f" Failed to download initial catalog to {args.catalog_file}. Some actions might fail.")
             else:
-                print(f"✅ Initial catalog ready at {args.catalog_file}")
+                print(f" Initial catalog ready at {args.catalog_file}")
         else:
             print(f"--- Stage 0: Skipping initial catalog download (using existing {args.catalog_file}) ---")
 
@@ -380,25 +380,25 @@ def main():
         print("\n--- Stage 1: Load and Filter ---")
         
         if args.use_shared_health_datasets:
-            print(f"📋 Using shared health datasets list ({len(HEALTH_DATASETS)} datasets)")
+            print(f" Using shared health datasets list ({len(HEALTH_DATASETS)} datasets)")
             # Convert shared health datasets to the expected format
             all_dataset_details = [(ds_id, f"Health Dataset {ds_id}", None, None, None) for ds_id in HEALTH_DATASETS]
         else:
             all_dataset_details = load_and_filter_catalog(args.catalog_file, args.keyword, db)
             
         if not all_dataset_details:
-            print(f"⚠️ Warning: No datasets found. Some actions might not proceed.")
+            print(f" Warning: No datasets found. Some actions might not proceed.")
         else:
-            print(f"✅ Found {len(all_dataset_details)} datasets for processing.")
+            print(f" Found {len(all_dataset_details)} datasets for processing.")
 
     # --- Prepare lists for actions ---
     health_ids_to_check_rss = set()
     if args.dataset_ids:
         health_ids_to_check_rss.update(s_id.strip() for s_id in args.dataset_ids.split(','))
-        print(f"🎯 For RSS check: using {len(health_ids_to_check_rss)} specific dataset IDs from --dataset-ids.")
+        print(f" For RSS check: using {len(health_ids_to_check_rss)} specific dataset IDs from --dataset-ids.")
     elif all_dataset_details:
         health_ids_to_check_rss.update(detail[0] for detail in all_dataset_details)
-        print(f"📋 For RSS check: using {len(health_ids_to_check_rss)} dataset IDs from filtering.")
+        print(f" For RSS check: using {len(health_ids_to_check_rss)} dataset IDs from filtering.")
 
     # Apply filters for actions
     targeted_dataset_details_for_actions = all_dataset_details
@@ -406,10 +406,10 @@ def main():
         if args.dataset_ids:
             specific_ids = {s_id.strip() for s_id in args.dataset_ids.split(',')}
             targeted_dataset_details_for_actions = [detail for detail in all_dataset_details if detail[0] in specific_ids]
-            print(f"🎯 Filtered to {len(targeted_dataset_details_for_actions)} datasets based on --dataset-ids.")
+            print(f" Filtered to {len(targeted_dataset_details_for_actions)} datasets based on --dataset-ids.")
         elif args.limit is not None and args.limit > 0:
             targeted_dataset_details_for_actions = all_dataset_details[:args.limit]
-            print(f"📊 Limited to processing the first {len(targeted_dataset_details_for_actions)} datasets due to --limit={args.limit}.")
+            print(f" Limited to processing the first {len(targeted_dataset_details_for_actions)} datasets due to --limit={args.limit}.")
     
     targeted_ids_for_actions = [item[0] for item in targeted_dataset_details_for_actions] if targeted_dataset_details_for_actions else []
 
@@ -418,29 +418,29 @@ def main():
     if args.action == 'download-main-catalog':
         print("\n--- Action: Download Main Eurostat Catalog ---")
         if download_eurostat_catalog(args.main_catalog_output_path):
-            print(f"✅ Main Eurostat catalog successfully downloaded to {args.main_catalog_output_path}")
+            print(f" Main Eurostat catalog successfully downloaded to {args.main_catalog_output_path}")
         else:
-            print(f"❌ Failed to download main Eurostat catalog")
+            print(f" Failed to download main Eurostat catalog")
             exit(1)
 
     elif args.action in ['check-updates', 'all']:
         print("\n--- Action: Check Updates ---")
         if not health_ids_to_check_rss:
-            print("⚠️ No local dataset IDs to check against the RSS feed.")
+            print(" No local dataset IDs to check against the RSS feed.")
         else:
             rss_found_ids = fetch_and_parse_rss_feed(args.rss_url)
             if rss_found_ids:
                 updated_health_datasets = check_health_datasets_in_rss(health_ids_to_check_rss, rss_found_ids)
                 if updated_health_datasets:
-                    print(f"\n🔄 Found {len(updated_health_datasets)} of your datasets in the RSS feed (updated):")
+                    print(f"\n Found {len(updated_health_datasets)} of your datasets in the RSS feed (updated):")
                     for ds_id in updated_health_datasets:
-                        print(f"  📊 {ds_id}")
+                        print(f"   {ds_id}")
                 else:
-                    print("\n✅ None of your datasets were found in recent RSS updates.")
+                    print("\n None of your datasets were found in recent RSS updates.")
 
     if args.action in ['export-details', 'all']:
         if not targeted_dataset_details_for_actions:
-            print("\n⚠️ No targeted datasets to export details for.")
+            print("\n No targeted datasets to export details for.")
         else:
             print("\n--- Action: Exporting Details ---")
             csv_export_filename = args.csv_output
@@ -451,23 +451,23 @@ def main():
 
     if args.action in ['download-datasets', 'all']:
         if not targeted_ids_for_actions:
-            print("\n⚠️ No targeted datasets to download.")
+            print("\n No targeted datasets to download.")
         else:
             print("\n--- Action: Downloading Datasets ---")
             downloaded_file_paths, failed_count = download_datasets_concurrently(
                 targeted_ids_for_actions, API_CONFIG, args.data_dir, MAX_WORKERS
             )
-            print(f"📊 Finished downloads. Success: {len(downloaded_file_paths)}, Failed: {failed_count}")
+            print(f" Finished downloads. Success: {len(downloaded_file_paths)}, Failed: {failed_count}")
 
     if args.action in ['calculate-size', 'all']:
         if not targeted_ids_for_actions:
-            print("\n⚠️ No targeted datasets to calculate size for.")
+            print("\n No targeted datasets to calculate size for.")
         else:
             print("\n--- Action: Calculate Size ---")
-            print("ℹ️ This functionality has been moved to scripts/EDA.py")
+            print(" This functionality has been moved to scripts/EDA.py")
             print("Example usage: python scripts/EDA.py --action calculate-size --dataset-ids \"ID1,ID2,ID3\"")
 
-    print("\n🎉 Enhanced script finished successfully!")
+    print("\n  script finished successfully!")
 
 if __name__ == "__main__":
     main() 

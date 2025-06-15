@@ -1,34 +1,32 @@
-version: '3.8'
-
 services:
   app:
-    build: .  # Uses the enhanced Dockerfile
+    build: .  
     image: eurostat-enhanced-processor # Updated image name
     container_name: eurostat_app_processor
     depends_on:
       db:
         condition: service_healthy
     environment:
-      # Enhanced pipeline database connection details
+      # pipeline database connection details
       - POSTGRES_HOST=db
       - POSTGRES_PORT=5432
       - POSTGRES_DB=eurostat_data
       - POSTGRES_USER=eurostat_user
       - POSTGRES_PASSWORD=mysecretpassword
       - DBT_PROFILES_DIR=/app/dbt_project # For dbt integration
-      # Enhanced pipeline configuration
+      # pipeline configuration
       - USE_SHARED_MODULES=true
       - ENHANCED_PIPELINE_MODE=true
       - PYTHONUNBUFFERED=1 # For immediate log output
     volumes:
-      # Mount directories for data persistence and enhanced pipeline output
+      # Mount directories for data persistence and pipeline output
       - ./Data_Directory:/app/Data_Directory
       - ./Output_Parquet_Directory:/app/Output_Parquet_Directory
       - ./Output_Directory:/app/Output_Directory
-      - ./dbt_project:/app/dbt_project   # Mount dbt project for enhanced pipeline
-      - ./scripts:/app/scripts # Mount enhanced scripts with shared modules
-      # Enhanced pipeline specific directories
-      - ./logs:/app/logs # Enhanced logging
+      - ./dbt_project:/app/dbt_project   # Mount dbt project for pipeline
+      - ./scripts:/app/scripts # Mount scripts with shared modules
+      # pipeline specific directories
+      - ./logs:/app/logs # logging
       - ./backups:/app/backups # Cleaned up backups
       - ./health_datasets.csv:/app/health_datasets.csv:ro
       - ./eurostat_full_catalog.json:/app/eurostat_full_catalog.json:ro
@@ -41,11 +39,11 @@ services:
     image: postgres:13-alpine  # Stable PostgreSQL version
     container_name: eurostat_db
     environment:
-      # PostgreSQL configuration for enhanced pipeline
+      # PostgreSQL configuration for pipeline
       - POSTGRES_DB=eurostat_data
       - POSTGRES_USER=eurostat_user
       - POSTGRES_PASSWORD=mysecretpassword
-      # Performance optimizations for enhanced pipeline
+      # Performance optimizations for pipeline
       - POSTGRES_SHARED_PRELOAD_LIBRARIES=pg_stat_statements
       - POSTGRES_MAX_CONNECTIONS=200
     volumes:
@@ -62,7 +60,7 @@ services:
       - eurostat_shared_network
 
   web:
-    build: .  # Uses the enhanced Dockerfile
+    build: .  # Uses the Dockerfile
     image: eurostat-web-interface # Same image as app
     container_name: eurostat_web_interface
     depends_on:
@@ -79,7 +77,7 @@ services:
       - FLASK_APP=web_interface/app.py
       - FLASK_ENV=development
       - FLASK_DEBUG=1
-      # Enhanced pipeline configuration
+      # pipeline configuration
       - USE_SHARED_MODULES=true
       - ENHANCED_PIPELINE_MODE=true
       - PYTHONPATH=/app/scripts:/app/scripts/shared:/app/web_interface # Ensure web_interface is in PYTHONPATH if needed
@@ -118,7 +116,7 @@ services:
     image: dpage/pgadmin4:latest # Database administration interface
     container_name: eurostat_pgadmin
     environment:
-      # pgAdmin configuration for enhanced pipeline monitoring
+      # pgAdmin configuration for pipeline monitoring
       - PGADMIN_DEFAULT_EMAIL=wangziwei1998@gmail.com
       - PGADMIN_DEFAULT_PASSWORD=eurostat
       - PGADMIN_CONFIG_SERVER_MODE=False # Simplified for development

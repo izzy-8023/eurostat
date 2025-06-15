@@ -1,45 +1,20 @@
 import psycopg2
-from psycopg2.extras import RealDictCursor # If you need to fetch results as dicts
+from psycopg2.extras import RealDictCursor 
 import os
-import logging # Optional
-from datetime import datetime # For testing type conversion in get_dataset_last_processed_info_db
+import logging 
+from datetime import datetime 
+from .database import EurostatDatabase
 
-logger = logging.getLogger(__name__) # Optional
+logger = logging.getLogger(__name__) 
 
 def get_db_connection_config(use_airflow_connection=True, airflow_conn_id="postgres_eurostat") -> dict:
     """
     Gets database connection parameters.
-    Prioritizes Airflow connection, then environment variables, then defaults.
+    Uses EurostatDatabase for consistent configuration across the codebase.
     """
-    if use_airflow_connection:
-        try:
-            from airflow.providers.postgres.hooks.postgres import PostgresHook
-            pg_hook = PostgresHook(postgres_conn_id=airflow_conn_id)
-            db_conn = pg_hook.get_conn() # This is a psycopg2 connection object
-            conn_config = db_conn.get_dsn_parameters()
-            db_conn.close() # Close the connection obtained just for config
-            # Map DSN parameters to psycopg2.connect() kwargs
-            # Common DSN params: host, port, dbname (for database), user, password
-            return {
-                'host': conn_config.get('host'),
-                'port': conn_config.get('port'),
-                'database': conn_config.get('dbname'),
-                'user': conn_config.get('user'),
-                'password': conn_config.get('password'),
-            }
-        except ImportError:
-            logger.warning("Airflow components not available. Falling back to env vars for DB config.")
-        except Exception as e:
-            logger.warning(f"Failed to get DB config from Airflow connection '{airflow_conn_id}': {e}. Falling back.")
-    
-    # Fallback to environment variables or defaults
-    return {
-        'host': os.environ.get('POSTGRES_HOST', 'localhost'),
-        'port': int(os.environ.get('POSTGRES_PORT', 5432)), # Default PG port
-        'database': os.environ.get('POSTGRES_DB', 'eurostat_data'),
-        'user': os.environ.get('POSTGRES_USER', 'eurostat_user'),
-        'password': os.environ.get('POSTGRES_PASSWORD', 'mysecretpassword')
-    }
+    # Initialize EurostatDatabase which handles all the configuration logic
+    db = EurostatDatabase()
+    return db.config
 
 def update_processed_dataset_log_db(dataset_id: str, 
                                  source_data_updated_at: str | None, 
@@ -50,10 +25,10 @@ def update_processed_dataset_log_db(dataset_id: str,
     Inserts or updates a record in the processed_dataset_log table.
     Returns True on success, False on failure.
     """
-    conn_config = get_db_connection_config()
+    # Use EurostatDatabase for consistent connection handling
+    db = EurostatDatabase()
+    
     # Ensure source_data_updated_at is None if it's an empty string or not a valid date string
-    # The database column is TIMESTAMP WITH TIME ZONE, so it needs to be a valid timestamp or NULL.
-    # psycopg2 can handle ISO 8601 strings directly for timestamp with time zone.
     if isinstance(source_data_updated_at, str) and not source_data_updated_at.strip():
         source_data_updated_at = None
         
@@ -71,11 +46,7 @@ def update_processed_dataset_log_db(dataset_id: str,
         processing_remarks = EXCLUDED.processing_remarks;
     """
     try:
-        # In Airflow context, it's better to use PostgresHook for connection management
-        # but for a generic shared util, direct psycopg2 is also an option if Airflow is not available.
-        # The get_db_connection_config tries to use Airflow hook first.
-        
-        with psycopg2.connect(**conn_config) as conn:
+        with db.get_connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(sql, (dataset_id, source_data_updated_at, dataset_title, 
                                   airflow_run_id, remarks))
@@ -85,13 +56,14 @@ def update_processed_dataset_log_db(dataset_id: str,
         logger.error(f"Error updating processed_dataset_log for {dataset_id}: {e}")
         return False
 
-# Add other db utility functions here as needed, e.g.:
 def get_dataset_last_processed_info_db(dataset_id: str) -> dict | None:
     """
     Retrieves the last processed info for a given dataset_id.
     Returns a dictionary with 'source_data_updated_at' etc., or None if not found.
     """
-    conn_config = get_db_connection_config()
+    # Use EurostatDatabase for consistent connection handling
+    db = EurostatDatabase()
+    
     sql = """
     SELECT dataset_id, source_data_updated_at, dataset_title, 
            last_processed_at_utc, last_processed_airflow_run_id, processing_remarks
@@ -99,8 +71,8 @@ def get_dataset_last_processed_info_db(dataset_id: str) -> dict | None:
     WHERE dataset_id = %s;
     """
     try:
-        with psycopg2.connect(**conn_config) as conn:
-            with conn.cursor(cursor_factory=RealDictCursor) as cur: # Use RealDictCursor
+        with db.get_connection() as conn:
+            with conn.cursor(cursor_factory=RealDictCursor) as cur:
                 cur.execute(sql, (dataset_id,))
                 row = cur.fetchone()
                 if row:

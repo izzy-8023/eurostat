@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Simplified Eurostat Dataset Web Interface
+Eurostat Dataset Web Interface
 
 A lightweight Flask web application for browsing and processing Eurostat datasets.
 """
@@ -19,7 +19,7 @@ from psycopg2.extras import RealDictCursor
 import traceback
 import subprocess
 import csv
-import psycopg2.sql as sql # Import the sql module
+import psycopg2.sql as sql 
 import pandas as pd
 
 # Add scripts directory to pathxw
@@ -32,6 +32,11 @@ logger = logging.getLogger(__name__)
 # Flask app configuration
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
+
+# Add health endpoint for container healthcheck
+@app.route('/health')
+def health_check():
+    return jsonify({'status': 'healthy'}), 200
 
 # Database configuration
 DB_CONFIG = {
@@ -180,7 +185,6 @@ def get_health_datasets():
 def update_grouped_datasets():
     """Run the grouping logic to update the grouped_datasets_summary.csv"""
     # This will execute the logic in group.py and update the CSV
-    # Assuming group.py writes to grouped_datasets_summary.csv as its output
     pass  # The logic is already executed when imported
 
 def get_grouped_datasets():
@@ -294,7 +298,9 @@ def chart_data(dataset_id):
     if not conn:
         return jsonify({"error": "Database connection failed"}), 500
 
+    # Try both fact and mart tables
     table_name = f"fct_{dataset_id.lower()}"
+    mart_table_name = f"mart_{dataset_id.lower()}"
     time_code = request.args.get('time_code', None)
 
     # Basic validation
@@ -303,15 +309,24 @@ def chart_data(dataset_id):
 
     try:
         with conn.cursor() as cur:
-            # Check if table exists
+            # Check if fact table exists in dbt_prod
             cur.execute("SELECT to_regclass(%s);", (f"dbt_prod.{table_name}",))
-            if cur.fetchone()[0] is None:
+            fact_table_exists = cur.fetchone()[0] is not None
+
+            # Check if mart table exists in dbt_prod
+            cur.execute("SELECT to_regclass(%s);", (f"dbt_prod.{mart_table_name}",))
+            mart_table_exists = cur.fetchone()[0] is not None
+
+            if not fact_table_exists and not mart_table_exists:
                 return jsonify({"error": "Dataset table not found"}), 404
- 
+
+            # Use mart table if it exists, otherwise use fact table
+            target_table = mart_table_name if mart_table_exists else table_name
+
             # Get all available time_codes (years)
             query_years = sql.SQL(
                 'SELECT DISTINCT time_code FROM dbt_prod.{} ORDER BY time_code DESC;'
-            ).format(sql.Identifier(table_name))
+            ).format(sql.Identifier(target_table))
             cur.execute(query_years)
             available_years = [str(row[0]) for row in cur.fetchall()]
 
@@ -320,10 +335,10 @@ def chart_data(dataset_id):
             if year_to_query is None:
                 return jsonify({"error": "No data available for any year"}), 404
 
-            # Prepare safe SQL query for the selected year, removing ORDER BY as it will be handled in pandas
+            # Prepare safe SQL query for the selected year
             query = sql.SQL(
                 'SELECT geo_code, value FROM dbt_prod.{} WHERE value IS NOT NULL AND time_code = %s;'
-            ).format(sql.Identifier(table_name))
+            ).format(sql.Identifier(target_table))
 
             cur.execute(query, (year_to_query,))
             rows = cur.fetchall()
@@ -356,7 +371,8 @@ def chart_data(dataset_id):
             "labels": df['geo_code'].tolist(),
             "datasets": chart_datasets,
             "available_years": available_years,
-            "current_year": year_to_query
+            "current_year": year_to_query,
+            "table_type": "mart" if mart_table_exists else "fact"
         }
 
         return jsonify(chart_data)

@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 """
-Enhanced Eurostat Dataset Processor DAG
+ Eurostat Dataset Processor DAG
 
-This DAG leverages the enhanced scripts with shared modules, improved error handling,
+This DAG leverages the scripts with shared modules, improved error handling,
 and centralized configuration. It provides better observability and performance.
 
 Features:
-- Uses enhanced SourceData.py with shared health datasets
-- Leverages enhanced json_to_postgres_loader.py with streaming
-- Utilizes consolidated_model_generator.py for unified model generation
-- Integrates topic_mart_generator.py for automated mart creation
-- Enhanced logging with emoji indicators
+- SourceData.py with shared health datasets
+- json_to_postgres_loader.py with streaming
+- consolidated_model_generator.py for unified model generation
+- topic_mart_generator.py for automated mart creation
 - Centralized configuration via shared modules
 """
 
@@ -22,6 +21,7 @@ from pathlib import Path
 import os
 import sys
 import subprocess
+import shutil
 
 from airflow import DAG
 from airflow.decorators import task
@@ -61,12 +61,13 @@ dag = DAG(
     catchup=False,
     tags=['eurostat', 'enhanced', 'production', 'shared-modules'],
     doc_md=__doc__,
+    is_paused_upon_creation=False,
 )
 
 @task(dag=dag)
 def validate_environment(**context) -> Dict[str, Any]:
     """
-    Validate that all enhanced scripts and shared modules are available
+    Validate that all scripts and shared modules are available
     
     Returns:
         Environment validation results
@@ -89,15 +90,15 @@ def validate_environment(**context) -> Dict[str, Any]:
         
         validation_results['shared_modules'] = True
         validation_results['health_datasets'] = len(HEALTH_DATASETS)
-        logger.info(f"✅ Shared modules loaded: {len(HEALTH_DATASETS)} health datasets available")
+        logger.info(f" Shared modules loaded: {len(HEALTH_DATASETS)} health datasets available")
         
         # Test database configuration
         db_config = get_db_config()
         db = EurostatDatabase()
         validation_results['database_config'] = True
-        logger.info("✅ Database configuration validated")
+        logger.info(" Database configuration validated")
         
-        # Verify enhanced scripts exist
+        # Verify scripts exist
         script_paths = [
             '/opt/airflow/scripts/SourceData.py',
             '/opt/airflow/scripts/json_to_postgres_loader.py',
@@ -114,30 +115,30 @@ def validate_environment(**context) -> Dict[str, Any]:
             validation_results['errors'].append(f"Missing scripts: {missing_scripts}")
         else:
             validation_results['enhanced_scripts'] = True
-            logger.info("✅ All enhanced scripts available")
+            logger.info(" All scripts available")
             
     except Exception as e:
         error_msg = f"Environment validation failed: {str(e)}"
         validation_results['errors'].append(error_msg)
-        logger.error(f"❌ {error_msg}")
+        logger.error(f" {error_msg}")
         raise AirflowException(error_msg)
     
     if validation_results['errors']:
         raise AirflowException(f"Environment validation failed: {validation_results['errors']}")
     
-    logger.info("🚀 Environment validation completed successfully")
+    logger.info(" Environment validation completed successfully")
     return validation_results
 
 @task(dag=dag)
 def plan_processing(dataset_ids: Optional[List[str]] = None, **context) -> Dict[str, Any]:
     """
-    Create processing plan using enhanced configuration
+    Create processing plan using configuration
     
     Args:
         dataset_ids: Optional list of specific datasets to process
     
     Returns:
-        Enhanced processing plan with shared configuration
+        processing plan with shared configuration
     """
     sys.path.append('/opt/airflow/scripts')
     
@@ -171,14 +172,14 @@ def plan_processing(dataset_ids: Optional[List[str]] = None, **context) -> Dict[
                 
             if use_health_datasets:
                 dataset_ids = HEALTH_DATASETS[:5]  # Process first 5 for demo
-                logger.info(f"📋 Using shared health datasets: {len(dataset_ids)} datasets")
+                logger.info(f" Using shared health datasets: {len(dataset_ids)} datasets")
             else:
                 try:
                     dataset_ids = Variable.get("eurostat_target_datasets", deserialize_json=True)
                 except KeyError:
                     dataset_ids = ["hlth_cd_ainfo", "hlth_dh010"]
     
-    # Create enhanced processing plan
+    # Create  processing plan
     processing_plan = {
         'datasets': dataset_ids,
         'run_id': context['run_id'],
@@ -188,27 +189,28 @@ def plan_processing(dataset_ids: Optional[List[str]] = None, **context) -> Dict[
         'batch_size': _get_variable_with_default("enhanced_batch_size", 2000),
         'enable_streaming': _get_variable_with_default("enable_streaming_load", True),
         'generate_marts': _get_variable_with_default("auto_generate_marts", True),
-        'processing_remarks': processing_remarks_from_conf
+        'processing_remarks': processing_remarks_from_conf,
+        'successful_loads': []  # Initialize empty list for successful loads
     }
     
     # Create data directory
     os.makedirs(processing_plan['data_dir'], exist_ok=True)
     
-    logger.info(f"📊 Processing plan created for {len(dataset_ids)} datasets")
-    logger.info(f"🏥 Health datasets: {processing_plan['health_datasets_count']}")
+    logger.info(f" Processing plan created for {len(dataset_ids)} datasets")
+    logger.info(f" Health datasets: {processing_plan['health_datasets_count']}")
     
     return processing_plan
 
 @task(dag=dag)
 def enhanced_download_datasets(processing_plan: Dict[str, Any], **context) -> Dict[str, Any]:
     """
-    Download datasets using enhanced SourceData.py with shared configuration
+    Download datasets using SourceData.py with shared configuration
     
     Args:
         processing_plan: Processing plan from plan_processing task
     
     Returns:
-        Download results with enhanced metrics
+        Download results with metrics
     """
     import subprocess
     import time
@@ -219,9 +221,9 @@ def enhanced_download_datasets(processing_plan: Dict[str, Any], **context) -> Di
     dataset_ids = processing_plan['datasets']
     data_dir = processing_plan['data_dir']
     
-    logger.info(f"🚀 Starting enhanced download for {len(dataset_ids)} datasets")
+    logger.info(f" Starting download for {len(dataset_ids)} datasets")
     
-    # Build enhanced download command
+    # Build download command
     dataset_list = ','.join(dataset_ids)
     cmd = [
         'python', '/opt/airflow/scripts/SourceData.py',
@@ -235,9 +237,9 @@ def enhanced_download_datasets(processing_plan: Dict[str, Any], **context) -> Di
     # Don't use it when specific custom datasets are requested
     if dataset_ids == processing_plan.get('datasets', []) and all(ds.lower() in [h.lower() for h in HEALTH_DATASETS] for ds in dataset_ids):
         cmd.append('--use-shared-health-datasets')
-        logger.info("📋 Using shared health datasets configuration")
+        logger.info(" Using shared health datasets configuration")
     else:
-        logger.info("🎯 Processing custom datasets - bypassing shared list")
+        logger.info(" Processing custom datasets - bypassing shared list")
     
     start_time = time.time()
     
@@ -245,8 +247,8 @@ def enhanced_download_datasets(processing_plan: Dict[str, Any], **context) -> Di
         result = subprocess.run(cmd, capture_output=True, text=True, check=True)
         download_time = time.time() - start_time
         
-        logger.info(f"✅ Enhanced download completed in {download_time:.2f} seconds")
-        logger.info(f"📥 Download output: {result.stdout}")
+        logger.info(f" Download completed in {download_time:.2f} seconds")
+        logger.info(f" Download output: {result.stdout}")
         
         # Verify downloads and collect metrics
         download_results = {
@@ -267,26 +269,26 @@ def enhanced_download_datasets(processing_plan: Dict[str, Any], **context) -> Di
                     'path': json_path,
                     'size_mb': file_size / (1024 * 1024)
                 }
-                logger.info(f"✅ {dataset_id}: {file_size / (1024 * 1024):.2f} MB")
+                logger.info(f" {dataset_id}: {file_size / (1024 * 1024):.2f} MB")
             else:
                 download_results['failed_downloads'].append(dataset_id)
-                logger.error(f"❌ Failed to download {dataset_id}")
+                logger.error(f" Failed to download {dataset_id}")
         
         if download_results['failed_downloads']:
             raise AirflowException(f"Failed to download: {download_results['failed_downloads']}")
         
-        logger.info(f"📊 Total downloaded: {download_results['total_size_mb']:.2f} MB")
+        logger.info(f"Total downloaded: {download_results['total_size_mb']:.2f} MB")
         return download_results
         
     except subprocess.CalledProcessError as e:
-        error_msg = f"Enhanced download failed: {e.stderr}"
-        logger.error(f"❌ {error_msg}")
+        error_msg = f"download failed: {e.stderr}"
+        logger.error(f" {error_msg}")
         raise AirflowException(error_msg)
 
 @task(dag=dag)
 def enhanced_load_to_database(processing_plan: Dict[str, Any], download_results: Dict[str, Any], **context) -> Dict[str, Any]:
     """
-    Load datasets using enhanced json_to_postgres_loader.py with streaming
+    Load datasets using json_to_postgres_loader.py with streaming
     
     Args:
         processing_plan: Processing plan
@@ -301,7 +303,7 @@ def enhanced_load_to_database(processing_plan: Dict[str, Any], download_results:
     successful_downloads = download_results['successful_downloads']
     batch_size = processing_plan['batch_size']
     
-    logger.info(f"🔄 Starting enhanced database loading for {len(successful_downloads)} datasets")
+    logger.info(f" Starting database loading for {len(successful_downloads)} datasets")
     
     loading_results = {
         'successful_loads': [],
@@ -318,9 +320,9 @@ def enhanced_load_to_database(processing_plan: Dict[str, Any], download_results:
         json_path = file_info['path']
         table_name = dataset_id.lower()
         
-        logger.info(f"📥 Loading {dataset_id} to table {table_name}")
+        logger.info(f"Loading {dataset_id} to table {table_name}")
         
-        # Build enhanced loading command
+        # Build loading command
         cmd = [
             'python', '/opt/airflow/scripts/json_to_postgres_loader.py',
             '--input-file', json_path,
@@ -333,22 +335,21 @@ def enhanced_load_to_database(processing_plan: Dict[str, Any], download_results:
         dataset_start_time = time.time()
         
         try:
-            # Enhanced: Log the command being run
+            # Log the command being run
             logger.info(f"Executing command: {' '.join(cmd)}")
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
             dataset_load_time = time.time() - dataset_start_time
             
-            # Enhanced: Log stdout and stderr from the script
+            # Log stdout and stderr from the script
             logger.info(f"Output from json_to_postgres_loader.py for {dataset_id}:\\nSTDOUT:\\n{result.stdout}\\nSTDERR:\\n{result.stderr}")
 
-            # Extract row count from output (enhanced loader provides this)
+            # Extract row count from output (loader provides this)
             output_lines = result.stderr.split('\n')
             rows_loaded = 0
             for line in output_lines:
                 # Match the new log format from json_to_postgres_loader.py
                 if 'Successfully loaded' in line and 'total rows into' in line: 
                     try:
-                        # Example: "INFO - ✅ Successfully loaded 6025 total rows into hlth_ehis_sk2e"
                         rows_loaded_str = line.split('Successfully loaded')[1].split('total rows into')[0].strip()
                         rows_loaded = int(rows_loaded_str)
                         logger.info(f"Extracted {rows_loaded} rows from log line: {line}")
@@ -366,11 +367,11 @@ def enhanced_load_to_database(processing_plan: Dict[str, Any], download_results:
                 'file_size_mb': file_info['size_mb']
             }
             
-            logger.info(f"✅ {dataset_id}: {rows_loaded:,} rows in {dataset_load_time:.2f}s ({rows_loaded/dataset_load_time:.0f} rows/sec)")
+            logger.info(f" {dataset_id}: {rows_loaded:,} rows in {dataset_load_time:.2f}s ({rows_loaded/dataset_load_time:.0f} rows/sec)")
             
         except subprocess.CalledProcessError as e:
-            # Enhanced: Log stdout and stderr on error as well
-            logger.error(f"❌ Failed to load {dataset_id}. Return code: {e.returncode}")
+            # Log stdout and stderr on error as well
+            logger.error(f" Failed to load {dataset_id}. Return code: {e.returncode}")
             logger.error(f"Output from json_to_postgres_loader.py for {dataset_id} (on error):\\nSTDOUT:\\n{e.stdout}\\nSTDERR:\\n{e.stderr}")
             loading_results['failed_loads'].append(dataset_id)
     
@@ -379,8 +380,11 @@ def enhanced_load_to_database(processing_plan: Dict[str, Any], download_results:
     if loading_results['failed_loads']:
         raise AirflowException(f"Failed to load datasets: {loading_results['failed_loads']}")
     
-    logger.info(f"🎉 Enhanced loading completed: {loading_results['total_rows_loaded']:,} total rows")
-    logger.info(f"⚡ Average performance: {loading_results['total_rows_loaded']/loading_results['loading_time_seconds']:.0f} rows/sec")
+    # Update the processing plan with successful loads
+    processing_plan['successful_loads'] = loading_results['successful_loads']
+    
+    logger.info(f" loading completed: {loading_results['total_rows_loaded']:,} total rows")
+    logger.info(f" Average performance: {loading_results['total_rows_loaded']/loading_results['loading_time_seconds']:.0f} rows/sec")
     
     return loading_results
 
@@ -390,7 +394,7 @@ def extract_source_metadata_task(loading_results: Dict[str, Any], processing_pla
     Extracts source_data_updated_at and title from the downloaded JSON file
     for each successfully loaded dataset.
     """
-    logger.info("🔎 Extracting source metadata for successfully loaded datasets...")
+    logger.info(" Extracting source metadata for successfully loaded datasets...")
     datasets_metadata = {}
     
     # Ensure shared modules can be imported
@@ -405,9 +409,6 @@ def extract_source_metadata_task(loading_results: Dict[str, Any], processing_pla
     for dataset_id in loading_results.get('successful_loads', []):
         # Construct path to the JSON file. Assumes structure from 'enhanced_download_datasets' task.
         # e.g., data_dir / dataset_id.json
-        # However, enhanced_download_datasets in the DAG saves to data_dir / dataset_id.json
-        # The 'enhanced_load_to_database' task gets this from download_results['files_info'][dataset_id]['path']
-        # We need a consistent way to know the path. For now, assume:
         json_file_path = Path(data_dir) / f"{dataset_id}.json"
         
         if json_file_path.exists():
@@ -477,10 +478,10 @@ def generate_topic_marts(processing_plan: Dict[str, Any], star_schema_results: D
     import os
     
     if not processing_plan.get('generate_marts', True):
-        logger.info("🚫 Topic mart generation disabled")
+        logger.info("Topic mart generation disabled")
         return {'marts_generated': [], 'generation_skipped': True}
     
-    logger.info("🎯 Generating topic-based mart models...")
+    logger.info("Generating topic-based mart models...")
     
     mart_results = {
         'marts_generated': [],
@@ -491,41 +492,43 @@ def generate_topic_marts(processing_plan: Dict[str, Any], star_schema_results: D
     script_path = '/opt/airflow/scripts/topic_mart_generator.py'
 
     try:
-        # The script uses internal paths for DBT_PROJECT_ROOT and GROUPED_DATASETS_CSV_PATH
-        # relative to its own location. These should resolve correctly if the script is run
-        # from /opt/airflow/scripts/ and the dbt_project & CSV are in /opt/airflow/.
-        cmd = ['python', script_path]
+        # Get the list of successfully loaded datasets from the processing plan
+        successful_loads = processing_plan.get('successful_loads', [])
+        if not successful_loads:
+            logger.warning("No datasets were successfully loaded. Skipping mart generation.")
+            return {'marts_generated': [], 'generation_skipped': True}
+
+        # Build command with dataset filter
+        cmd = ['python', script_path, '--datasets', ','.join(successful_loads)]
         
         # Set PYTHONPATH to include the shared modules directory
         env = os.environ.copy()
         env['PYTHONPATH'] = f"{env.get('PYTHONPATH', '')}:{os.path.dirname(script_path)}/shared"
 
         logger.info(f"Executing command: {' '.join(cmd)}")
-        result = subprocess.run(cmd, capture_output=True, text=True, check=True, env=env, cwd=os.path.dirname(script_path)) # Run from script's dir
+        result = subprocess.run(cmd, capture_output=True, text=True, check=True, env=env, cwd=os.path.dirname(script_path))
         
         # Extract generated mart names from output
         output_lines = result.stdout.split('\n')
         for line in output_lines:
             if 'Generated' in line and 'mart models' in line:
-                # Look for pattern like "Generated 5 mart models"
                 try:
                     count = int(line.split('Generated')[1].split('mart models')[0].strip())
-                    logger.info(f"✅ Generated {count} mart models")
+                    logger.info(f" Generated {count} mart models")
                 except:
                     pass
             elif 'Mart models:' in line:
-                # Extract model names
                 models_part = line.split('Mart models:')[1].strip()
                 mart_results['marts_generated'] = [m.strip() for m in models_part.split(',')]
         
-        logger.info(f"🎯 Topic marts generated: {mart_results['marts_generated']}")
+        logger.info(f" Topic marts generated: {mart_results['marts_generated']}")
         
     except subprocess.CalledProcessError as e:
         error_msg = f"Topic mart generation failed: {e.stderr}"
-        logger.error(f"❌ {error_msg}")
+        logger.error(f" {error_msg}")
         # Don't fail the entire DAG for mart generation issues
         mart_results['failed_generations'].append(error_msg)
-        logger.warning("⚠️ Continuing without topic marts")
+        logger.warning(" Continuing without topic marts")
     
     return mart_results
 
@@ -541,13 +544,13 @@ def run_dbt_pipeline(
     Run dbt models, tests, and generate documentation.
     Dynamically selects models based on successfully loaded datasets.
     """
-    import subprocess  # Ensure subprocess is imported within the task
-    import os          # Ensure os is imported (often useful with subprocess)
+    import subprocess
+    import os
 
-    logger.info("🚀 Running dbt pipeline (full-refresh & test)...")
+    logger.info(" Running dbt pipeline (full-refresh & test)...")
     
-    DBT_PROJECT_DIR = "/opt/airflow/dbt_project"  # Make sure this is correct
-    DBT_PROFILES_DIR = "/opt/airflow/dbt_project" # Assuming profiles.yml is in dbt_project
+    DBT_PROJECT_DIR = "/opt/airflow/dbt_project"
+    DBT_PROFILES_DIR = "/opt/airflow/dbt_project"
     dbt_results = {
         "run_success": False,
         "run_output": "",
@@ -560,85 +563,101 @@ def run_dbt_pipeline(
     }
 
     successful_dataset_ids = loading_results.get('successful_loads', [])
-    dbt_select_args = [] # Arguments for dbt --select
-
-    if successful_dataset_ids:
-        logger.info(f"DBT_PIPELINE: Building dbt selection for successfully loaded datasets: {successful_dataset_ids}")
-        # Selectors for the source tables and all their downstream children
-        # Example: "source:eurostat_raw.hlth_ehis_fv3e+"
-        dbt_selectors = [f"source:eurostat_raw.{dataset_id.lower()}+" for dataset_id in successful_dataset_ids]
-        
-        if dbt_selectors:
-            dbt_select_args.extend(['--select'])
-            dbt_select_args.extend(dbt_selectors)
-            logger.info(f"DBT_PIPELINE: dbt operations will be scoped to: {' '.join(dbt_selectors)}")
-    else:
-        logger.info("DBT_PIPELINE: No datasets were successfully loaded in this run. "
-                    "dbt will be instructed to select no models by using a non-existent tag.")
-        dbt_select_args.extend(['--select', 'tag:__no_data_loaded_skip_dbt__'])
-
     base_dbt_args = ['--project-dir', DBT_PROJECT_DIR, '--profiles-dir', DBT_PROFILES_DIR]
-    # Consider adding --target if not using default, e.g., ['--target', 'prod']
-    # For now, assuming default target from profiles.yml is used.
 
-    # dbt run
-    logger.info("⚙️ Running dbt run --full-refresh...")
-    dbt_run_cmd = ['dbt', 'run', '--full-refresh'] + base_dbt_args + dbt_select_args
-    logger.info(f"Executing dbt run command: {' '.join(dbt_run_cmd)}")
-    try:
-        run_result = subprocess.run(dbt_run_cmd, capture_output=True, text=True, check=True)
-        dbt_results["run_success"] = True
-        dbt_results["run_output"] = run_result.stdout
-        logger.info("✅ dbt run --full-refresh completed successfully.")
-        logger.debug(f"dbt run stdout:\\n{run_result.stdout}")
-    except subprocess.CalledProcessError as e:
-        dbt_results["run_error"] = f"Stderr:\\n{e.stderr}\\nStdout:\\n{e.stdout}"
-        logger.error(f"❌ dbt run --full-refresh failed. Return code: {e.returncode}")
-        logger.error(dbt_results["run_error"])
-        # Optionally, re-raise to fail the task immediately
-        # raise AirflowException(f"dbt run failed: {dbt_results['run_error']}") from e
+    # Build source selectors for the successfully loaded datasets
+    source_selectors = [f"source:eurostat_raw.{dataset_id.lower()}+" for dataset_id in successful_dataset_ids]
+    
+    if not source_selectors:
+        logger.info("No datasets were successfully loaded. Skipping dbt operations.")
+        return dbt_results
 
-    # dbt test (only if run was successful, or always try to test what was built)
-    # Let's run test even if some models in the selection failed to build, to get test results on what did build.
-    logger.info("🧪 Running dbt test...")
-    dbt_test_cmd = ['dbt', 'test'] + base_dbt_args + dbt_select_args
-    logger.info(f"Executing dbt test command: {' '.join(dbt_test_cmd)}")
-    try:
-        test_result = subprocess.run(dbt_test_cmd, capture_output=True, text=True, check=True)
+    def run_dbt_command(cmd, step_name):
+        """Helper function to run dbt commands with consistent error handling"""
+        try:
+            logger.info(f"Executing command: {' '.join(cmd)}")
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            logger.info(f"{step_name} completed successfully")
+            logger.debug(f"Command output:\n{result.stdout}")
+            return True, result.stdout, ""
+        except subprocess.CalledProcessError as e:
+            error_msg = f"Failed to {step_name.lower()}:"
+            if e.stdout:
+                error_msg += f"\nSTDOUT:\n{e.stdout}"
+            if e.stderr:
+                error_msg += f"\nSTDERR:\n{e.stderr}"
+            logger.error(error_msg)
+            return False, e.stdout, error_msg
+
+    # Step 1: Run dimensions first
+    logger.info("Step 1: Running dimension models...")
+    dim_cmd = ['dbt', 'run', '--full-refresh', '--select', 'tag:dimension'] + base_dbt_args
+    success, output, error = run_dbt_command(dim_cmd, "Build dimension models")
+    if not success:
+        raise AirflowException(error)
+
+    # Step 2: Run fact models
+    logger.info("Step 2: Running fact models...")
+    fact_selectors = ' '.join(source_selectors)
+    fact_cmd = ['dbt', 'run', '--full-refresh', '--select', fact_selectors, '--exclude', 'tag:mart'] + base_dbt_args
+    success, output, error = run_dbt_command(fact_cmd, "Build fact models")
+    if not success:
+        raise AirflowException(error)
+
+    # Step 3: Run mart models - only for the datasets we loaded
+    logger.info("Step 3: Running mart models...")
+    # Build a selector that includes both the source tables and their downstream mart models
+    mart_selectors = []
+    for dataset_id in successful_dataset_ids:
+        # Add the source and all its downstream models (including marts)
+        mart_selectors.append(f"source:eurostat_raw.{dataset_id.lower()}+")
+    
+    mart_cmd = ['dbt', 'run', '--full-refresh', '--select', ' '.join(mart_selectors), '--select', 'tag:mart'] + base_dbt_args
+    success, output, error = run_dbt_command(mart_cmd, "Build mart models")
+    if not success:
+        raise AirflowException(error)
+    dbt_results["run_success"] = True
+
+    # Step 4: Run tests - only for the models we built
+    logger.info("Running dbt tests...")
+    test_selectors = []
+    # Test dimensions
+    test_selectors.append('tag:dimension')
+    # Test facts for loaded datasets
+    test_selectors.extend(source_selectors)
+    # Test marts that depend on our loaded datasets
+    test_selectors.extend(mart_selectors)
+    test_selectors.append('tag:mart')
+
+    test_cmd = ['dbt', 'test', '--select', ' '.join(test_selectors)] + base_dbt_args
+    success, output, error = run_dbt_command(test_cmd, "Run tests")
+    if success:
         dbt_results["test_success"] = True
-        dbt_results["test_output"] = test_result.stdout
-        logger.info("✅ dbt test completed successfully.")
-        logger.debug(f"dbt test stdout:\\n{test_result.stdout}")
-    except subprocess.CalledProcessError as e:
-        dbt_results["test_error"] = f"Stderr:\\n{e.stderr}\\nStdout:\\n{e.stdout}"
-        logger.error(f"❌ dbt test failed. Return code: {e.returncode}")
-        logger.error(dbt_results["test_error"])
+        dbt_results["test_output"] = output
+    else:
+        dbt_results["test_error"] = error
+        # Don't fail the DAG for test failures, just log them
 
-    # dbt docs generate
-    # Scoping docs generation to selected models to prevent compilation errors
-    # for models whose sources may not be in the dynamically generated sources.yml.
-    logger.info("📚 Generating dbt documentation...")
-    dbt_docs_cmd = ['dbt', 'docs', 'generate'] + base_dbt_args + dbt_select_args
-    logger.info(f"Executing dbt docs command: {' '.join(dbt_docs_cmd)}")
-    try:
-        docs_result = subprocess.run(dbt_docs_cmd, capture_output=True, text=True, check=True)
+    # Step 5: Generate documentation - only for the models we built
+    logger.info("Generating dbt documentation...")
+    docs_cmd = ['dbt', 'docs', 'generate', '--select', ' '.join(test_selectors)] + base_dbt_args
+    success, output, error = run_dbt_command(docs_cmd, "Generate documentation")
+    if success:
         dbt_results["docs_success"] = True
-        logger.info("✅ dbt docs generate completed successfully.")
-    except subprocess.CalledProcessError as e:
-        dbt_results["docs_error"] = f"Stderr:\\n{e.stderr}\\nStdout:\\n{e.stdout}"
-        logger.error(f"❌ dbt docs generate failed: {dbt_results['docs_error']}")
+    else:
+        dbt_results["docs_error"] = error
+        # Don't fail the DAG for docs generation failures
 
     # Fail the task if critical dbt steps failed
-    if not dbt_results["run_success"]: # or (not dbt_results["test_success"] if tests are critical)
-        # Construct a summary of errors
+    if not dbt_results["run_success"]:
         error_summary = "dbt pipeline execution failed:"
         if dbt_results["run_error"]:
-            error_summary += f"\\nRUN ERRORS:\\n{dbt_results['run_error']}"
+            error_summary += f"\nRUN ERRORS:\n{dbt_results['run_error']}"
         if dbt_results["test_error"]:
-            error_summary += f"\\nTEST ERRORS:\\n{dbt_results['test_error']}"
+            error_summary += f"\nTEST ERRORS:\n{dbt_results['test_error']}"
         raise AirflowException(error_summary)
 
-    logger.info("✅ dbt pipeline execution finished.")
+    logger.info("dbt pipeline execution finished.")
     return dbt_results
 
 @task(dag=dag)
@@ -650,7 +669,7 @@ def update_processed_log_db_task(dbt_execution_results: Dict[str, Any],
     """
     Updates the processed_dataset_log table for successfully processed datasets.
     """
-    logger.info("📝 Updating processed_dataset_log database table...")
+    logger.info(" Updating processed_dataset_log database table...")
     
     scripts_dir = '/opt/airflow/scripts'
     if scripts_dir not in sys.path:
@@ -711,7 +730,7 @@ def generate_pipeline_summary(
         Complete pipeline summary with metrics and results
     """
     
-    logger.info("🚀 Starting pipeline summary generation...")
+    logger.info(" Starting pipeline summary generation...")
     
     try:
         # Simple summary with basic metrics
@@ -723,18 +742,18 @@ def generate_pipeline_summary(
             'pipeline_success': True
         }
         
-        logger.info("📊 ENHANCED PIPELINE EXECUTION SUMMARY")
+        logger.info(" ENHANCED PIPELINE EXECUTION SUMMARY")
         logger.info("=" * 50)
-        logger.info(f"🎯 Datasets Processed: {summary['datasets_processed']}")
-        logger.info(f"📊 Rows Loaded: {summary['total_rows_loaded']:,}")
-        logger.info(f"🏗️ dbt Success: {summary['dbt_success']}")
-        logger.info(f"✅ Pipeline Success: {summary['pipeline_success']}")
+        logger.info(f" Datasets Processed: {summary['datasets_processed']}")
+        logger.info(f" Rows Loaded: {summary['total_rows_loaded']:,}")
+        logger.info(f" dbt Success: {summary['dbt_success']}")
+        logger.info(f" Pipeline Success: {summary['pipeline_success']}")
         logger.info("=" * 50)
         
         return summary
         
     except Exception as e:
-        logger.error(f"❌ Error in pipeline summary: {str(e)}")
+        logger.error(f" Error in pipeline summary: {str(e)}")
         return {
             'pipeline_id': context.get('run_id', 'unknown'),
             'pipeline_success': False,
@@ -748,10 +767,10 @@ downloads = enhanced_download_datasets(plan)
 loading = enhanced_load_to_database(plan, downloads)
 source_metadata_results = extract_source_metadata_task(loading_results=loading, processing_plan=plan)
 star_schema_files = generate_dbt_star_schema_files_task(processing_plan=plan, loading_results=loading, source_metadata=source_metadata_results)
-topic_mart_files = generate_topic_marts(processing_plan=plan, star_schema_results=star_schema_files)
+topic_mart_files = generate_topic_marts(processing_plan=loading, star_schema_results=star_schema_files)
 dbt_execution = run_dbt_pipeline(star_schema_results=star_schema_files, mart_generation_results=topic_mart_files, loading_results=loading, processing_plan=plan)
 
-# NEW: update_processed_log_db_task after dbt_execution
+# update_processed_log_db_task after dbt_execution
 log_update = update_processed_log_db_task(
     dbt_execution_results=dbt_execution, 
     source_metadata_results=source_metadata_results, 

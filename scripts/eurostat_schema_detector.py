@@ -311,7 +311,8 @@ class EurostatSchemaDetector:
         quoted_value = self._quote_identifier("value")
         columns.append(f"    {quoted_value} {schema.value_type.upper()}")
         
-        # Add status column if status codes exist
+        # Add status column if status codes exist 
+        # TODO: to be deleted later
         if schema.status_codes:
             quoted_status = self._quote_identifier("status")
             columns.append(f"    {quoted_status} VARCHAR(10)")
@@ -354,6 +355,7 @@ CREATE INDEX IF NOT EXISTS idx_{table_name}_dataset ON {quoted_table}({self._quo
         quoted_value = self._quote_identifier("value")
         columns.append(f"    {quoted_value}, -- {schema.value_unit}")
         
+        # TODO: status codes will be deleted later
         if schema.status_codes:
             quoted_status = self._quote_identifier("status")
             columns.append(f"    {quoted_status}, -- Data quality status")

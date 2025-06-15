@@ -6,16 +6,31 @@ FROM apache/airflow:3.0.1
 # Set the USER to root temporarily to install system dependencies
 USER root
 
-# Install system dependencies for enhanced scripts (cached layer)
-# - curl for SourceData.py data downloads
-# - libpq-dev for psycopg2 (PostgreSQL connections)
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    curl \
-    libpq-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+# Install additional system dependencies
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        postgresql-client \
+        curl \
+    && apt-get autoremove -yqq --purge \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Switch back to the airflow user
+# Make cleanup script executable
+COPY scripts/cleanup_sql_files.sh /opt/airflow/scripts/
+RUN chmod +x /opt/airflow/scripts/cleanup_sql_files.sh
+
+# Create entrypoint script
+RUN echo '#!/bin/bash\n\
+/opt/airflow/scripts/cleanup_sql_files.sh\n\
+exec "$@"' > /opt/airflow/entrypoint.sh \
+    && chmod +x /opt/airflow/entrypoint.sh
+
+# Switch back to airflow user
 USER airflow
+
+# Set entrypoint
+ENTRYPOINT ["/opt/airflow/entrypoint.sh"]
+CMD ["airflow", "standalone"]
 
 # OPTIMIZATION: Copy requirements FIRST for better layer caching
 # This layer will only rebuild if requirements change

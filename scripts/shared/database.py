@@ -133,17 +133,19 @@ class EurostatDatabase:
             return []
 
 # Convenience function for backward compatibility
+"""
 def get_db_connection():
-    """Legacy function for backward compatibility"""
+    # Legacy function for backward compatibility
     db = EurostatDatabase()
     return db.get_connection()
 
 def get_table_columns(table_name: str):
-    """Legacy function for backward compatibility"""
+    # Legacy function for backward compatibility
     db = EurostatDatabase()
     return db.get_table_columns_detailed(table_name)
 
 def get_table_schema(table_name: str):
-    """Legacy function for backward compatibility"""
+    # Legacy function for backward compatibility
     db = EurostatDatabase()
     return db.get_table_schema(table_name) 
+"""
